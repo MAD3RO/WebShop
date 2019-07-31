@@ -94,7 +94,7 @@ namespace WebShop.Areas.Admin.Controllers
             return RedirectToAction("AddPage");
         }
 
-        // GET: Admin/Pages/EditPage/5
+        // GET: Admin/Pages/EditPage/id
         [HttpGet]
         public ActionResult EditPage(int id)
         {
@@ -120,7 +120,7 @@ namespace WebShop.Areas.Admin.Controllers
             return View(model);
         }
 
-        // POST: Admin/Pages/EditPage
+        // POST: Admin/Pages/EditPage/id
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult EditPage(PageVM model)
@@ -159,8 +159,8 @@ namespace WebShop.Areas.Admin.Controllers
                 }
 
                 // Make sure title and slug are unique
-                if(db.Pages.Where(x => x.Id != id).Any(x=>x.Title==model.Title) || 
-                   db.Pages.Where(x=>x.Id!=id).Any(x=>x.Slug == slug))
+                if (db.Pages.Where(x => x.Id != id).Any(x => x.Title == model.Title) ||
+                   db.Pages.Where(x => x.Id != id).Any(x => x.Slug == slug))
                 {
                     ModelState.AddModelError("", "That title or slug already exists.");
                     return View(model);
@@ -179,20 +179,32 @@ namespace WebShop.Areas.Admin.Controllers
             TempData["SM"] = "You have edited the page!";
             return RedirectToAction("EditPage");
         }
-        //// GET: Admin/Pages/Details/5
-        //public ActionResult Details(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    PageModel page = db.Pages.Find(id);
-        //    if (page == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(page);
-        //}
+
+        // GET: Admin/Pages/PageDetails/id
+        public ActionResult PageDetails(int id)
+        {
+            // Declare pageVM
+            PageVM model;
+
+            using (Db db = new Db())
+            {
+                // Get the page
+                PageModel dto = db.Pages.Find(id);
+
+                // Confirm page exists
+                if (dto == null)
+                {
+                    return Content("The page does not exist.");
+                }
+
+                // Init PageVM
+                model = new PageVM(dto);
+            }
+
+            // Return view with model
+            return View(model);
+        }
+
 
         //// GET: Admin/Pages/Create
         //public ActionResult Create()
