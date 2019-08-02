@@ -206,6 +206,92 @@ namespace WebShop.Areas.Admin.Controllers
         }
 
 
+        // GET: Admin/Pages/DeletePage/id
+        public ActionResult DeletePage(int? id)
+        {
+            using (Db db = new Db())
+            {
+                // Get the page
+                PageModel dto = db.Pages.Find(id);
+                // Remove the page
+                db.Pages.Remove(dto);
+                // Save
+                db.SaveChanges();
+            }
+            return RedirectToAction("Index");
+        }
+
+        // POST: Admin/Pages/ReorderPages
+        [HttpPost]
+        public void ReorderPages(int[] id)
+        {
+            using (Db db = new Db())
+            {
+                // Set initial count
+                int count = 1;
+
+                // Declare PageModel
+                PageModel dto;
+
+                // Set sorting for each page
+                foreach (var pageId in id)
+                {
+                    dto = db.Pages.Find(pageId);
+                    dto.Sorting = count;
+
+                    db.SaveChanges();
+
+                    count++;
+                }
+            }
+        }
+
+        // GET: Admin/Pages/EditSidebar
+        [HttpGet]
+        public ActionResult EditSidebar()
+        {
+            // Declare pageVM
+            SidebarVM model;
+
+            using (Db db = new Db())
+            {
+                // Get the page
+                SidebarModel dto = db.Sidebar.Find(1);
+
+                // Init pageVM
+                model = new SidebarVM(dto);
+            }
+
+            // Return view with model
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditSidebar(SidebarVM model)
+        {
+            // Check model state
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            using (Db db = new Db())
+            {
+                // Get the DTO
+                SidebarModel dto = db.Sidebar.Find(1);
+
+                // DTO the body
+                dto.Body = model.Body;
+
+                // Save the DTO
+                db.SaveChanges();
+            }
+
+            // Set TempData message
+            TempData["SM"] = "You have edited the sidebar!";
+            return RedirectToAction("EditSidebar");
+        }
         //// GET: Admin/Pages/Create
         //public ActionResult Create()
         //{
@@ -245,31 +331,6 @@ namespace WebShop.Areas.Admin.Controllers
         //}
 
 
-        //// GET: Admin/Pages/Delete/5
-        //public ActionResult Delete(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    PageModel page = db.Pages.Find(id);
-        //    if (page == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(page);
-        //}
-
-        //// POST: Admin/Pages/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult DeleteConfirmed(int id)
-        //{
-        //    PageModel page = db.Pages.Find(id);
-        //    db.Pages.Remove(page);
-        //    db.SaveChanges();
-        //    return RedirectToAction("Index");
-        //}
 
         //protected override void Dispose(bool disposing)
         //{

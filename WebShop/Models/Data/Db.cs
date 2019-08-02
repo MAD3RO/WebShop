@@ -11,6 +11,7 @@ namespace WebShop.Models.Data
     {
         public Db() : base("Db") { }
         public DbSet<PageModel> Pages { get; set; }
+        public DbSet<SidebarModel> Sidebar { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
