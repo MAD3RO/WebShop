@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 using WebShop.Models.Data;
 
 namespace WebShop.Models.ViewModels.Pages
@@ -15,10 +16,11 @@ namespace WebShop.Models.ViewModels.Pages
 
         public SidebarVM(SidebarModel row)
         {
-            Id = row.Id;
             Body = row.Body;
+            Id = row.Id;
         }
         public int Id { get; set; }
+        [AllowHtml]
         public string Body { get; set; }
     }
 }
