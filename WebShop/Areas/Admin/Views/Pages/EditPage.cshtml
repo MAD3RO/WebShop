@@ -77,8 +77,11 @@
 
 @section Scripts{
 
-    <script src="~/Areas/ckeditor/ckeditor.js"></script>
+    <script src="/ckeditor/ckeditor.js"></script>
     <script>
-        CKEDITOR.replace("Body");
+        CKEDITOR.replace("Body", {
+            filebrowserBrowseUrl: '/ckfinder/ckfinder.html',
+            filebrowserUploadUrl: '/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files'
+        });
     </script>
 }
