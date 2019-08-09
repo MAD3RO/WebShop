@@ -54,39 +54,40 @@ else
         }
 
     </table>
-
-    @section Scripts{
-        <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
-        <script>
-
-            $(function () {
-                /*
-                 * Confirm page deletion
-                 */
-                $("a.delete").click(function () {
-                    if (!confirm("Confirm page deletion")) return false;
-                });
-
-                /////////////////////////////////////////////////////////////
-
-                /*
-                 * Confirm page deletion
-                 */
-                $("table#pages tbody").sortable({
-                    items: "tr:not(.home)",
-                    placeholder: "ui-state-highlight", 
-                    update: function () {
-                        var ids = $("table#pages tbody").sortable("serialize");
-                        var url = "/Admin/Pages/ReorderPages";
-
-                        $.post(url, ids, function (data) {
-
-                        });
-                    }
-                });
-
-                /////////////////////////////////////////////////////////////
-            });
-        </script>
-    }
 }
+
+@section Scripts{
+    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
+    <script>
+
+        $(function () {
+            /*
+             * Confirm page deletion
+             */
+            $("a.delete").click(function () {
+                if (!confirm("Confirm page deletion")) return false;
+            });
+
+            /////////////////////////////////////////////////////////////
+
+            /*
+             * Reorder pages
+             */
+            $("table#pages tbody").sortable({
+                items: "tr:not(.home)",
+                placeholder: "ui-state-highlight",
+                update: function () {
+                    var ids = $("table#pages tbody").sortable("serialize");
+                    var url = "/Admin/Pages/ReorderPages";
+
+                    $.post(url, ids, function (data) {
+
+                    });
+                }
+            });
+
+            /////////////////////////////////////////////////////////////
+        });
+    </script>
+}
+

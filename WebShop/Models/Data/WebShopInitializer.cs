@@ -6,7 +6,7 @@ using WebShop.Models.ViewModels.Pages;
 
 namespace WebShop.Models.Data
 {
-    public class WebShopInitializer : System.Data.Entity.DropCreateDatabaseAlways<Db>
+    public class WebShopInitializer : System.Data.Entity.DropCreateDatabaseIfModelChanges<Db>
     {
         protected override void Seed(Db context)
         {
@@ -26,6 +26,15 @@ namespace WebShop.Models.Data
             };
 
             Sidebar.ForEach(s => context.Sidebar.Add(s));
+            context.SaveChanges();
+
+            // Categories initializer
+            var Categories = new List<CategoryModel>
+            {
+                new CategoryModel{Name = "Kategorija", Slug="običan slug", Sorting=1}
+            };
+
+            Categories.ForEach(s => context.Categories.Add(s));
             context.SaveChanges();
         }
     }
