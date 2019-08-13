@@ -36,6 +36,15 @@ namespace WebShop.Models.Data
 
             Categories.ForEach(s => context.Categories.Add(s));
             context.SaveChanges();
+
+            // Products initializer
+            var Products = new List<ProductModel>
+            {
+                new ProductModel{Name = "Produkt", Slug="običan slug", CategoryName="voće", Description="opis", CategoryId=1, ImageName="slika", Price=12}
+            };
+
+            Products.ForEach(s => context.Products.Add(s));
+            context.SaveChanges();
         }
     }
 }

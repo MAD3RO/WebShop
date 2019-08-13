@@ -7,13 +7,13 @@ namespace WebShop.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class migracija : IMigrationMetadata
+    public sealed partial class products : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(migracija));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(products));
         
         string IMigrationMetadata.Id
         {
-            get { return "201908021912200_migracija"; }
+            get { return "201908122251169_products"; }
         }
         
         string IMigrationMetadata.Source

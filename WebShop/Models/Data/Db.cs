@@ -13,6 +13,7 @@ namespace WebShop.Models.Data
         public DbSet<PageModel> Pages { get; set; }
         public DbSet<SidebarModel> Sidebar { get; set; }
         public DbSet<CategoryModel> Categories{ get; set; }
+        public DbSet<ProductModel> Products { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
