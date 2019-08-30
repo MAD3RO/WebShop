@@ -11,13 +11,12 @@ namespace WebShop.Models.ViewModels.Pages
     {
         public SidebarVM()
         {
-
         }
 
         public SidebarVM(SidebarModel row)
         {
-            Body = row.Body;
             Id = row.Id;
+            Body = row.Body;
         }
         public int Id { get; set; }
         [AllowHtml]

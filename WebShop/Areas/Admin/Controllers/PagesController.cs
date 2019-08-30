@@ -11,10 +11,9 @@ using WebShop.Models.ViewModels.Pages;
 
 namespace WebShop.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class PagesController : Controller
     {
-        private Db db = new Db();
-
         // GET: Admin/Pages
         public ActionResult Index()
         {
@@ -26,6 +25,8 @@ namespace WebShop.Areas.Admin.Controllers
                 // Init the list
                 pagesList = db.Pages.ToArray().OrderBy(x => x.Sorting).Select(x => new PageVM(x)).ToList();
             }
+
+            // Return view with list
             return View(pagesList);
         }
 
@@ -38,7 +39,6 @@ namespace WebShop.Areas.Admin.Controllers
 
         // POST: Admin/Pages/AddPage
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult AddPage(PageVM model)
         {
             // Check model state
@@ -52,14 +52,13 @@ namespace WebShop.Areas.Admin.Controllers
                 // Declare slug
                 string slug;
 
-                // Init pageModel
-                PageModel pageModel = new PageModel
-                {
-                    // Model title
-                    Title = model.Title
-                };
+                // Init pageDTO
+                PageModel dto = new PageModel();
 
-                // Check for and set slug if need to be
+                // DTO title
+                dto.Title = model.Title;
+
+                // Check for and set slug if need be
                 if (string.IsNullOrWhiteSpace(model.Slug))
                 {
                     slug = model.Title.Replace(" ", "-").ToLower();
@@ -76,14 +75,14 @@ namespace WebShop.Areas.Admin.Controllers
                     return View(model);
                 }
 
-                // Model the rest
-                pageModel.Slug = slug;
-                pageModel.Body = model.Body;
-                pageModel.HasSidebar = model.HasSidebar;
-                pageModel.Sorting = 100;
+                // DTO the rest
+                dto.Slug = slug;
+                dto.Body = model.Body;
+                dto.HasSidebar = model.HasSidebar;
+                dto.Sorting = 100;
 
-                // Save the   Model
-                db.Pages.Add(pageModel);
+                // Save DTO
+                db.Pages.Add(dto);
                 db.SaveChanges();
             }
 
@@ -122,7 +121,6 @@ namespace WebShop.Areas.Admin.Controllers
 
         // POST: Admin/Pages/EditPage/id
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult EditPage(PageVM model)
         {
             // Check model state
@@ -160,7 +158,7 @@ namespace WebShop.Areas.Admin.Controllers
 
                 // Make sure title and slug are unique
                 if (db.Pages.Where(x => x.Id != id).Any(x => x.Title == model.Title) ||
-                   db.Pages.Where(x => x.Id != id).Any(x => x.Slug == slug))
+                     db.Pages.Where(x => x.Id != id).Any(x => x.Slug == slug))
                 {
                     ModelState.AddModelError("", "That title or slug already exists.");
                     return View(model);
@@ -177,13 +175,15 @@ namespace WebShop.Areas.Admin.Controllers
 
             // Set TempData message
             TempData["SM"] = "You have edited the page!";
+
+            // Redirect
             return RedirectToAction("EditPage");
         }
 
         // GET: Admin/Pages/PageDetails/id
         public ActionResult PageDetails(int id)
         {
-            // Declare pageVM
+            // Declare PageVM
             PageVM model;
 
             using (Db db = new Db())
@@ -205,19 +205,22 @@ namespace WebShop.Areas.Admin.Controllers
             return View(model);
         }
 
-
         // GET: Admin/Pages/DeletePage/id
-        public ActionResult DeletePage(int? id)
+        public ActionResult DeletePage(int id)
         {
             using (Db db = new Db())
             {
                 // Get the page
                 PageModel dto = db.Pages.Find(id);
+
                 // Remove the page
                 db.Pages.Remove(dto);
+
                 // Save
                 db.SaveChanges();
             }
+
+            // Redirect
             return RedirectToAction("Index");
         }
 
@@ -230,7 +233,7 @@ namespace WebShop.Areas.Admin.Controllers
                 // Set initial count
                 int count = 1;
 
-                // Declare PageModel
+                // Declare PageDTO
                 PageModel dto;
 
                 // Set sorting for each page
@@ -244,21 +247,22 @@ namespace WebShop.Areas.Admin.Controllers
                     count++;
                 }
             }
+
         }
 
         // GET: Admin/Pages/EditSidebar
         [HttpGet]
         public ActionResult EditSidebar()
         {
-            // Declare pageVM
+            // Declare model
             SidebarVM model;
 
             using (Db db = new Db())
             {
-                // Get the page
+                // Get the DTO
                 SidebarModel dto = db.Sidebar.Find(1);
 
-                // Init pageVM
+                // Init model
                 model = new SidebarVM(dto);
             }
 
@@ -266,16 +270,10 @@ namespace WebShop.Areas.Admin.Controllers
             return View(model);
         }
 
+        // POST: Admin/Pages/EditSidebar
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult EditSidebar(SidebarVM model)
         {
-            // Check model state
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-
             using (Db db = new Db())
             {
                 // Get the DTO
@@ -284,61 +282,15 @@ namespace WebShop.Areas.Admin.Controllers
                 // DTO the body
                 dto.Body = model.Body;
 
-                // Save the DTO
+                // Save
                 db.SaveChanges();
             }
 
             // Set TempData message
             TempData["SM"] = "You have edited the sidebar!";
+
+            // Redirect
             return RedirectToAction("EditSidebar");
         }
-        //// GET: Admin/Pages/Create
-        //public ActionResult Create()
-        //{
-        //    return View();
-        //}
-
-        //// POST: Admin/Pages/Create
-        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        //// more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Create([Bind(Include = "Id,Title,Slug,Body,Sorting,HasSidebar")] PageModel page)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        db.Pages.Add(page);
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
-
-        //    return View(page);
-        //}
-
-        //// GET: Admin/Pages/Edit/5
-        //public ActionResult Edit(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    PageModel page = db.Pages.Find(id);
-        //    if (page == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(page);
-        //}
-
-
-
-        //protected override void Dispose(bool disposing)
-        //{
-        //    if (disposing)
-        //    {
-        //        db.Dispose();
-        //    }
-        //    base.Dispose(disposing);
-        //}
     }
 }

@@ -140,6 +140,8 @@
     <Compile Include="Areas\Admin\Controllers\DashboardController.cs" />
     <Compile Include="Areas\Admin\Controllers\PagesController.cs" />
     <Compile Include="Areas\Admin\Controllers\ShopController.cs" />
+    <Compile Include="Areas\Admin\Models\ViewModels\Shop\OrdersForAdminVM.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\PagesController.cs" />
     <Compile Include="Controllers\ShopController.cs" />
@@ -159,13 +161,38 @@
     <Compile Include="Migrations\201908122251169_products.Designer.cs">
       <DependentUpon>201908122251169_products.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201908141757518_users.cs" />
+    <Compile Include="Migrations\201908141757518_users.Designer.cs">
+      <DependentUpon>201908141757518_users.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908141807234_roles.cs" />
+    <Compile Include="Migrations\201908141807234_roles.Designer.cs">
+      <DependentUpon>201908141807234_roles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908141836592_userRoles.cs" />
+    <Compile Include="Migrations\201908141836592_userRoles.Designer.cs">
+      <DependentUpon>201908141836592_userRoles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908231308523_orders_orderDetails.cs" />
+    <Compile Include="Migrations\201908231308523_orders_orderDetails.Designer.cs">
+      <DependentUpon>201908231308523_orders_orderDetails.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Data\CategoryModel.cs" />
     <Compile Include="Models\Data\Db.cs" />
+    <Compile Include="Models\Data\OrderDetailsModel.cs" />
+    <Compile Include="Models\Data\OrderModel.cs" />
     <Compile Include="Models\Data\ProductModel.cs" />
+    <Compile Include="Models\Data\RoleModel.cs" />
+    <Compile Include="Models\Data\UserModel.cs" />
+    <Compile Include="Models\Data\UserRoleModel.cs" />
     <Compile Include="Models\Data\WebShopInitializer.cs" />
     <Compile Include="Models\Data\PageModel.cs" />
     <Compile Include="Models\Data\SidebarModel.cs" />
+    <Compile Include="Models\ViewModels\Account\LoginUserVM.cs" />
+    <Compile Include="Models\ViewModels\Account\OrdersForUserVM.cs" />
+    <Compile Include="Models\ViewModels\Account\UserProfileVM.cs" />
+    <Compile Include="Models\ViewModels\Account\UserVM.cs" />
     <Compile Include="Models\ViewModels\Cart\CartVM.cs" />
     <Compile Include="Models\ViewModels\Pages\PageVM.cs" />
     <Compile Include="Global.asax.cs">
@@ -173,7 +200,9 @@
     </Compile>
     <Compile Include="Models\ViewModels\Pages\SidebarVM.cs" />
     <Compile Include="Models\ViewModels\Shop\CategoryVM.cs" />
+    <Compile Include="Models\ViewModels\Shop\OrderVM.cs" />
     <Compile Include="Models\ViewModels\Shop\ProductVM.cs" />
+    <Compile Include="Models\ViewModels\UserNavPartialVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -909,7 +938,9 @@
     <Content Include="fileman\lang\ru.json" />
     <Content Include="fileman\lang\sk.json" />
     <Content Include="fileman\lang\tr.json" />
-    <Content Include="fileman\web.config" />
+    <Content Include="fileman\web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Areas\Admin\Views\Shop\Categories.cshtml" />
     <Content Include="Scripts\ckeditor\adapters\jquery.js" />
     <Content Include="Scripts\ckeditor\CHANGES.html" />
@@ -1291,6 +1322,7 @@
     <Content Include="Scripts\dropzone\dropzone.js" />
     <Content Include="Scripts\dropzone\dropzone.min.css" />
     <Content Include="Scripts\dropzone\dropzone.min.js" />
+    <Content Include="Areas\Admin\Views\Shop\Orders.cshtml" />
     <None Include="Scripts\jquery-1.6.1-vsdoc.js" />
     <Content Include="Scripts\jquery-1.6.1.js" />
     <Content Include="Scripts\jquery-1.6.1.min.js" />
@@ -1318,13 +1350,19 @@
     <Content Include="Areas\Admin\Views\Shop\EditProduct.cshtml" />
     <Content Include="Views\Pages\Index.cshtml" />
     <Content Include="Views\Pages\PagesMenuPartial.cshtml" />
-    <Content Include="Views\Pages\SidebarPartial.cshtml" />
     <Content Include="Views\Shop\CategoryMenuPartial.cshtml" />
     <Content Include="Views\Shop\Category.cshtml" />
     <Content Include="Views\Shop\ProductDetails.cshtml" />
     <Content Include="Views\Cart\CartPartial.cshtml" />
     <Content Include="Views\Cart\Index.cshtml" />
     <Content Include="Views\Cart\AddToCartPartial.cshtml" />
+    <Content Include="Views\Account\CreateAccount.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\UserNavPartial.cshtml" />
+    <Content Include="Views\Account\UserProfile.cshtml" />
+    <Content Include="Views\Cart\PaypalPartial.cshtml" />
+    <Content Include="Views\Account\Orders.cshtml" />
+    <Content Include="Views\Pages\SidebarPartial.cshtml" />
     <None Include="_bin_deployableAssemblies\x86\sqlcese40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceqp40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceme40.dll" />
@@ -1336,7 +1374,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Admin\Models\" />
     <Folder Include="fileman\aspnet_client\system_web\2_0_50727\" />
     <Folder Include="fileman\aspnet_client\system_web\4_0_30319\" />
     <Folder Include="fileman\tmp\" />
@@ -1356,6 +1393,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908122251169_products.resx">
       <DependentUpon>201908122251169_products.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908141757518_users.resx">
+      <DependentUpon>201908141757518_users.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908141807234_roles.resx">
+      <DependentUpon>201908141807234_roles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908141836592_userRoles.resx">
+      <DependentUpon>201908141836592_userRoles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908231308523_orders_orderDetails.resx">
+      <DependentUpon>201908231308523_orders_orderDetails.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -60,15 +60,14 @@ namespace WebShop.Controllers
 
         public ActionResult PagesMenuPartial()
         {
-            // Declare a list of models
+            // Declare a list of PageVM
             List<PageVM> pageVMList;
 
             // Get all pages except home
-            using(Db db = new Db())
+            using (Db db = new Db())
             {
                 pageVMList = db.Pages.ToArray().OrderBy(x => x.Sorting).Where(x => x.Slug != "home").Select(x => new PageVM(x)).ToList();
             }
-
             // Return partial view with list
             return PartialView(pageVMList);
         }
@@ -79,14 +78,15 @@ namespace WebShop.Controllers
             SidebarVM model;
 
             // Init model
-            using(Db db = new Db())
+            using (Db db = new Db())
             {
                 SidebarModel dto = db.Sidebar.Find(1);
+
                 model = new SidebarVM(dto);
             }
 
             // Return partial view with model
-            return View(model);
+            return PartialView(model);
         }
     }
 }
