@@ -16,7 +16,6 @@ namespace WebShop.Migrations
                         Slug = c.String(),
                         Body = c.String(),
                         Sorting = c.Int(nullable: false),
-                        HasSidebar = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
             

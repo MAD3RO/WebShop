@@ -11,7 +11,6 @@ namespace WebShop.Models.Data
     {
         public Db() : base("Db") { }
         public DbSet<PageModel> Pages { get; set; }
-        public DbSet<SidebarModel> Sidebar { get; set; }
         public DbSet<CategoryModel> Categories { get; set; }
         public DbSet<ProductModel> Products { get; set; }
         public DbSet<UserModel> Users { get; set; }
@@ -23,17 +22,8 @@ namespace WebShop.Models.Data
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            // modelBuilder.Entity<OrderModel>().HasRequired(m => m.Users).WithMany().HasForeignKey(m => m.UserId).WillCascadeOnDelete(true);
-            // modelBuilder.Entity<OrderModel>().HasOptional(t => t.Users).WithMany().HasForeignKey(d => d.UserId).WillCascadeOnDelete(true);
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
-            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
-            // modelBuilder.Entity<OrderModel>().HasKey(m => m.OrderId);
-            //        modelBuilder
-            //.Entity<OrderModel>()
-            //    .HasOptional(e => e.)
-            //    .WithMany()
-            //    .WillCascadeOnDelete(false);
-            
+            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();            
         }
     }
 }

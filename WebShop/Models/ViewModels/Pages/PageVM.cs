@@ -21,7 +21,6 @@ namespace WebShop.Models.ViewModels.Pages
             Slug = row.Slug;
             Body = row.Body;
             Sorting = row.Sorting;
-            HasSidebar = row.HasSidebar;
         }
 
         public int Id { get; set; }
@@ -34,6 +33,5 @@ namespace WebShop.Models.ViewModels.Pages
         [AllowHtml]
         public string Body { get; set; }
         public int Sorting { get; set; }
-        public bool HasSidebar { get; set; }
     }
 }

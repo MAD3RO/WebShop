@@ -16,6 +16,5 @@ namespace WebShop.Models.Data
         public string Slug { get; set; }
         public string Body { get; set; }
         public int Sorting { get; set; }
-        public bool HasSidebar { get; set; }
     }
 }

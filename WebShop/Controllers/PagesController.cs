@@ -40,17 +40,7 @@ namespace WebShop.Controllers
 
             // Set page title
             ViewBag.PageTitle = dto.Title;
-
-            // Check for sidebar
-            if (dto.HasSidebar == true)
-            {
-                ViewBag.Sidebar = "Yes";
-            }
-            else
-            {
-                ViewBag.Sidebar = "No";
-            }
-
+            
             // Init model
             model = new PageVM(dto);
 
@@ -70,23 +60,6 @@ namespace WebShop.Controllers
             }
             // Return partial view with list
             return PartialView(pageVMList);
-        }
-
-        public ActionResult SidebarPartial()
-        {
-            // Declare model
-            SidebarVM model;
-
-            // Init model
-            using (Db db = new Db())
-            {
-                SidebarModel dto = db.Sidebar.Find(1);
-
-                model = new SidebarVM(dto);
-            }
-
-            // Return partial view with model
-            return PartialView(model);
         }
     }
 }

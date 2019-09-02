@@ -24,9 +24,6 @@ else
             <th>
                 Slug
             </th>
-            <th>
-                Sidebar
-            </th>
             <th></th>
         </tr>
 
@@ -38,9 +35,6 @@ else
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Slug)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.HasSidebar)
                 </td>
                 <td>
                     @Html.ActionLink("Edit", "EditPage", new { id = item.Id }) |

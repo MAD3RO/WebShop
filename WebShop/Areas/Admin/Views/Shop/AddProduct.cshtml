@@ -45,7 +45,7 @@
         </div>
 
         <div class="form-group">
-            <label class="control-label col-md-2" for="HasSidebar">Category</label>
+            <label class="control-label col-md-2">Category</label>
             <div class="col-md-10">
                 @Html.DropDownListFor(model => model.CategoryId, Model.Categories, "Select Category", new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
@@ -53,7 +53,7 @@
         </div>
 
         <div class="form-group">
-            <label class="control-label col-md-2" for="HasSidebar">Product Image</label>
+            <label class="control-label col-md-2">Product Image</label>
             <div class="col-md-10">
                 <input type="file" name="file" id="ImageUpload" />
                 <img src="#" id="imgpreview" />

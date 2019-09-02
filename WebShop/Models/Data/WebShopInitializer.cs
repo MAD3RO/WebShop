@@ -15,25 +15,16 @@ namespace WebShop.Models.Data
             // Page initializer
             var Pages = new List<PageModel>
             {
-                new PageModel{Title="Home", HasSidebar=false, Body="home page", Slug="home", Sorting=0},
+                new PageModel{Title="Home", Body="home page", Slug="home", Sorting=0},
             };
 
             Pages.ForEach(s => context.Pages.Add(s));
             context.SaveChanges();
 
-            // Sidebar initializer
-            var Sidebar = new List<SidebarModel>
-            {
-                new SidebarModel{Body="home page"}
-            };
-
-            Sidebar.ForEach(s => context.Sidebar.Add(s));
-            context.SaveChanges();
-
             // Categories initializer
             var Categories = new List<CategoryModel>
             {
-                new CategoryModel{Name = "Kategorija", Slug="običan slug", Sorting=1}
+                new CategoryModel{Name = "Kategorija", Slug="kategorija", Sorting=1}
             };
 
             Categories.ForEach(s => context.Categories.Add(s));
@@ -42,7 +33,7 @@ namespace WebShop.Models.Data
             // Products initializer
             var Products = new List<ProductModel>
             {
-                new ProductModel{Name = "Produkt", Slug="običan slug", CategoryName="voće", Description="opis", CategoryId=1, ImageName="slika", Price=12}
+                new ProductModel{Name = "Produkt", Slug="produkt", CategoryName="Voće", Description="opis", CategoryId=1, ImageName="slika", Price=12}
             };
 
             Products.ForEach(s => context.Products.Add(s));
