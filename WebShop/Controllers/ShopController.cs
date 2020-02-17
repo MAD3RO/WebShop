@@ -86,8 +86,15 @@ namespace WebShop.Controllers
             }
 
             // Get gallery images
-            model.GalleryImages = Directory.EnumerateFiles(Server.MapPath("~/Images/Uploads/Products/" + id + "/Gallery/Thumbs"))
-                                                .Select(fn => Path.GetFileName(fn));
+            try
+            {
+                model.GalleryImages = Directory.EnumerateFiles(Server.MapPath("~/Images/Uploads/Products/" + id + "/Gallery/Thumbs"))
+                                                        .Select(fn => Path.GetFileName(fn));
+            }
+            catch (Exception)
+            {
+                return View("ProductDetails", model);
+            }
 
             // Return view with model
             return View("ProductDetails", model);

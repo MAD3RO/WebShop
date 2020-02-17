@@ -256,7 +256,6 @@ namespace WebShop.Controllers
                     orderDetailsDTO.Quantity = item.Quantity;
 
                     db.OrderDetails.Add(orderDetailsDTO);
-
                     db.SaveChanges();
                 }
             }

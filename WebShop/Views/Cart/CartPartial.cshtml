@@ -1,7 +1,10 @@
 ﻿@model WebShop.Models.ViewModels.Cart.CartVM
 
-<div class="ajaxcart" style="color:white;">
-    Your cart: @Model.Quantity item(s) - $@Model.Price
-    <br />
-    @Html.ActionLink("Checkout", "Index")
-</div>
+@if (Request.IsAuthenticated)
+{
+    <div class="ajaxcart" style="color:white;">
+        Your cart: @Model.Quantity item(s) - $@Model.Price
+        <br />
+        @Html.ActionLink("Checkout", "Index")
+    </div>
+}
