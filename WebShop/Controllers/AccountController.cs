@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -51,9 +52,22 @@ namespace WebShop.Controllers
 
             using (Db db = new Db())
             {
-                if (db.Users.Any(x => x.Username.Equals(model.Username) && x.Password.Equals(model.Password)))
+                var user = db.Users.SingleOrDefault(a => a.Username == model.Username);
+
+                if (user != null)
                 {
-                    isValid = true;
+                    if(user.Password == CreatePasswordHash(model.Password, user.Salt))
+                    {
+                        isValid = true;
+                    }
+                    else
+                    {
+                        isValid = false;
+                    }
+                }
+                else
+                {
+                    isValid = false;
                 }
             }
 
@@ -83,6 +97,7 @@ namespace WebShop.Controllers
         [HttpPost]
         public ActionResult CreateAccount(UserVM model)
         {
+            var salt = CreateSalt();
             // Check model state
             if (!ModelState.IsValid)
             {
@@ -113,7 +128,9 @@ namespace WebShop.Controllers
                     LastName = model.LastName,
                     EmailAddress = model.EmailAddress,
                     Username = model.Username,
-                    Password = model.Password
+                    Password = CreatePasswordHash(model.Password, salt),
+                    Salt = salt,
+                    DateCreated = DateTime.Now
                 };
 
                 // Add the DTO
@@ -321,5 +338,36 @@ namespace WebShop.Controllers
             // Return view with list of OrdersForUserVM
             return View(ordersForUser);
         }
+
+        #region Helper methods
+        /// <summary>
+        /// Generating the salt method
+        /// </summary>
+        /// <returns></returns>
+        public string CreateSalt()
+        {
+            var rng = new RNGCryptoServiceProvider();
+            byte[] buff = new byte[32];
+            rng.GetBytes(buff);
+
+            return Convert.ToBase64String(buff);
+        }
+
+        /// <summary>
+        /// Create the password hash method
+        /// </summary>
+        /// <param name="pwd"></param>
+        /// <param name="salt"></param>
+        /// <returns></returns>
+        public string CreatePasswordHash(string pwd, string salt)
+        {
+            string pwdAndSalt = String.Concat(pwd, salt);
+#pragma warning disable CS0618 // Type or member is obsolete
+            string hashedPwd = FormsAuthentication.HashPasswordForStoringInConfigFile(pwdAndSalt, "sha1");
+#pragma warning restore CS0618 // Type or member is obsolete
+
+            return hashedPwd;
+        }
+        #endregion
     }
 }

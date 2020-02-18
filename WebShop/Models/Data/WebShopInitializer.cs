@@ -6,9 +6,9 @@ using WebShop.Models.ViewModels.Pages;
 
 namespace WebShop.Models.Data
 {
-    // public class WebShopInitializer : System.Data.Entity.DropCreateDatabaseAlways<Db>
+    public class WebShopInitializer : System.Data.Entity.DropCreateDatabaseAlways<Db>
 
-    public class WebShopInitializer : System.Data.Entity.DropCreateDatabaseIfModelChanges<Db>
+    //public class WebShopInitializer : System.Data.Entity.DropCreateDatabaseIfModelChanges<Db>
     {
         protected override void Seed(Db context)
         {
@@ -42,7 +42,7 @@ namespace WebShop.Models.Data
             // Users initializer
             var Users = new List<UserModel>
             {
-                new UserModel{FirstName = "Admin", LastName="Admin", EmailAddress="admin@gmail.com", Password="password123", Username="admin"}
+                new UserModel{FirstName = "Admin", LastName="Admin", EmailAddress="admin@gmail.com", Password="password123", Username="admin", Salt="", DateCreated=null}
             };
 
             Users.ForEach(s => context.Users.Add(s));

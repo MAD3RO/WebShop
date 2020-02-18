@@ -158,37 +158,9 @@
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\PagesController.cs" />
     <Compile Include="Controllers\ShopController.cs" />
-    <Compile Include="Migrations\201907151335184_migrate.cs" />
-    <Compile Include="Migrations\201907151335184_migrate.Designer.cs">
-      <DependentUpon>201907151335184_migrate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201908071628429_categories.cs" />
-    <Compile Include="Migrations\201908071628429_categories.Designer.cs">
-      <DependentUpon>201908071628429_categories.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201908122251169_products.cs" />
-    <Compile Include="Migrations\201908122251169_products.Designer.cs">
-      <DependentUpon>201908122251169_products.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201908141757518_users.cs" />
-    <Compile Include="Migrations\201908141757518_users.Designer.cs">
-      <DependentUpon>201908141757518_users.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201908141807234_roles.cs" />
-    <Compile Include="Migrations\201908141807234_roles.Designer.cs">
-      <DependentUpon>201908141807234_roles.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201908141836592_userRoles.cs" />
-    <Compile Include="Migrations\201908141836592_userRoles.Designer.cs">
-      <DependentUpon>201908141836592_userRoles.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201908231308523_orders_orderDetails.cs" />
-    <Compile Include="Migrations\201908231308523_orders_orderDetails.Designer.cs">
-      <DependentUpon>201908231308523_orders_orderDetails.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201909022200220_initial.cs" />
-    <Compile Include="Migrations\201909022200220_initial.Designer.cs">
-      <DependentUpon>201909022200220_initial.cs</DependentUpon>
+    <Compile Include="Migrations\202002181413285_initial.cs" />
+    <Compile Include="Migrations\202002181413285_initial.designer.cs">
+      <DependentUpon>202002181413285_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Data\CategoryModel.cs" />
@@ -1396,32 +1368,6 @@
     <Folder Include="fileman\Uploads\FLV\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201907151335184_migrate.resx">
-      <DependentUpon>201907151335184_migrate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201908071628429_categories.resx">
-      <DependentUpon>201908071628429_categories.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201908122251169_products.resx">
-      <DependentUpon>201908122251169_products.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201908141757518_users.resx">
-      <DependentUpon>201908141757518_users.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201908141807234_roles.resx">
-      <DependentUpon>201908141807234_roles.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201908141836592_userRoles.resx">
-      <DependentUpon>201908141836592_userRoles.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201908231308523_orders_orderDetails.resx">
-      <DependentUpon>201908231308523_orders_orderDetails.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201909022200220_initial.resx">
-      <DependentUpon>201909022200220_initial.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
@@ -1434,6 +1380,11 @@
     <None Include="packages.config" />
     <Content Include="Scripts\ckeditor\ckeditor.pack" />
     <None Include="_bin_deployableAssemblies\amd64\Microsoft.VC90.CRT\Microsoft.VC90.CRT.manifest" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202002181413285_initial.resx">
+      <DependentUpon>202002181413285_initial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

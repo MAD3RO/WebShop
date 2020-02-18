@@ -2,8 +2,8 @@ namespace WebShop.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;
-    
-    public partial class users : DbMigration
+
+    public partial class Users : DbMigration
     {
         public override void Up()
         {
@@ -17,11 +17,13 @@ namespace WebShop.Migrations
                         EmailAddress = c.String(),
                         Username = c.String(),
                         Password = c.String(),
+                        Salt = c.String(),
+                        DateCreated = c.DateTime()
                     })
                 .PrimaryKey(t => t.Id);
-            
+
         }
-        
+
         public override void Down()
         {
             DropTable("dbo.tblUsers");
