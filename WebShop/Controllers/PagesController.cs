@@ -40,7 +40,7 @@ namespace WebShop.Controllers
 
             // Set page title
             ViewBag.PageTitle = dto.Title;
-            
+
             // Init model
             model = new PageVM(dto);
 

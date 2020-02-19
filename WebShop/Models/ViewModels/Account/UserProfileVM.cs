@@ -20,7 +20,7 @@ namespace WebShop.Models.ViewModels.Account
             LastName = row.LastName;
             EmailAddress = row.EmailAddress;
             Username = row.Username;
-            Password = row.Password;
+            Password = row.PasswordHash;
         }
 
         public int Id { get; set; }
@@ -33,8 +33,9 @@ namespace WebShop.Models.ViewModels.Account
         public string EmailAddress { get; set; }
         [Required]
         public string Username { get; set; }
+        [DataType(DataType.Password)]
         public string Password { get; set; }
+        [DataType(DataType.Password)]
         public string ConfirmPassword { get; set; }
-
     }
 }

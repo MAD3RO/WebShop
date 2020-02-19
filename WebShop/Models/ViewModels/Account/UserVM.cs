@@ -20,7 +20,7 @@ namespace WebShop.Models.ViewModels.Account
             LastName = row.LastName;
             EmailAddress = row.EmailAddress;
             Username = row.Username;
-            Password = row.Password;
+            Password = row.PasswordHash;
         }
 
         public int Id { get; set; }

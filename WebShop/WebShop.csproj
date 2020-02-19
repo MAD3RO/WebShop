@@ -158,9 +158,9 @@
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\PagesController.cs" />
     <Compile Include="Controllers\ShopController.cs" />
-    <Compile Include="Migrations\202002181413285_initial.cs" />
-    <Compile Include="Migrations\202002181413285_initial.designer.cs">
-      <DependentUpon>202002181413285_initial.cs</DependentUpon>
+    <Compile Include="Migrations\202002191051011_initial.cs" />
+    <Compile Include="Migrations\202002191051011_initial.designer.cs">
+      <DependentUpon>202002191051011_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Data\CategoryModel.cs" />
@@ -1382,8 +1382,8 @@
     <None Include="_bin_deployableAssemblies\amd64\Microsoft.VC90.CRT\Microsoft.VC90.CRT.manifest" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202002181413285_initial.resx">
-      <DependentUpon>202002181413285_initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202002191051011_initial.resx">
+      <DependentUpon>202002191051011_initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

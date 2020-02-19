@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -56,7 +57,7 @@ namespace WebShop.Controllers
 
                 if (user != null)
                 {
-                    if(user.Password == CreatePasswordHash(model.Password, user.Salt))
+                    if (user.PasswordHash == CreatePasswordHash(model.Password, user.Salt))
                     {
                         isValid = true;
                     }
@@ -94,6 +95,7 @@ namespace WebShop.Controllers
 
         // POST: /account/create-account
         [ActionName("create-account")]
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public ActionResult CreateAccount(UserVM model)
         {
@@ -128,7 +130,7 @@ namespace WebShop.Controllers
                     LastName = model.LastName,
                     EmailAddress = model.EmailAddress,
                     Username = model.Username,
-                    Password = CreatePasswordHash(model.Password, salt),
+                    PasswordHash = CreatePasswordHash(model.Password, salt),
                     Salt = salt,
                     DateCreated = DateTime.Now
                 };
@@ -224,6 +226,8 @@ namespace WebShop.Controllers
         [Authorize]
         public ActionResult UserProfile(UserProfileVM model)
         {
+            var salt = CreateSalt();
+
             // Check model state
             if (!ModelState.IsValid)
             {
@@ -263,7 +267,8 @@ namespace WebShop.Controllers
 
                 if (!string.IsNullOrWhiteSpace(model.Password))
                 {
-                    dto.Password = model.Password;
+                    dto.PasswordHash = CreatePasswordHash(model.Password, salt);
+                    dto.Salt = salt;
                 }
 
                 // Save
@@ -341,19 +346,6 @@ namespace WebShop.Controllers
 
         #region Helper methods
         /// <summary>
-        /// Generating the salt method
-        /// </summary>
-        /// <returns></returns>
-        public string CreateSalt()
-        {
-            var rng = new RNGCryptoServiceProvider();
-            byte[] buff = new byte[32];
-            rng.GetBytes(buff);
-
-            return Convert.ToBase64String(buff);
-        }
-
-        /// <summary>
         /// Create the password hash method
         /// </summary>
         /// <param name="pwd"></param>
@@ -362,11 +354,40 @@ namespace WebShop.Controllers
         public string CreatePasswordHash(string pwd, string salt)
         {
             string pwdAndSalt = String.Concat(pwd, salt);
-#pragma warning disable CS0618 // Type or member is obsolete
-            string hashedPwd = FormsAuthentication.HashPasswordForStoringInConfigFile(pwdAndSalt, "sha1");
-#pragma warning restore CS0618 // Type or member is obsolete
+            string hashedPwd = GetSwcSHA1(pwdAndSalt);
 
             return hashedPwd;
+        }
+
+        /// <summary>
+        /// Generating the salt method
+        /// </summary>
+        /// <returns></returns>
+        public string CreateSalt()
+        {
+            var rng = new RNGCryptoServiceProvider();
+            var saltSize = 32;
+            byte[] buff = new byte[saltSize];
+            rng.GetBytes(buff);
+
+            return Convert.ToBase64String(buff);
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static string GetSwcSHA1(string value)
+        {
+            SHA1 algorithm = SHA1.Create();
+            byte[] data = algorithm.ComputeHash(Encoding.UTF8.GetBytes(value));
+            string sh1 = "";
+            for (int i = 0; i < data.Length; i++)
+            {
+                sh1 += data[i].ToString("x2").ToUpperInvariant();
+            }
+            return sh1;
         }
         #endregion
     }
