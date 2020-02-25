@@ -582,6 +582,8 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\creditly.css" />
+    <Content Include="Content\easy-responsive-tabs.css" />
     <Content Include="Content\fancybox\blank.gif" />
     <Content Include="Content\fancybox\fancybox_buttons.png" />
     <Content Include="Content\fancybox\fancybox_loading%402x.gif" />
@@ -589,8 +591,8 @@
     <Content Include="Content\fancybox\fancybox_overlay.png" />
     <Content Include="Content\fancybox\fancybox_sprite%402x.png" />
     <Content Include="Content\fancybox\fancybox_sprite.png" />
+    <Content Include="Content\flexslider.css" />
     <Content Include="Content\font-awesome.min.css" />
-    <Content Include="Content\fontawesome.min.css" />
     <Content Include="Content\img\ajax-loader.gif" />
     <Content Include="Content\img\hotdeal.png" />
     <Content Include="Content\img\logo.png" />
@@ -609,8 +611,10 @@
     <Content Include="Content\jquery.fancybox-buttons.css" />
     <Content Include="Content\jquery.fancybox-thumbs.css" />
     <Content Include="Content\jquery.fancybox.css" />
+    <Content Include="Content\menu.css" />
     <Content Include="Content\nouislider.min.css" />
     <Content Include="Content\PagedList.css" />
+    <Content Include="Content\popuo-box.css" />
     <Content Include="Content\slick-theme.css" />
     <Content Include="Content\slick.css" />
     <Content Include="Content\style.css" />
@@ -1328,6 +1332,8 @@
     <Content Include="Scripts\ckeditor\themes\default\theme.js" />
     <Content Include="Scripts\ckeditor\vendor\promise.js" />
     <Content Include="Areas\Admin\Views\Shop\Orders.cshtml" />
+    <Content Include="Scripts\creditly.js" />
+    <Content Include="Scripts\creditly2.js" />
     <Content Include="Scripts\dropzone\basic.css" />
     <Content Include="Scripts\dropzone\basic.min.css" />
     <Content Include="Scripts\dropzone\dropzone-amd-module.js" />
@@ -1345,6 +1351,8 @@
     <Content Include="fonts\slick.ttf" />
     <Content Include="fonts\slick.woff" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\easing.js" />
+    <Content Include="Scripts\easyResponsiveTabs.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
@@ -1354,6 +1362,8 @@
     <Content Include="Scripts\jquery.fancybox-thumbs.js" />
     <Content Include="Scripts\jquery.fancybox.js" />
     <Content Include="Scripts\jquery.fancybox.pack.js" />
+    <Content Include="Scripts\jquery.flexslider.js" />
+    <Content Include="Scripts\jquery.magnific-popup.js" />
     <Content Include="Scripts\jquery.mousewheel-3.0.6.pack.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
@@ -1362,13 +1372,17 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\jquery.zoom.min.js" />
     <Content Include="Scripts\main.js" />
+    <Content Include="Scripts\minicart.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\move-top.js" />
     <Content Include="Scripts\nouislider.min.js" />
     <Content Include="Scripts\popper-utils.js" />
     <Content Include="Scripts\popper-utils.min.js" />
     <Content Include="Scripts\popper.js" />
     <Content Include="Scripts\popper.min.js" />
+    <Content Include="Scripts\scroll.js" />
     <Content Include="Scripts\slick.min.js" />
+    <Content Include="Scripts\SmoothScroll.min.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

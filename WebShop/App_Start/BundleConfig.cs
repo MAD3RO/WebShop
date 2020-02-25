@@ -17,12 +17,22 @@ namespace WebShop
 
             bundles.Add(new ScriptBundle("~/bundles/scripts").Include(
             "~/Scripts/jquery-{version}.js",
-            "~/Scripts/main.js",
+            "~/Scripts/bootstrap.min.js",
             "~/Scripts/slick.min.js",
             "~/Scripts/nouislider.min.js",
             "~/Scripts/jquery.zoom.min.js",
-            "~/Scripts/bootstrap.min.js",
-            "~/Scripts/bootstrap.js"));
+            "~/Scripts/main.js",
+            "~/Scripts/scroll.js",
+            "~/Scripts/SmoothScroll.js",
+            "~/Scripts/move-top.js",
+            "~/Scripts/easing.js"
+            //"~/Scripts/creditly.js",
+            //"~/Scripts/creditly2.js",
+            //"~/Scripts/easyResponsiveTabs.js",
+            //"~/Scripts/jquery.flexslider.js",
+            //"~/Scripts/jquery.magnific-popup.js",
+            //"~/Scripts/minicart.js",
+            ));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at https://modernizr.com to pick only the tests you need.
@@ -33,15 +43,18 @@ namespace WebShop
                       "~/Scripts/bootstrap.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
-                      "~/Content/style.css",
-                      "~/Content/all.css",
-                      "~/Content/slick-theme.css",
-                      "~/Content/font-awesome.min.css",
-                      "~/Content/fontawesome.min.css",
-                      "~/Content/nouislider.min.css",
+                      "~/Content/bootstrap.min.css",
                       "~/Content/slick.css",
-                      "~/Content/site.css"));
+                      "~/Content/slick-theme.css",
+                      "~/Content/nouislider.min.css",
+                      "~/Content/font-awesome.min.css",
+                      "~/Content/style.css"));
+            //"~/Content/creditly.css",
+            //"~/Content/easy-responsive-tabs.css",
+            //"~/Content/flexslider.css",
+            //"~/Content/menu.css",
+            //"~/Content/popuo-box.css",
+            //"~/Content/site.css"));
         }
     }
 }
