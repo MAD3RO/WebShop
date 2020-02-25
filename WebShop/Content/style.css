@@ -2210,13 +2210,13 @@ ul.multi-column-dropdown li {
     }
 
         ul.multi-column-dropdown li a:hover {
-            color: #F45C5D;
+            color: #D10024;
         }
 
 .dropdown-menu > .active > a,
 .dropdown-menu > .active > a:hover,
 .dropdown-menu > .active > a:focus {
-    background-color: #F45C5D;
+    background-color: #D10024;
 }
 
 .dropdown-item {
