@@ -17,6 +17,11 @@ namespace WebShop
 
             bundles.Add(new ScriptBundle("~/bundles/scripts").Include(
             "~/Scripts/jquery-{version}.js",
+            "~/Scripts/main.js",
+            "~/Scripts/slick.min.js",
+            "~/Scripts/nouislider.min.js",
+            "~/Scripts/jquery.zoom.min.js",
+            "~/Scripts/bootstrap.min.js",
             "~/Scripts/bootstrap.js"));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
@@ -29,6 +34,13 @@ namespace WebShop
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
+                      "~/Content/style.css",
+                      "~/Content/all.css",
+                      "~/Content/slick-theme.css",
+                      "~/Content/font-awesome.min.css",
+                      "~/Content/fontawesome.min.css",
+                      "~/Content/nouislider.min.css",
+                      "~/Content/slick.css",
                       "~/Content/site.css"));
         }
     }
