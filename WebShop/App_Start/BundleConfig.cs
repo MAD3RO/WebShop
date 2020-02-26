@@ -23,9 +23,9 @@ namespace WebShop
             "~/Scripts/jquery.zoom.min.js",
             "~/Scripts/main.js",
             "~/Scripts/scroll.js",
-            "~/Scripts/SmoothScroll.js",
             "~/Scripts/move-top.js",
             "~/Scripts/easing.js"
+            //"~/Scripts/SmoothScroll.min.js"
             //"~/Scripts/creditly.js",
             //"~/Scripts/creditly2.js",
             //"~/Scripts/easyResponsiveTabs.js",
