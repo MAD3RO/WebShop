@@ -40,7 +40,8 @@ namespace WebShop.Controllers
             return PartialView();
         }
 
-        // POST: /account/login
+        // POST: /account/login-partial
+        //[ActionName("login-partial")]
         [HttpPost]
         public ActionResult LoginPartial(LoginUserVM model)
         {

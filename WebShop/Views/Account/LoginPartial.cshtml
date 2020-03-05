@@ -89,8 +89,8 @@
     <!-- END-HEADER-MODAL -->
 
     <!-- password-script -->
-    <script>
 
+    <script>
         //$("#headerModal").on("submit", "#loginForm", function (e) {
         //    e.preventDefault();
 
@@ -106,47 +106,48 @@
         //    });
 
         //});
-        //$(document).ready(function () {
-        //    $("#btnLogin").click(function () {
-        //        var loginFormData = $("#loginForm").serialize();
+        $(document).ready(function () {
+            $("#btnLogin").click(function () {
+                var loginFormData = $("#loginForm").serialize();
 
-        //        $.ajax({
-        //            type: "POST",
-        //            url: "/account/create-account",
-        //            data: loginFormData,
-        //            //success: function () {
-        //            //    $("headerModal").modal("show");
-        //            //    location.reload();
-        //            //}
-        //            success: function (e) { succeedLogin(e); },
-        //            error: function (e) { failedToLogin(e); }
-        //        });
-        //    });
-        //});
+                $.ajax({
+                    type: "POST",
+                    url: "/account/LoginPartial",
+                    data: loginFormData,
+                    success: function () {
+                        alert("success!");
+                        $("#headerModal").modal("show");
+                        window.location.reload();
+                    }
+                    //success: function (e) { succeedLogin(e); },
+                    //error: function (e) { failedToLogin(e); }
+                });
+            });
+        });
 
-        function succeedLogin(e) {
-            if (e == true) {
-                window.location.reload();
-            }
-            else { alert(getDisplayStr("FailedLogin")); }
-        }
-        function failedToLogin(error) {
-            alert(error);
-        }
-                    //window.onload = function () {
-                    //    document.getElementById("password1").onchange = validatePassword;
-                    //    document.getElementById("password2").onchange = validatePassword;
-                    //}
+                //function succeedLogin(e) {
+                //    if (e == true) {
+                //        window.location.reload();
+                //    }
+                //    else { alert(getDisplayStr("FailedLogin")); }
+                //}
+                //function failedToLogin(error) {
+                //    alert(error);
+                //}
+                            //window.onload = function () {
+                            //    document.getElementById("password1").onchange = validatePassword;
+                            //    document.getElementById("password2").onchange = validatePassword;
+                            //}
 
-                    //function validatePassword() {
-                    //    var pass2 = document.getElementById("password2").value;
-                    //    var pass1 = document.getElementById("password1").value;
-                    //    if (pass1 != pass2)
-                    //        document.getElementById("password2").setCustomValidity("Passwords Don't Match");
-                    //    else
-                    //        document.getElementById("password2").setCustomValidity('');
-                    //    //empty string means no validation error
-                    //}
+                            //function validatePassword() {
+                            //    var pass2 = document.getElementById("password2").value;
+                            //    var pass1 = document.getElementById("password1").value;
+                            //    if (pass1 != pass2)
+                            //        document.getElementById("password2").setCustomValidity("Passwords Don't Match");
+                            //    else
+                            //        document.getElementById("password2").setCustomValidity('');
+                            //    //empty string means no validation error
+                            //}
     </script>
     <!-- //password-script -->
 }
