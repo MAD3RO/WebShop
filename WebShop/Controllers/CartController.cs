@@ -158,7 +158,8 @@ namespace WebShop.Controllers
         }
 
         // GET: /Cart/DecrementProduct
-        public ActionResult DecrementProduct(int productId)
+        //public ActionResult DecrementProduct(int productId)
+        public JsonResult DecrementProduct(int productId)
         {
             // Init cart
             List<CartVM> cart = Session["cart"] as List<CartVM>;

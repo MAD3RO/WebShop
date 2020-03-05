@@ -18,37 +18,39 @@ namespace WebShop.Controllers
         // GET: Account
         public ActionResult Index()
         {
-            return Redirect("~/account/login");
+            //return Redirect("~/account/login");
+            //return Redirect("~/shop");
+            return RedirectToAction("Index", "Shop");
         }
 
-        // GET: /Account/login
+        //// GET: /Account/login
         [HttpGet]
-        public ActionResult Login()
+        public ActionResult LoginPartial()
         {
             // Confirm user is not logged in
             string username = User.Identity.Name;
 
             if (!string.IsNullOrEmpty(username))
             {
-                return RedirectToAction("user-profile");
+                //return RedirectToAction("user-profile");
+                return PartialView();
             }
 
             // Return view
-            return View();
+            return PartialView();
         }
 
         // POST: /account/login
         [HttpPost]
-        public ActionResult Login(LoginUserVM model)
+        public ActionResult LoginPartial(LoginUserVM model)
         {
             // Check model state
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return PartialView(model);
             }
 
             // Check if the user is valid
-
             bool isValid = false;
 
             using (Db db = new Db())
@@ -75,12 +77,14 @@ namespace WebShop.Controllers
             if (!isValid)
             {
                 ModelState.AddModelError("", "Invalid username or password.");
-                return View(model);
+                return PartialView(model);
             }
             else
             {
                 FormsAuthentication.SetAuthCookie(model.Username, model.RememberMe);
-                return Redirect(FormsAuthentication.GetRedirectUrl(model.Username, model.RememberMe));
+                //return Redirect(FormsAuthentication.GetRedirectUrl(model.Username, model.RememberMe));
+                // Page.Response.Redirect(Page.Request.Url.ToString(), true);
+                return PartialView(model);
             }
         }
 
@@ -89,7 +93,6 @@ namespace WebShop.Controllers
         [HttpGet]
         public ActionResult CreateAccount()
         {
-
             return View("CreateAccount");
         }
 
@@ -158,7 +161,8 @@ namespace WebShop.Controllers
             TempData["SM"] = "You are now registered and can login.";
 
             // Redirect
-            return Redirect("~/account/login");
+            //return Redirect("~/account/login");
+            return RedirectToAction("Index", "Shop");
         }
 
         // GET: /account/Logout
@@ -166,7 +170,9 @@ namespace WebShop.Controllers
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
-            return Redirect("~/account/login");
+            //return Redirect("~/account/login");
+            //return Redirect("~/shop/");
+            return RedirectToAction("Index", "Shop");
         }
 
         [Authorize]

@@ -25,10 +25,10 @@ namespace WebShop
             "~/Scripts/scroll.js",
             "~/Scripts/move-top.js",
             "~/Scripts/easing.js"
+            //"~/Scripts/easyResponsiveTabs.js"
             //"~/Scripts/SmoothScroll.min.js"
             //"~/Scripts/creditly.js",
             //"~/Scripts/creditly2.js",
-            //"~/Scripts/easyResponsiveTabs.js",
             //"~/Scripts/jquery.flexslider.js",
             //"~/Scripts/jquery.magnific-popup.js",
             //"~/Scripts/minicart.js",
