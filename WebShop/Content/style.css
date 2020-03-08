@@ -2441,6 +2441,12 @@ ul.multi-column-dropdown li {
     border-radius: 50px;
 }
 
+    #toTop:hover {
+        -webkit-transform: scale(1.05);
+        -ms-transform: scale(1.05);
+        transform: scale(1.05);
+    }
+
 #toTopHover {
     width: 64px;
     height: 64px;
@@ -2484,6 +2490,7 @@ ul.multi-column-dropdown li {
     min-height: 3em;
     padding: .5em 1em 0;
     background-color: #D10024;
+    box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.25);
 }
 
 .modal button.close {
@@ -2568,8 +2575,8 @@ h2.resp-accordion {
     font-size: 1.5em;
     color: #FFF;
     padding-left: 1.5em;
-    width:80%;
-    float:left;
+    width: 80%;
+    float: left;
 }
 
 .register input[type="text"], .register input[type="email"], .register input[type="password"] {
@@ -2631,4 +2638,21 @@ h3.other-nw {
     text-align: right;
     margin: 1em 0 4em;
 }
+
+#login-error {
+    /*visibility:hidden;*/
+    display: none;
+}
+
+#btnLogin {
+    background-color: #D10024;
+    color: #FFF;
+    font-weight: 2em;
+}
+
+    #btnLogin:hover {
+        -webkit-transform: scale(1.02);
+        -ms-transform: scale(1.02);
+        transform: scale(1.02);
+    }
 /*-- //login --*/

@@ -44,6 +44,7 @@ namespace WebShop
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.min.css",
+                      //"~/Content/bootstrap-responsive.min.css",
                       "~/Content/slick.css",
                       "~/Content/slick-theme.css",
                       "~/Content/nouislider.min.css",

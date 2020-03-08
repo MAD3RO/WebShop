@@ -11,28 +11,29 @@
     </div>
 }
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    <!-- START-HEADER-MODAL -->
-    <div class="modal fade" id="headerModal" tabindex="-1" role="dialog" aria-labelledby="headerModal"
-         aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                        &times;
-                    </button>
-                    <h4 class="modal-title" id="myModalLabel">Don't Wait, Login now!</h4>
-                </div>
-                <div class="modal-body modal-body-sub">
-                    <div class="row">
-                        <div class="col-md-6" style="border-right: 1px dotted #C2C2C2;padding-right:3em;">
-                            <div class="sap_tabs">
-                                <div id="horizontalTab" style="display: block; width: 100%; margin: 0px;">
-                                    <h3>Existing user</h3>
-                                    <div class="tab-1 resp-tab-content" aria-labelledby="tab_item-0">
-                                        <div class="form-horizontal" id="loginForm">
+<!-- START-HEADER-MODAL -->
+<div class="modal fade" id="headerModal" tabindex="-1" role="dialog" aria-labelledby="headerModal"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Don't Wait, Login now!</h4>
+            </div>
+            <div class="modal-body modal-body-sub">
+                <div class="row">
+                    <div class="col-md-6" style="border-right: 1px dotted #C2C2C2;padding-right:3em;">
+                        <div class="sap_tabs">
+                            <div id="horizontalTab" style="display: block; width: 100%; margin: 0px;">
+                                <h3>Existing user</h3>
+                                <div class="tab-1 resp-tab-content" aria-labelledby="tab_item-0">
+                                    @using (Html.BeginForm("LoginPartial", "Account", FormMethod.Post, new { id = "loginForm" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <div class="form-horizontal">
+                                            <span class="text-danger" id="login-error">Incorrect username or password</span>
                                             <hr />
                                             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                                             <div class="form-group">
@@ -69,16 +70,16 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    }
                                 </div>
                             </div>
-                            <div id="OR" class="hidden-xs">OR</div>
                         </div>
-                        <div class="col-md-6 modal_body_right modal_body_right1">
-                            <div class="row text-center sign-with">
-                                <div class="col-md-12">
-                                    <h3>New user</h3>
-                                </div>
+                        <div id="OR" class="hidden-xs">OR</div>
+                    </div>
+                    <div class="col-md-6 modal_body_right modal_body_right1">
+                        <div class="row text-center sign-with">
+                            <div class="col-md-12">
+                                <h3>New user</h3>
                             </div>
                         </div>
                     </div>
@@ -86,44 +87,102 @@
             </div>
         </div>
     </div>
-    <!-- END-HEADER-MODAL -->
+</div>
+<!-- END-HEADER-MODAL -->
+<!-- password-script -->
 
-    <!-- password-script -->
+<script>
+    $(document).ready(function () {
 
-    <script>
-        //$("#headerModal").on("submit", "#loginForm", function (e) {
-        //    e.preventDefault();
+        $("#headerModal").on("submit", "#loginForm", function (e) {
+            e.preventDefault();
 
-        //    var form = $(this);
-        //    $.ajax({
-        //        url: "/account/login",
-        //        method: form.attr("method"),
-        //        data: form.serialize(),
-        //        success: function (partialResult) {
-        //            $("#loginForm").html(partialResult);
-        //            location.reload();
-        //        }
-        //    });
-
-        //});
-        $(document).ready(function () {
-            $("#btnLogin").click(function () {
-                var loginFormData = $("#loginForm").serialize();
-
-                $.ajax({
-                    type: "POST",
-                    url: "/account/LoginPartial",
-                    data: loginFormData,
-                    success: function () {
-                        alert("success!");
-                        $("#headerModal").modal("show");
-                        window.location.reload();
+            var form = $(this);
+            $.ajax({
+                url: form.attr("action"),
+                method: form.attr("method"),
+                data: form.serialize(),
+                success: function (partialResult) {
+                    if (partialResult === "error") {
+                        $("#login-error").show();
                     }
-                    //success: function (e) { succeedLogin(e); },
-                    //error: function (e) { failedToLogin(e); }
-                });
+                    else if (partialResult === "success") {
+                        $("#headerModal").modal("hide");
+                        setTimeout(function () { location.reload(); }, 35);
+                    }
+                }
             });
         });
+        //function myLoginEnd(response) {
+        //    if (response == true) {
+        //        window.location.href = "/Home/Index";
+        //    }
+        //    else if (response == "error") {
+        //        $("#_loadingBtnLogin").hide();
+        //        $("#login_btn").show();
+        //        $('.bt-login').prop('disabled', false);
+        //        $("#error_msg").show();
+        //        $("#_messageLogin").html("Failure! Invalid login attempt.");
+        //    }
+        //    else if (response == "verify") {
+        //        $("#_loadingBtnLogin").hide();
+        //        $("#login_btn").show();
+        //        $('.bt-login').prop('disabled', false);
+        //        $("#error_msg").show();
+        //        $("#_messageLogin").html("You have not verified yet. Please check your mail!");
+        //    }
+        //    else {
+        //        $("#_loadingBtnLogin").hide();
+        //        $("#login_btn").show();
+        //        window.location.href = response;
+        //    }
+        //}
+
+
+
+            @*$("#headerModal").on("submit", "#loginForm", function (e) {
+                e.preventDefault();
+
+                var form = $(this);
+                $.ajax({
+                    //url: "/account/login",
+                    url: form.attr("action"),
+                    method: form.attr("method"),
+                    //contentType: "application/json; charset=utf-8"
+                    data: form.serialize(),
+                    //success: function (result, status, xhr) {
+                    //    if (ViewBab.Message == "Success" )
+                    //}
+                    success: function (partialResult) {
+                        //$("#form-container").html(partialResult);
+                        //$("#headerModal").modal("hide");
+                        var test = '@TempData["LoginMessage"]';
+                        //setTimeout(function () { location.reload(); }, 60);
+                        console.log(test);
+                    }
+                });
+            });*@
+        });
+
+
+    //$(document).ready(function () {
+    //    $("#btnLogin").click(function () {
+    //        var loginFormData = $("#loginForm").serialize();
+
+    //        $.ajax({
+    //            type: "POST",
+    //            url: "/account/LoginPartial",
+    //            data: loginFormData,
+    //            success: function () {
+    //                alert("success!");
+    //                $("#headerModal").modal("show");
+    //                window.location.reload();
+    //            }
+    //            //success: function (e) { succeedLogin(e); },
+    //            //error: function (e) { failedToLogin(e); }
+    //        });
+    //    });
+    //});
 
                 //function succeedLogin(e) {
                 //    if (e == true) {
@@ -148,7 +207,5 @@
                             //        document.getElementById("password2").setCustomValidity('');
                             //    //empty string means no validation error
                             //}
-    </script>
-    <!-- //password-script -->
-}
-
+</script>
+<!-- //password-script -->

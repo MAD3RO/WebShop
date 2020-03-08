@@ -20,7 +20,12 @@
     <!-- END-SMOOTH-SCROLLING -->
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    @*<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>*@
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 </head>
 <body>
 
@@ -341,13 +346,18 @@
         <!-- /bottom footer -->
     </footer>
     <!-- /FOOTER -->
-
+    @*@Scripts.Render("~/bundles/jquery")*@
+    @*@Scripts.Render("~/bundles/bootstrap")*@
+    @*@Scripts.Render("~/bundles/jqueryval")*@
+    @*@Scripts.Render("~/bundles/ajax")*@
     @Scripts.Render("~/bundles/scripts")
     @RenderSection("scripts", required: false)
 
     <!-- nav smooth scroll -->
     <script>
         $(document).ready(function () {
+            //var test = '@TempData["LoginMessage"]';
+
             $(".dropdown-categories").hover(
                 function () {
                     $('.dropdown-menu', this).stop(true, true).slideDown("fast");

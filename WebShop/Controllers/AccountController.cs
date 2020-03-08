@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -28,27 +29,30 @@ namespace WebShop.Controllers
         public ActionResult LoginPartial()
         {
             // Confirm user is not logged in
-            string username = User.Identity.Name;
+            //string username = User.Identity.Name;
 
-            if (!string.IsNullOrEmpty(username))
-            {
-                //return RedirectToAction("user-profile");
-                return PartialView();
-            }
+            //if (!string.IsNullOrEmpty(username))
+            //{
+            //    //return RedirectToAction("user-profile");
+            //    return PartialView("LoginPartial");
+            //}
 
             // Return view
             return PartialView();
         }
 
-        // POST: /account/login-partial
-        //[ActionName("login-partial")]
-        [HttpPost]
-        public ActionResult LoginPartial(LoginUserVM model)
+        //POST: /account/login-partial
+       //[ActionName("login-partial")]
+       [HttpPost]
+       //[ValidateAntiForgeryToken]
+       [HandleError]
+        public JsonResult LoginPartial(LoginUserVM model)
         {
             // Check model state
             if (!ModelState.IsValid)
             {
-                return PartialView(model);
+                //return PartialView(model);
+                return Json("error", JsonRequestBehavior.AllowGet);
             }
 
             // Check if the user is valid
@@ -78,16 +82,98 @@ namespace WebShop.Controllers
             if (!isValid)
             {
                 ModelState.AddModelError("", "Invalid username or password.");
-                return PartialView(model);
+                ViewBag.Haha = "aha";
+                //ViewBag.Message = "Error";
+                TempData["LoginMessage"] = "Error";
+                //return PartialView();
+                return Json("error", JsonRequestBehavior.AllowGet);
             }
             else
             {
                 FormsAuthentication.SetAuthCookie(model.Username, model.RememberMe);
+                //Return Success message
+                TempData["LoginMessage"] = "Success";
+                ModelState.Clear();
                 //return Redirect(FormsAuthentication.GetRedirectUrl(model.Username, model.RememberMe));
                 // Page.Response.Redirect(Page.Request.Url.ToString(), true);
-                return PartialView(model);
+                //return PartialView();
+                return Json("success", JsonRequestBehavior.AllowGet);
             }
         }
+        //[HttpPost]
+        //[AllowAnonymous]
+        //[ValidateAntiForgeryToken]
+        //[HandleError]
+        //public async Task<ActionResult> LoginPartial(LoginUserVM model, string returnUrl)
+        //{
+        //    // Check model state
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return Json("error", JsonRequestBehavior.AllowGet);
+        //    }
+
+        //    // This doesn't count login failures towards account lockout
+        //    // To enable password failures to trigger account lockout, change to shouldLockout: true
+        //    var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+        //    switch (result)
+        //    {
+        //        case SignInStatus.Success:
+        //            //return RedirectToLocal(returnUrl);  -- Here I commented this line and added if else condition to check and return json value
+        //            if (returnUrl != null)
+        //            {
+        //                return Json(returnUrl, JsonRequestBehavior.AllowGet);
+        //            }
+        //            else
+        //                return Json(true, JsonRequestBehavior.AllowGet);
+        //        //case SignInStatus.LockedOut:   -- Commented because It's not required in our case.
+        //        //    return View("Lockout");
+        //        case SignInStatus.RequiresVerification:
+        //            return Json("verify", JsonRequestBehavior.AllowGet);
+        //        case SignInStatus.Failure:
+        //        default:
+        //            return Json("error", JsonRequestBehavior.AllowGet);
+        //    }
+
+        //    // Check if the user is valid
+        //    bool isValid = false;
+
+        //    using (Db db = new Db())
+        //    {
+        //        var user = db.Users.SingleOrDefault(a => a.Username == model.Username);
+
+        //        if (user != null)
+        //        {
+        //            if (user.PasswordHash == CreatePasswordHash(model.Password, user.Salt))
+        //            {
+        //                isValid = true;
+        //            }
+        //            else
+        //            {
+        //                isValid = false;
+        //            }
+        //        }
+        //        else
+        //        {
+        //            isValid = false;
+        //        }
+        //    }
+
+        //    if (!isValid)
+        //    {
+        //        ModelState.AddModelError("", "Invalid username or password.");
+        //        return PartialView(model);
+        //    }
+        //    else
+        //    {
+        //        FormsAuthentication.SetAuthCookie(model.Username, model.RememberMe);
+        //        //Return Success message
+        //        ViewBag.Message = "Blog saved";
+        //        ModelState.Clear();
+        //        //return Redirect(FormsAuthentication.GetRedirectUrl(model.Username, model.RememberMe));
+        //        // Page.Response.Redirect(Page.Request.Url.ToString(), true);
+        //        return PartialView();
+        //    }
+        //}
 
         // GET: /Account/create-account
         [ActionName("create-account")]
