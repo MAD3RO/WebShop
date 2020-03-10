@@ -2476,10 +2476,6 @@ ul.multi-column-dropdown li {
     padding: 0 1em !important;
 }
 
-.modal-body {
-    padding: 0em 2em 2em;
-}
-
 .modal-dialog {
     margin: 6em auto 0;
 }
@@ -2509,7 +2505,7 @@ ul.multi-column-dropdown li {
     }
 
 .modal-body p {
-    margin-top: 1em;
+    /*margin-top: 1em;*/
     font-size: 1em;
     font-weight: 400;
 }

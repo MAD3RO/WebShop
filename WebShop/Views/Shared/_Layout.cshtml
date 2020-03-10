@@ -20,6 +20,7 @@
     <!-- END-SMOOTH-SCROLLING -->
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <link href="https://use.fontawesome.com/releases/v5.0.4/css/all.css" rel="stylesheet">
     <script src="~/Scripts/jquery-3.4.1.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
     <script src="~/Scripts/jquery.validate.min.js"></script>
@@ -37,25 +38,25 @@
             <div class="container">
                 <ul class="header-links pull-left">
                     <li><a href="#"><i class="fa fa-phone"></i> +021-95-51-84</a></li>
-                    <li><a href="#"><i class="fa fa-envelope-o"></i> email@email.com</a></li>
-                    <li><a href="#"><i class="fa fa-map-marker"></i> 1734 Stonecoal Road</a></li>
+                    <li><a href="#"><i class="far fa-envelope"></i> email@email.com</a></li>
+                    <li><a href="#"><i class="fas fa-map-marker-alt"></i> 1734 Stonecoal Road</a></li>
                 </ul>
                 <ul class="header-links pull-right">
                     @*<li><a href="#"><i class="fa fa-dollar"></i> USD</a></li>
                         <li><a href="#"><i class="fa fa-user-o"></i> My Account</a></li>*@
                     @if (Request.IsAuthenticated)
                     {
-                        <li><a href="/account/logout"><i class="fa fa-sign-out"></i>Logout</a></li>
+                        <li><a href="/account/logout"><i class="fas fa-sign-out-alt"></i>Logout</a></li>
                     }
                     else
                     {
                         if (ViewBag.Title == "Login")
                         {
-                            <li class="active"><a href="/account/login"><i class="fa fa-user-o"></i>Login</a></li>
+                            <li class="active"><a href="/account/login"><i class="far fa-user"></i>Login</a></li>
                         }
                         else
                         {
-                            <li><a href="#" data-toggle="modal" data-target="#headerModal"><i class="fa fa-user-o"></i>Login</a></li>
+                            <li><a href="#" data-toggle="modal" data-target="#headerModal"><i class="far fa-user"></i>Login</a></li>
                         }
                     }
 
@@ -73,7 +74,7 @@
 
                     @if (Request.IsAuthenticated && User.IsInRole("Admin"))
                     {
-                        <li><i class="fa fa-user-secret"></i>@Html.ActionLink("Admin Area", "Index", "Dashboard", new { area = "Admin" }, null) </li>
+                        <li><i class="fas fa-chart-line"></i>@Html.ActionLink("Admin Area", "Index", "Dashboard", new { area = "Admin" }, null) </li>
                     }
                     else
                     {
@@ -119,7 +120,7 @@
                             <!-- Wishlist -->
                             <div>
                                 <a href="#">
-                                    <i class="fa fa-heart-o"></i>
+                                    <i class="fas fa-heart"></i>
                                     <span>Your Wishlist</span>
                                     <div class="qty">2</div>
                                 </a>
