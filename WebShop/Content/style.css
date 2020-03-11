@@ -2662,3 +2662,7 @@ h3.other-nw {
 }
 
 /*-- //login --*/
+
+#body-section{
+    min-height:329px;
+}

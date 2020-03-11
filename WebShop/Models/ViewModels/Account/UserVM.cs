@@ -57,7 +57,8 @@ namespace WebShop.Models.ViewModels.Account
 
         [Required(ErrorMessage = "You must confirm your password.")]
         [DataType(DataType.Password)]
-        [Compare("Password", ErrorMessage = "Passwords do not match.")]
+        [Compare("Password", ErrorMessage = "Confirm password and password do not match.")]
         public string ConfirmPassword { get; set; }
+
     }
 }

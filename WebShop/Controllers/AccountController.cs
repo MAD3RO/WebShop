@@ -82,14 +82,11 @@ namespace WebShop.Controllers
             if (!isValid)
             {
                 ModelState.AddModelError("", "Invalid username or password.");
-                ViewBag.Haha = "aha";
-                TempData["LoginMessage"] = "Error";
                 return Json("error", JsonRequestBehavior.AllowGet);
             }
             else
             {
                 FormsAuthentication.SetAuthCookie(model.Username, model.RememberMe);
-                TempData["LoginMessage"] = "Success";
                 ModelState.Clear();
                 return Json("success", JsonRequestBehavior.AllowGet);
             }
@@ -109,7 +106,6 @@ namespace WebShop.Controllers
         [HttpPost]
         public ActionResult CreateAccount(UserVM model)
         {
-            var salt = CreateSalt();
             // Check model state
             if (!ModelState.IsValid)
             {
@@ -132,6 +128,17 @@ namespace WebShop.Controllers
                     model.Username = "";
                     return View("CreateAccount", model);
                 }
+
+                // Make sure email is unique
+                if (db.Users.Any(x => x.EmailAddress.Equals(model.EmailAddress)))
+                {
+                    ModelState.AddModelError("", "Email address " + model.EmailAddress + " already exists.");
+                    model.EmailAddress = "";
+                    return View("CreateAccount", model);
+                }
+
+                // Create salt
+                var salt = CreateSalt();
 
                 // Create userDTO
                 UserModel userDTO = new UserModel()
@@ -161,7 +168,7 @@ namespace WebShop.Controllers
                 UserRoleModel userRolesDTO = new UserRoleModel()
                 {
                     UserId = id,
-                    RoleId = 2
+                    RoleId = 2 // 2 is for user, 1 is for admin
                 };
 
                 db.UserRoles.Add(userRolesDTO);
@@ -169,10 +176,11 @@ namespace WebShop.Controllers
             }
 
             // Create a TempData message
-            TempData["SM"] = "You are now registered and can login.";
+            TempData["SM"] = "Registration is successfully done. Account activation link has been sent to your email.";
 
-            //return Redirect("~/account/login");
-            return RedirectToAction("Index", "Shop");
+            return Redirect("~/account/create-account");
+            //return RedirectToAction("Index", "Shop");
+            //return View("CreateAccount", model);
         }
 
         // GET: /account/Logout

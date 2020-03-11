@@ -27,5 +27,8 @@ namespace WebShop.Models.Data
         public string Salt { get; set; }
         //[DataType(DataType.DateTime)]
         public DateTime? DateCreated { get; set; }
+        // Maybe in future?
+        //public bool IsVerified { get; set; }
+        //public Guid ActivationCode { get; set; }
     }
 }

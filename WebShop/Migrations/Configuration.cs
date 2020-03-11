@@ -7,7 +7,7 @@
     using System.Linq;
     using WebShop.Models.Data;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<WebShop.Models.Data.Db>
+    internal sealed class Configuration : DbMigrationsConfiguration<Db>
     {
         public Configuration()
         {
@@ -15,7 +15,7 @@
             AutomaticMigrationDataLossAllowed = false;
         }
 
-        protected override void Seed(WebShop.Models.Data.Db context)
+        protected override void Seed(Db context)
         {
             // Page initializer
             var Pages = new List<PageModel>
