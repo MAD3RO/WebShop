@@ -162,6 +162,10 @@
     <Compile Include="Migrations\202003111455111_initial.designer.cs">
       <DependentUpon>202003111455111_initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003111919075_initial2.cs" />
+    <Compile Include="Migrations\202003111919075_initial2.designer.cs">
+      <DependentUpon>202003111919075_initial2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Data\CategoryModel.cs" />
     <Compile Include="Models\Data\Db.cs" />
@@ -1473,6 +1477,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202003111455111_initial.resx">
       <DependentUpon>202003111455111_initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003111919075_initial2.resx">
+      <DependentUpon>202003111919075_initial2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

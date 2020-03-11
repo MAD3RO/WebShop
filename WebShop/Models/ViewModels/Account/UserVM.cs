@@ -46,9 +46,9 @@ namespace WebShop.Models.ViewModels.Account
 
         public string City { get; set; }
 
-        public long ZipCode { get; set; }
+        public long? ZipCode { get; set; }
 
-        public long Contact { get; set; }
+        public long? Contact { get; set; }
 
         [Required(ErrorMessage = "Password is required.")]
         [DataType(DataType.Password)]

@@ -21,8 +21,8 @@ namespace WebShop.Models.Data
         public string EmailAddress { get; set; }
         public string StreetAddress { get; set; }
         public string City { get; set; }
-        public long ZipCode { get; set; }
-        public long Contact { get; set; }
+        public long? ZipCode { get; set; }
+        public long? Contact { get; set; }
         public string PasswordHash { get; set; }
         public string Salt { get; set; }
         //[DataType(DataType.DateTime)]
