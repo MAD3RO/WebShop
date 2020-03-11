@@ -18,24 +18,43 @@ namespace WebShop.Models.ViewModels.Account
             Id = row.Id;
             FirstName = row.FirstName;
             LastName = row.LastName;
-            EmailAddress = row.EmailAddress;
             Username = row.Username;
+            EmailAddress = row.EmailAddress;
+            StreetAddress = row.StreetAddress;
+            City = row.City;
+            ZipCode = row.ZipCode;
+            Contact = row.Contact;
             Password = row.PasswordHash;
+            // Salt NEEDED !!!
         }
 
         public int Id { get; set; }
-        [Required]
+
         public string FirstName { get; set; }
-        [Required]
+
         public string LastName { get; set; }
-        [Required]
+
+        public string Username { get; set; }
+
         [DataType(DataType.EmailAddress)]
         public string EmailAddress { get; set; }
-        [Required]
-        public string Username { get; set; }
+
+        public string StreetAddress { get; set; }
+
+        public string City { get; set; }
+
+        public long ZipCode { get; set; }
+
+        public long Contact { get; set; }
+
+        //[Required(ErrorMessage = "Password is required.")]
         [DataType(DataType.Password)]
+        [MinLength(6, ErrorMessage = "Password must contain minimum 6 characters.")]
         public string Password { get; set; }
+
+        //[Required(ErrorMessage = "You must confirm your password.")]
         [DataType(DataType.Password)]
+        [Compare("Password", ErrorMessage = "Passwords do not match.")]
         public string ConfirmPassword { get; set; }
     }
 }

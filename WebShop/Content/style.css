@@ -2442,9 +2442,9 @@ ul.multi-column-dropdown li {
 }
 
     #toTop:hover {
-        -webkit-transform: scale(1.05);
-        -ms-transform: scale(1.05);
-        transform: scale(1.05);
+        -webkit-transform: scale(1.04);
+        -ms-transform: scale(1.04);
+        transform: scale(1.04);
     }
 
 #toTopHover {
@@ -2461,13 +2461,13 @@ ul.multi-column-dropdown li {
 
 /*-- //bottom-to-top --*/
 
+/*--banner-modal--*/
 .modal-body iframe {
     width: 100%;
     min-height: 400px;
     border: none;
 }
 
-/*--banner-modal--*/
 .modal-open .modal {
     background: rgba(0, 0, 0, 0.48);
 }
@@ -2643,12 +2643,22 @@ h3.other-nw {
 #btnLogin {
     background-color: #D10024;
     color: #FFF;
-    font-weight: 2em;
 }
 
     #btnLogin:hover {
-        -webkit-transform: scale(1.02);
-        -ms-transform: scale(1.02);
-        transform: scale(1.02);
+        -webkit-transform: scale(1.01);
+        -ms-transform: scale(1.01);
+        transform: scale(1.01);
     }
+
+#modalIcon {
+    color: #15161d;
+    opacity: 0.3;
+    float: right;
+}
+
+#RememberMe{
+    margin: 0px 0px 0px 5px;
+}
+
 /*-- //login --*/

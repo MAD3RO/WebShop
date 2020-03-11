@@ -12,12 +12,11 @@
 }
 
 <!-- START-HEADER-MODAL -->
-<div class="modal fade" id="headerModal" tabindex="-1" role="dialog" aria-labelledby="headerModal"
-     aria-hidden="true">
+<div class="modal fade" id="headerModal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                <button type="button" class="close" data-dismiss="modal">
                     &times;
                 </button>
                 <h4 class="modal-title" id="myModalLabel">Don't Wait, Login to Your Account!</h4>
@@ -26,81 +25,85 @@
                 <div class="row">
                     <div class="col-md-6" style="border-right: 1px dotted #C2C2C2;">
                         <div class="sap_tabs">
-                            <div id="horizontalTab" style="display: block; width: 100%; margin: 0px;">
-                                <div class="col-md-10 text-center" style="display:inline-block;">
-                                    <h3>
-                                        Existing user
-                                        <span class="input-group-text">
-                                            <i class="fas fa-user-circle fa-3x" style="opacity:0.5; float:right;"></i>
-                                        </span>
-                                    </h3>
+                            @*<div id="horizontalTab" style="display: block; width: 100%; margin: 0px;">*@
+                            <div class="col-md-10 text-center" style="display:inline-block;">
+                                <h3>
+                                    Existing user
+                                    <span class="input-group-text">
+                                        <i class="fas fa-user-circle fa-3x" id="modalIcon"></i>
+                                    </span>
+                                </h3>
 
-                                </div>
-                                <div class="tab-1 resp-tab-content">
-                                    @using (Html.BeginForm("LoginPartial", "Account", FormMethod.Post, new { id = "loginForm" }))
-                                    {
-                                        @Html.AntiForgeryToken()
-                                        <div class="form-horizontal" style="margin-top:10px;">
-                                            <span class="text-danger" id="login-error">Incorrect username or password</span>
-                                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                                            <div class="form-group">
-                                                @*@Html.LabelFor(model => model.Username, htmlAttributes: new { @class = "control-label col-md-2" })*@
-                                                <div class="col-md-10">
-                                                    <span class="input-group-text">
-                                                        <i class="fas fa-user"></i>
-                                                    </span>
-                                                    @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control", @placeholder = "Username", @id = "asd" } })
-                                                    @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                @*@Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })*@
-                                                <div class="col-md-10">
-                                                    <span class="input-group-text">
-                                                        <i class="fas fa-unlock-alt"></i>
-                                                    </span>
-                                                    @Html.PasswordFor(model => model.Password, new { @class = "form-control", @placeholder = "Password" })
-                                                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="col-md-10">
-                                                    <label class="control-label col-md-6" for="RememberMe" style="float:left;">Remember me</label>
-                                                    @*<div class="checkbox" style="float:left;">*@
-                                                        @Html.EditorFor(model => model.RememberMe)
-                                                        @Html.ValidationMessageFor(model => model.RememberMe, "", new { @class = "text-danger" })
-                                                    @*</div>*@
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="col-md-offset-2 col-md-10">
-                                                    <input type="submit" value="Login" class="btn btn-default" id="btnLogin" />
-                                                    &nbsp;<a href="/account/create-account">Register</a>
-                                                    @*&nbsp;<a href="#" onclick="saveForm()">Register</a>*@
-                                                </div>
+                            </div>
+                            <div class="tab-1 resp-tab-content">
+                                @using (Html.BeginForm("LoginPartial", "Account", FormMethod.Post, new { id = "loginForm" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <div class="form-horizontal" style="margin-top:10px;">
+                                        <span class="text-danger" id="login-error">Incorrect username or password</span>
+                                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                        <div class="form-group">
+                                            @*@Html.LabelFor(model => model.Username, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                                            <div class="col-md-10">
+                                                <span class="input-group-text">
+                                                    <i class="fas fa-user"></i>
+                                                </span>
+                                                @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control", @placeholder = "Username", @id = "asd" } })
+                                                @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
                                             </div>
                                         </div>
-                                    }
-                                </div>
+                                        <div class="form-group">
+                                            @*@Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                                            <div class="col-md-10">
+                                                <span class="input-group-text">
+                                                    <i class="fas fa-unlock-alt"></i>
+                                                </span>
+                                                @Html.PasswordFor(model => model.Password, new { @class = "form-control", @placeholder = "Password" })
+                                                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-10">
+                                                <label for="RememberMe">Remember me</label>
+                                                @*<div class="checkbox" style="float:left;">*@
+                                                @Html.EditorFor(model => model.RememberMe, new { @class = "form-control" })
+                                                @*@Html.ValidationMessageFor(model => model.RememberMe, "", new { @class = "text-danger" })*@
+                                                @*</div>*@
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-10">
+                                                <input class="btn btn-default" id="btnLogin" type="submit" value="Login" style="width:100%;" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
                             </div>
                         </div>
                         <div id="OR" class="hidden-xs">OR</div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6" style="padding:0px 15px;">
                         <div class="sap_tabs">
                             <div id="horizontalTab" style="display: block; width: 100%; margin: 0px;">
                                 <div class="col-md-10 text-center" style="margin-bottom:20px;">
                                     <h3>
                                         New user
                                         <span class="input-group-text">
-                                            <i class="fas fa-user-plus fa-3x" style="opacity:0.5; float:right;"></i>
+                                            <i class="fas fa-user-plus fa-3x" id="modalIcon"></i>
                                         </span>
                                     </h3>
                                 </div>
                                 <div class="tab-1 resp-tab-content">
-                                    <p style="margin:20px; margin-top:10px;">
-                                        Opening an account on our site will allow you to shop faster, stay up-to-date on the status of your account, and keep track of the account you previously created.
-                                    </p>
+                                    <div class="col-md-10">
+                                        <p style="margin:20px; margin-top:10px;">
+                                            Opening an account on our site will allow you to shop faster, stay up-to-date on the status of your account, and keep track of the account you previously created.
+                                        </p>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <form action="/account/create-account">
+                                            <input class="btn btn-default" type="submit" style="width:100%;" value="Register" />
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -130,7 +133,7 @@
                     }
                     else if (partialResult === "success") {
                         $("#headerModal").modal("hide");
-                        setTimeout(function () { location.reload(); }, 35);
+                        setTimeout(function () { window.location.href = "/Shop/Index"; }, 35);
                     }
                 }
             });

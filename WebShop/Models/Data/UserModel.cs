@@ -15,10 +15,14 @@ namespace WebShop.Models.Data
         //[Required]
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public string Username { get; set; }
         //[Required]
         //[DataType(DataType.EmailAddress)]
         public string EmailAddress { get; set; }
-        public string Username { get; set; }
+        public string StreetAddress { get; set; }
+        public string City { get; set; }
+        public long ZipCode { get; set; }
+        public long Contact { get; set; }
         public string PasswordHash { get; set; }
         public string Salt { get; set; }
         //[DataType(DataType.DateTime)]

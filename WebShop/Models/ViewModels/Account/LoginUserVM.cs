@@ -8,11 +8,11 @@ namespace WebShop.Models.ViewModels.Account
 {
     public class LoginUserVM
     {
-        [Required]
+        [Required(ErrorMessage = "Username is required.")]
         //[MaxLength(150, ErrorMessageResourceType = typeof(ErrorResource), ErrorMessageResourceName = "CheckLenght")]
         [MaxLength(50)]
         public string Username { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Password is required.")]
         [DataType(DataType.Password)]
         [MaxLength(50)]
         public string Password { get; set; }
