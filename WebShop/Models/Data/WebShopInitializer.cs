@@ -6,16 +6,16 @@ using WebShop.Models.ViewModels.Pages;
 
 namespace WebShop.Models.Data
 {
-    public class WebShopInitializer : System.Data.Entity.DropCreateDatabaseAlways<Db>
+    //public class WebShopInitializer : System.Data.Entity.DropCreateDatabaseAlways<Db>
 
-    //public class WebShopInitializer : System.Data.Entity.DropCreateDatabaseIfModelChanges<Db>
+    public class WebShopInitializer : System.Data.Entity.DropCreateDatabaseIfModelChanges<Db>
     {
         protected override void Seed(Db context)
         {
             // Page initializer
             var Pages = new List<PageModel>
             {
-                new PageModel{Title="Home", Body="home page", Slug="home", Sorting=0},
+                new PageModel{Title="Home", Body="<p>This is Home page.</p>", Slug="home", Sorting=0},
             };
 
             Pages.ForEach(s => context.Pages.Add(s));
@@ -42,7 +42,7 @@ namespace WebShop.Models.Data
             // Users initializer
             var Users = new List<UserModel>
             {
-                new UserModel{FirstName = "Admin", LastName="Admin", EmailAddress="admin@gmail.com", Password="password123", Username="admin", Salt="", DateCreated=null}
+                new UserModel{FirstName = "Admin", LastName="Admin", EmailAddress="admin@gmail.com", Username="admin", StreetAddress=null, City=null, Contact=null, ZipCode=null, PasswordHash="1AA2693838747090005ED77F132B6CE68C15AB7E", Salt="4ok+P6YyPBl9EqGs/dFvtcZAXWMrJVyG6KQGYpWvfVc=", DateCreated=null}
             };
 
             Users.ForEach(s => context.Users.Add(s));

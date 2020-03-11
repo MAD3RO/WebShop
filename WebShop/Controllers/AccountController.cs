@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
+using System.Text;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -17,37 +19,43 @@ namespace WebShop.Controllers
         // GET: Account
         public ActionResult Index()
         {
-            return Redirect("~/account/login");
+            //return Redirect("~/account/login");
+            //return Redirect("~/shop");
+            return RedirectToAction("Index", "Shop");
         }
 
-        // GET: /Account/login
+        //// GET: /Account/login
         [HttpGet]
-        public ActionResult Login()
+        public ActionResult LoginPartial()
         {
             // Confirm user is not logged in
-            string username = User.Identity.Name;
+            //string username = User.Identity.Name;
 
-            if (!string.IsNullOrEmpty(username))
-            {
-                return RedirectToAction("user-profile");
-            }
+            //if (!string.IsNullOrEmpty(username))
+            //{
+            //    //return RedirectToAction("user-profile");
+            //    return PartialView("LoginPartial");
+            //}
 
             // Return view
-            return View();
+            return PartialView();
         }
 
-        // POST: /account/login
+        //POST: /account/login-partial
+        //[ActionName("login-partial")]
         [HttpPost]
-        public ActionResult Login(LoginUserVM model)
+        //[ValidateAntiForgeryToken]
+        [HandleError]
+        public JsonResult LoginPartial(LoginUserVM model)
         {
             // Check model state
             if (!ModelState.IsValid)
             {
-                return View(model);
+                //return PartialView(model);
+                return Json("error", JsonRequestBehavior.AllowGet);
             }
 
             // Check if the user is valid
-
             bool isValid = false;
 
             using (Db db = new Db())
@@ -56,7 +64,7 @@ namespace WebShop.Controllers
 
                 if (user != null)
                 {
-                    if(user.Password == CreatePasswordHash(model.Password, user.Salt))
+                    if (user.PasswordHash == CreatePasswordHash(model.Password, user.Salt))
                     {
                         isValid = true;
                     }
@@ -74,12 +82,13 @@ namespace WebShop.Controllers
             if (!isValid)
             {
                 ModelState.AddModelError("", "Invalid username or password.");
-                return View(model);
+                return Json("error", JsonRequestBehavior.AllowGet);
             }
             else
             {
                 FormsAuthentication.SetAuthCookie(model.Username, model.RememberMe);
-                return Redirect(FormsAuthentication.GetRedirectUrl(model.Username, model.RememberMe));
+                ModelState.Clear();
+                return Json("success", JsonRequestBehavior.AllowGet);
             }
         }
 
@@ -88,28 +97,27 @@ namespace WebShop.Controllers
         [HttpGet]
         public ActionResult CreateAccount()
         {
-
             return View("CreateAccount");
         }
 
         // POST: /account/create-account
         [ActionName("create-account")]
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public ActionResult CreateAccount(UserVM model)
         {
-            var salt = CreateSalt();
             // Check model state
             if (!ModelState.IsValid)
             {
                 return View("CreateAccount", model);
             }
 
-            // Check if passwords match
-            if (!model.Password.Equals(model.ConfirmPassword))
-            {
-                ModelState.AddModelError("", "Passwords do not match.");
-                return View("CreateAccount", model);
-            }
+            //// Check if passwords match
+            //if (!model.Password.Equals(model.ConfirmPassword))
+            //{
+            //    ModelState.AddModelError("", "Passwords do not match.");
+            //    return View("CreateAccount", model);
+            //}
 
             using (Db db = new Db())
             {
@@ -121,14 +129,29 @@ namespace WebShop.Controllers
                     return View("CreateAccount", model);
                 }
 
+                // Make sure email is unique
+                if (db.Users.Any(x => x.EmailAddress.Equals(model.EmailAddress)))
+                {
+                    ModelState.AddModelError("", "Email address " + model.EmailAddress + " already exists.");
+                    model.EmailAddress = "";
+                    return View("CreateAccount", model);
+                }
+
+                // Create salt
+                var salt = CreateSalt();
+
                 // Create userDTO
                 UserModel userDTO = new UserModel()
                 {
                     FirstName = model.FirstName,
                     LastName = model.LastName,
-                    EmailAddress = model.EmailAddress,
                     Username = model.Username,
-                    Password = CreatePasswordHash(model.Password, salt),
+                    EmailAddress = model.EmailAddress,
+                    StreetAddress = model.StreetAddress,
+                    City = model.City,
+                    ZipCode = model.ZipCode,
+                    Contact = model.Contact,
+                    PasswordHash = CreatePasswordHash(model.Password, salt),
                     Salt = salt,
                     DateCreated = DateTime.Now
                 };
@@ -145,7 +168,7 @@ namespace WebShop.Controllers
                 UserRoleModel userRolesDTO = new UserRoleModel()
                 {
                     UserId = id,
-                    RoleId = 2
+                    RoleId = 2 // 2 is for user, 1 is for admin
                 };
 
                 db.UserRoles.Add(userRolesDTO);
@@ -153,10 +176,11 @@ namespace WebShop.Controllers
             }
 
             // Create a TempData message
-            TempData["SM"] = "You are now registered and can login.";
+            TempData["SM"] = "Registration is successfully done. Account activation link has been sent to your email.";
 
-            // Redirect
-            return Redirect("~/account/login");
+            return Redirect("~/account/create-account");
+            //return RedirectToAction("Index", "Shop");
+            //return View("CreateAccount", model);
         }
 
         // GET: /account/Logout
@@ -164,7 +188,9 @@ namespace WebShop.Controllers
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
-            return Redirect("~/account/login");
+            //return Redirect("~/account/login");
+            //return Redirect("~/shop/");
+            return RedirectToAction("Index", "Shop");
         }
 
         [Authorize]
@@ -224,21 +250,23 @@ namespace WebShop.Controllers
         [Authorize]
         public ActionResult UserProfile(UserProfileVM model)
         {
+            var salt = CreateSalt();
+
             // Check model state
             if (!ModelState.IsValid)
             {
                 return View("UserProfile", model);
             }
 
-            // Check if passwords match if need be
-            if (!string.IsNullOrWhiteSpace(model.Password))
-            {
-                if (!model.Password.Equals(model.ConfirmPassword))
-                {
-                    ModelState.AddModelError("", "Passwords do not match.");
-                    return View("UserProfile", model);
-                }
-            }
+            //// Check if passwords match if need be
+            //if (!string.IsNullOrWhiteSpace(model.Password))
+            //{
+            //    if (!model.Password.Equals(model.ConfirmPassword))
+            //    {
+            //        ModelState.AddModelError("", "Passwords do not match.");
+            //        return View("UserProfile", model);
+            //    }
+            //}
 
             using (Db db = new Db())
             {
@@ -258,12 +286,17 @@ namespace WebShop.Controllers
 
                 dto.FirstName = model.FirstName;
                 dto.LastName = model.LastName;
-                dto.EmailAddress = model.EmailAddress;
                 dto.Username = model.Username;
+                dto.EmailAddress = model.EmailAddress;
+                dto.StreetAddress = model.StreetAddress;
+                dto.City = model.City;
+                dto.ZipCode = model.ZipCode;
+                dto.Contact = model.Contact;
 
                 if (!string.IsNullOrWhiteSpace(model.Password))
                 {
-                    dto.Password = model.Password;
+                    dto.PasswordHash = CreatePasswordHash(model.Password, salt);
+                    dto.Salt = salt;
                 }
 
                 // Save
@@ -341,19 +374,6 @@ namespace WebShop.Controllers
 
         #region Helper methods
         /// <summary>
-        /// Generating the salt method
-        /// </summary>
-        /// <returns></returns>
-        public string CreateSalt()
-        {
-            var rng = new RNGCryptoServiceProvider();
-            byte[] buff = new byte[32];
-            rng.GetBytes(buff);
-
-            return Convert.ToBase64String(buff);
-        }
-
-        /// <summary>
         /// Create the password hash method
         /// </summary>
         /// <param name="pwd"></param>
@@ -362,11 +382,40 @@ namespace WebShop.Controllers
         public string CreatePasswordHash(string pwd, string salt)
         {
             string pwdAndSalt = String.Concat(pwd, salt);
-#pragma warning disable CS0618 // Type or member is obsolete
-            string hashedPwd = FormsAuthentication.HashPasswordForStoringInConfigFile(pwdAndSalt, "sha1");
-#pragma warning restore CS0618 // Type or member is obsolete
+            string hashedPwd = GetSwcSHA1(pwdAndSalt);
 
             return hashedPwd;
+        }
+
+        /// <summary>
+        /// Generating the salt method
+        /// </summary>
+        /// <returns></returns>
+        public string CreateSalt()
+        {
+            var rng = new RNGCryptoServiceProvider();
+            var saltSize = 32;
+            byte[] buff = new byte[saltSize];
+            rng.GetBytes(buff);
+
+            return Convert.ToBase64String(buff);
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static string GetSwcSHA1(string value)
+        {
+            SHA1 algorithm = SHA1.Create();
+            byte[] data = algorithm.ComputeHash(Encoding.UTF8.GetBytes(value));
+            string sh1 = "";
+            for (int i = 0; i < data.Length; i++)
+            {
+                sh1 += data[i].ToString("x2").ToUpperInvariant();
+            }
+            return sh1;
         }
         #endregion
     }

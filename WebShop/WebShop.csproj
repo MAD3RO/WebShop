@@ -158,9 +158,13 @@
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\PagesController.cs" />
     <Compile Include="Controllers\ShopController.cs" />
-    <Compile Include="Migrations\202002181413285_initial.cs" />
-    <Compile Include="Migrations\202002181413285_initial.designer.cs">
-      <DependentUpon>202002181413285_initial.cs</DependentUpon>
+    <Compile Include="Migrations\202003111455111_initial.cs" />
+    <Compile Include="Migrations\202003111455111_initial.designer.cs">
+      <DependentUpon>202003111455111_initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003111919075_initial2.cs" />
+    <Compile Include="Migrations\202003111919075_initial2.designer.cs">
+      <DependentUpon>202003111919075_initial2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Data\CategoryModel.cs" />
@@ -577,6 +581,13 @@
     <Content Include="bin\WebGrease.dll" />
     <Content Include="bin\WebShop.dll" />
     <Content Include="bin\WebShop.pdb" />
+    <Content Include="Content\all.css" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\creditly.css" />
+    <Content Include="Content\easy-responsive-tabs.css" />
     <Content Include="Content\fancybox\blank.gif" />
     <Content Include="Content\fancybox\fancybox_buttons.png" />
     <Content Include="Content\fancybox\fancybox_loading%402x.gif" />
@@ -584,11 +595,35 @@
     <Content Include="Content\fancybox\fancybox_overlay.png" />
     <Content Include="Content\fancybox\fancybox_sprite%402x.png" />
     <Content Include="Content\fancybox\fancybox_sprite.png" />
+    <Content Include="Content\flexslider.css" />
+    <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\img\ajax-loader.gif" />
+    <Content Include="Content\img\bg.jpg" />
+    <Content Include="Content\img\hotdeal.png" />
+    <Content Include="Content\img\logo.png" />
+    <Content Include="Content\img\move-up.png" />
+    <Content Include="Content\img\product01.png" />
+    <Content Include="Content\img\product02.png" />
+    <Content Include="Content\img\product03.png" />
+    <Content Include="Content\img\product04.png" />
+    <Content Include="Content\img\product05.png" />
+    <Content Include="Content\img\product06.png" />
+    <Content Include="Content\img\product07.png" />
+    <Content Include="Content\img\product08.png" />
+    <Content Include="Content\img\product09.png" />
+    <Content Include="Content\img\shop01.png" />
+    <Content Include="Content\img\shop02.png" />
+    <Content Include="Content\img\shop03.png" />
     <Content Include="Content\jquery.fancybox-buttons.css" />
     <Content Include="Content\jquery.fancybox-thumbs.css" />
     <Content Include="Content\jquery.fancybox.css" />
+    <Content Include="Content\menu.css" />
+    <Content Include="Content\nouislider.min.css" />
     <Content Include="Content\PagedList.css" />
+    <Content Include="Content\popuo-box.css" />
+    <Content Include="Content\slick-theme.css" />
+    <Content Include="Content\slick.css" />
+    <Content Include="Content\style.css" />
     <Content Include="favicon.ico" />
     <Content Include="fileman\css\images\animated-overlay.gif" />
     <Content Include="fileman\css\images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -866,6 +901,10 @@
     <Content Include="fileman\Uploads\Images\DSC_5744.jpg" />
     <Content Include="fileman\Uploads\LICENSE.txt" />
     <Content Include="fileman\Uploads\roxy-fileman-logo.gif" />
+    <Content Include="fonts\font-awesome.min.css" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="fonts\slick.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Areas\Admin\Views\web.config" />
@@ -873,6 +912,8 @@
     <Content Include="Areas\Admin\Views\Pages\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Pages\AddPage.cshtml" />
     <Content Include="Areas\Admin\Views\Pages\EditPage.cshtml" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\bootstrap.min.js.map" />
     <Content Include="Areas\Admin\Views\Pages\PageDetails.cshtml" />
     <Content Include="bin\roslyn\csc.exe.config" />
@@ -1297,6 +1338,8 @@
     <Content Include="Scripts\ckeditor\themes\default\theme.js" />
     <Content Include="Scripts\ckeditor\vendor\promise.js" />
     <Content Include="Areas\Admin\Views\Shop\Orders.cshtml" />
+    <Content Include="Scripts\creditly.js" />
+    <Content Include="Scripts\creditly2.js" />
     <Content Include="Scripts\dropzone\basic.css" />
     <Content Include="Scripts\dropzone\basic.min.css" />
     <Content Include="Scripts\dropzone\dropzone-amd-module.js" />
@@ -1305,12 +1348,49 @@
     <Content Include="Scripts\dropzone\dropzone.js" />
     <Content Include="Scripts\dropzone\dropzone.min.css" />
     <Content Include="Scripts\dropzone\dropzone.min.js" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\FontAwesome.otf" />
+    <Content Include="fonts\slick.eot" />
+    <Content Include="fonts\slick.ttf" />
+    <Content Include="fonts\slick.woff" />
+    <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\easing.js" />
+    <Content Include="Scripts\easyResponsiveTabs.js" />
+    <Content Include="Scripts\jquery-3.4.1.js" />
+    <Content Include="Scripts\jquery-3.4.1.min.js" />
+    <Content Include="Scripts\jquery-3.4.1.slim.js" />
+    <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
     <Content Include="Scripts\jquery.fancybox-buttons.js" />
     <Content Include="Scripts\jquery.fancybox-media.js" />
     <Content Include="Scripts\jquery.fancybox-thumbs.js" />
     <Content Include="Scripts\jquery.fancybox.js" />
     <Content Include="Scripts\jquery.fancybox.pack.js" />
+    <Content Include="Scripts\jquery.flexslider.js" />
+    <Content Include="Scripts\jquery.magnific-popup.js" />
     <Content Include="Scripts\jquery.mousewheel-3.0.6.pack.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\jquery.zoom.min.js" />
+    <Content Include="Scripts\main.js" />
+    <Content Include="Scripts\minicart.js" />
+    <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\move-top.js" />
+    <Content Include="Scripts\nouislider.min.js" />
+    <Content Include="Scripts\popper-utils.js" />
+    <Content Include="Scripts\popper-utils.min.js" />
+    <Content Include="Scripts\popper.js" />
+    <Content Include="Scripts\popper.min.js" />
+    <Content Include="Scripts\scroll.js" />
+    <Content Include="Scripts\slick.min.js" />
+    <Content Include="Scripts\SmoothScroll.min.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -1336,11 +1416,21 @@
     <Content Include="Views\Cart\Index.cshtml" />
     <Content Include="Views\Cart\AddToCartPartial.cshtml" />
     <Content Include="Views\Account\CreateAccount.cshtml" />
-    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\LoginPartial.cshtml" />
     <Content Include="Views\Account\UserNavPartial.cshtml" />
     <Content Include="Views\Account\UserProfile.cshtml" />
     <Content Include="Views\Cart\PaypalPartial.cshtml" />
     <Content Include="Views\Account\Orders.cshtml" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Scripts\jquery-3.4.1.min.map" />
+    <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
+    <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Scripts\popper-utils.min.js.map" />
+    <Content Include="Scripts\popper.js.map" />
+    <Content Include="Scripts\popper.min.js.map" />
     <None Include="_bin_deployableAssemblies\x86\sqlcese40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceqp40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceme40.dll" />
@@ -1382,8 +1472,14 @@
     <None Include="_bin_deployableAssemblies\amd64\Microsoft.VC90.CRT\Microsoft.VC90.CRT.manifest" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202002181413285_initial.resx">
-      <DependentUpon>202002181413285_initial.cs</DependentUpon>
+    <TypeScriptCompile Include="Scripts\index.d.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202003111455111_initial.resx">
+      <DependentUpon>202003111455111_initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003111919075_initial2.resx">
+      <DependentUpon>202003111919075_initial2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

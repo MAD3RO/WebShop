@@ -12,12 +12,23 @@ namespace WebShop.Models.Data
     {
         [Key]
         public int Id { get; set; }
+        //[Required]
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string EmailAddress { get; set; }
         public string Username { get; set; }
-        public string Password { get; set; }
+        //[Required]
+        //[DataType(DataType.EmailAddress)]
+        public string EmailAddress { get; set; }
+        public string StreetAddress { get; set; }
+        public string City { get; set; }
+        public long? ZipCode { get; set; }
+        public long? Contact { get; set; }
+        public string PasswordHash { get; set; }
         public string Salt { get; set; }
+        //[DataType(DataType.DateTime)]
         public DateTime? DateCreated { get; set; }
+        // Maybe in future?
+        //public bool IsVerified { get; set; }
+        //public Guid ActivationCode { get; set; }
     }
 }

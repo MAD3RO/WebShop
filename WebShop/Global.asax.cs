@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Security.Principal;
 using System.Web;
@@ -18,6 +19,7 @@ namespace WebShop
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            Database.SetInitializer<Db>(new WebShopInitializer());
         }
 
         protected void Application_AuthenticateRequest()
@@ -36,7 +38,14 @@ namespace WebShop
                 // Populate roles
                 UserModel dto = db.Users.FirstOrDefault(x => x.Username == username);
 
-                roles = db.UserRoles.Where(x => x.UserId == dto.Id).Select(x => x.Role.Name).ToArray();
+                if (dto != null)
+                {
+                    roles = db.UserRoles.Where(x => x.UserId == dto.Id).Select(x => x.Role.Name).ToArray();
+                }
+                else
+                {
+                    return;
+                }
             }
 
             // Build IPrincipal object
