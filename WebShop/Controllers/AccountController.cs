@@ -211,7 +211,8 @@ namespace WebShop.Controllers
                 model = new UserNavPartialVM()
                 {
                     FirstName = dto.FirstName,
-                    LastName = dto.LastName
+                    LastName = dto.LastName,
+                    UserName = dto.Username
                 };
             }
 
