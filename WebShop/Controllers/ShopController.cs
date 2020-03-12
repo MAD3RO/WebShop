@@ -48,7 +48,13 @@ namespace WebShop.Controllers
                 productVMList = db.Products.ToArray().Where(x => x.CategoryId == catId).Select(x => new ProductVM(x)).ToList();
 
                 // Get category name
-                var productCat = db.Products.Where(x => x.CategoryId == catId).FirstOrDefault();
+                ProductModel productCat = db.Products.Where(x => x.CategoryId == catId).FirstOrDefault();
+
+                if(productCat == null)
+                {
+                    ViewBag.Message = "There are no products in " + categoryDTO.Name + " category";
+                    return View();
+                }
                 ViewBag.CategoryName = productCat.CategoryName;
             }
 

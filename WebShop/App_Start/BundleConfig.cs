@@ -16,7 +16,7 @@ namespace WebShop
                         "~/Scripts/jquery.validate*"));
 
             bundles.Add(new ScriptBundle("~/bundles/scripts").Include(
-            //"~/Scripts/jquery-{version}.js",
+            "~/Scripts/jquery-{version}.js",
             "~/Scripts/bootstrap.min.js",
             "~/Scripts/slick.min.js",
             "~/Scripts/nouislider.min.js",

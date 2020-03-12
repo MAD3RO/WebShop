@@ -132,7 +132,7 @@ namespace WebShop.Areas.Admin.Controllers
                 dto.Name = newCatName;
                 dto.Slug = newCatName.Replace(" ", "-").ToLower();
 
-                // Save 
+                // Save
                 db.SaveChanges();
             }
 
@@ -257,7 +257,7 @@ namespace WebShop.Areas.Admin.Controllers
                     }
                 }
 
-                // Init inage name 
+                // Init image name
                 string imageName = file.FileName;
 
                 // Save image name to DTO

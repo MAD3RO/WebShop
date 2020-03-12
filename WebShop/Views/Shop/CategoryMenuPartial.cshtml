@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<WebShop.Models.ViewModels.Shop.CategoryVM>
 
-<h5>Mobiles, Computers</h5>
+@*<h5>Mobiles, Computers</h5>*@
 @foreach (var item in Model)
 {
     <li><a href="/shop/category/@item.Slug.ToLower()">@item.Name</a></li>
