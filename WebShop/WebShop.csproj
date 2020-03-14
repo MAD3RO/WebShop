@@ -158,9 +158,13 @@
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\PagesController.cs" />
     <Compile Include="Controllers\ShopController.cs" />
-    <Compile Include="Migrations\202003122106465_initial.cs" />
-    <Compile Include="Migrations\202003122106465_initial.designer.cs">
-      <DependentUpon>202003122106465_initial.cs</DependentUpon>
+    <Compile Include="Migrations\202003141518115_initial.cs" />
+    <Compile Include="Migrations\202003141518115_initial.designer.cs">
+      <DependentUpon>202003141518115_initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003141553391_initial2.cs" />
+    <Compile Include="Migrations\202003141553391_initial2.designer.cs">
+      <DependentUpon>202003141553391_initial2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Data\CategoryModel.cs" />
@@ -1471,8 +1475,11 @@
     <TypeScriptCompile Include="Scripts\index.d.ts" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202003122106465_initial.resx">
-      <DependentUpon>202003122106465_initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202003141518115_initial.resx">
+      <DependentUpon>202003141518115_initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003141553391_initial2.resx">
+      <DependentUpon>202003141553391_initial2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

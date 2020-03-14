@@ -195,6 +195,7 @@ namespace WebShop.Areas.Admin.Controllers
                 product.Description = model.Description;
                 product.Price = model.Price;
                 product.CategoryId = model.CategoryId;
+                product.Discount = model.NewPrice;
 
                 CategoryModel catDTO = db.Categories.FirstOrDefault(x => x.Id == model.CategoryId);
                 product.CategoryName = catDTO.Name;
@@ -293,7 +294,7 @@ namespace WebShop.Areas.Admin.Controllers
         public ActionResult Products(int? page, int? catId)
         {
             // Declare a list of ProductVM
-            List<ProductVM> listOfProductVM;
+            List<ProductVM> productVMList;
 
             // Set page number
             var pageNumber = page ?? 1;
@@ -301,7 +302,7 @@ namespace WebShop.Areas.Admin.Controllers
             using (Db db = new Db())
             {
                 // Init the list
-                listOfProductVM = db.Products.ToArray()
+                productVMList = db.Products.ToArray()
                     .Where(x => catId == null || catId == 0 || x.CategoryId == catId)
                     .Select(x => new ProductVM(x))
                     .ToList();
@@ -315,11 +316,11 @@ namespace WebShop.Areas.Admin.Controllers
             }
 
             // Set pagination
-            var onePageOfProducts = listOfProductVM.ToPagedList(pageNumber, 3); // will only contain 25 products max because of the pageSize
+            var onePageOfProducts = productVMList.ToPagedList(pageNumber, 3); // will only contain 25 products max because of the pageSize
             ViewBag.OnePageOfProducts = onePageOfProducts;
 
             // Return view with list
-            return View(listOfProductVM);
+            return View(productVMList);
         }
 
         // GET: Admin/Shop/EditProduct/id

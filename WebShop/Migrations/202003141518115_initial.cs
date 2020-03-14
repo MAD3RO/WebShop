@@ -2,7 +2,7 @@
 {
     using System;
     using System.Data.Entity.Migrations;
-
+    
     public partial class initial : DbMigration
     {
         public override void Up()
@@ -17,7 +17,7 @@
                         Sorting = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
-
+            
             CreateTable(
                 "dbo.tblOrderDetails",
                 c => new
@@ -35,7 +35,7 @@
                 .Index(t => t.OrderId)
                 .Index(t => t.UserId)
                 .Index(t => t.ProductId);
-
+            
             CreateTable(
                 "dbo.tblOrders",
                 c => new
@@ -47,7 +47,7 @@
                 .PrimaryKey(t => t.OrderId)
                 .ForeignKey("dbo.tblUsers", t => t.UserId)
                 .Index(t => t.UserId);
-
+            
             CreateTable(
                 "dbo.tblUsers",
                 c => new
@@ -66,7 +66,7 @@
                         DateCreated = c.DateTime(),
                     })
                 .PrimaryKey(t => t.Id);
-
+            
             CreateTable(
                 "dbo.tblProducts",
                 c => new
@@ -79,11 +79,12 @@
                         CategoryName = c.String(),
                         CategoryId = c.Int(nullable: false),
                         ImageName = c.String(),
+                        Discount = c.Decimal(nullable: false, precision: 18, scale: 2),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.tblCategories", t => t.CategoryId)
                 .Index(t => t.CategoryId);
-
+            
             CreateTable(
                 "dbo.tblPages",
                 c => new
@@ -95,7 +96,7 @@
                         Sorting = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
-
+            
             CreateTable(
                 "dbo.tblRoles",
                 c => new
@@ -104,7 +105,7 @@
                         Name = c.String(),
                     })
                 .PrimaryKey(t => t.Id);
-
+            
             CreateTable(
                 "dbo.tblUserRoles",
                 c => new
@@ -117,9 +118,9 @@
                 .ForeignKey("dbo.tblUsers", t => t.UserId)
                 .Index(t => t.UserId)
                 .Index(t => t.RoleId);
-
+            
         }
-
+        
         public override void Down()
         {
             DropForeignKey("dbo.tblUserRoles", "UserId", "dbo.tblUsers");

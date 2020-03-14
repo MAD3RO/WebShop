@@ -22,9 +22,12 @@ namespace WebShop.Models.ViewModels.Shop
             Slug = row.Slug;
             Description = row.Description;
             Price = row.Price;
+            Discount = row.Discount;
+            NewPrice = Math.Round(row.Discount > 0 ? row.Price - (row.Discount / 100) * row.Price : row.Price, 2);
             CategoryName = row.CategoryName;
             CategoryId = row.CategoryId;
             ImageName = row.ImageName;
+            //NewPrice = row.Discount > 0 ? row.Price * ((100 - row.Discount) / 100) : row.Price;
         }
 
         public int Id { get; set; }
@@ -34,12 +37,14 @@ namespace WebShop.Models.ViewModels.Shop
         [Required]
         public string Description { get; set; }
         public decimal Price { get; set; }
+        public decimal Discount { get; set; }
+        public decimal NewPrice { get; set; }
         public string CategoryName { get; set; }
         [Required]
         public int CategoryId { get; set; }
         public string ImageName { get; set; }
 
-        public IEnumerable<SelectListItem> Categories{ get; set; }
+        public IEnumerable<SelectListItem> Categories { get; set; }
         public IEnumerable<string> GalleryImages { get; set; }
     }
 }

@@ -232,14 +232,20 @@
                                     <div class="product-img">
                                         <img src="/Images/Uploads/Products/@item.Id/Thumbs/@item.ImageName" alt="" />
                                         <div class="product-label">
-                                            <span class="sale">-30%</span>
+                                            @if (item.Discount > 0)
+                                            {
+                                                <span class="sale">-@item.Discount%</span>
+                                            }
                                             <span class="new">NEW</span>
                                         </div>
                                     </div>
                                     <div class="product-body">
                                         <p class="product-category">@item.CategoryName</p>
                                         <h3 class="product-name"><a href="/shop/product-details/@item.Slug">@item.Name</a></h3>
-                                        <h4 class="product-price">$@item.Price <del class="product-old-price">$@item.Price</del></h4>
+                                        <h4 class="product-price">
+                                            $@item.NewPrice @if (item.Discount > 0)
+                                            {<del class="product-old-price">$@item.Price</del>}
+                                        </h4>
                                         <div class="product-rating">
                                             <i class="fa fa-star"></i>
                                             <i class="fa fa-star"></i>

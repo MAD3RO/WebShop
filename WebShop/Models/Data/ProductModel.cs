@@ -19,6 +19,7 @@ namespace WebShop.Models.Data
         public string CategoryName { get; set; }
         public int CategoryId { get; set; }
         public string ImageName { get; set; }
+        public decimal Discount { get; set; }
 
         [ForeignKey("CategoryId")]
         public virtual CategoryModel Category { get; set; }
