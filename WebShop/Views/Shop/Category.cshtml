@@ -4,6 +4,9 @@
     ViewBag.Title = ViewBag.CategoryName;
 }
 
+@using PagedList.Mvc;
+@using PagedList;
+
 <!-- SECTION -->
 <div class="section">
     <!-- container -->
@@ -200,21 +203,21 @@
                     <!-- store top filter -->
                     <div class="store-filter clearfix">
                         <div class="store-sort">
-                            <label>
-                                Sort By:
-                                <select class="input-select">
-                                    <option value="0">Popular</option>
-                                    <option value="1">Position</option>
-                                </select>
-                            </label>
-
-                            <label>
-                                Show:
-                                <select class="input-select">
-                                    <option value="0">20</option>
-                                    <option value="1">50</option>
-                                </select>
-                            </label>
+                            @using (Html.BeginForm("Category", "Shop", FormMethod.Get))
+                            {
+                                <label>
+                                    Sort By:
+                                    <select class="input-select">
+                                        <option value="0">Popular</option>
+                                        <option value="1">Position</option>
+                                    </select>
+                                </label>
+                                <label>
+                                    <input id="hidcategoryId" name="categoryId" type="hidden" />
+                                    Show:
+                                    @Html.DropDownList("pageSize", new SelectList(new Dictionary<string, int> { { "3", 3 }, { "25", 25 }, { "50", 50 } }, "Key", "Value"), new { id = "pageSizeList", @class = "input-select" })
+                                </label>
+                            }
                         </div>
                         <ul class="store-grid">
                             <li class="active"><i class="fa fa-th"></i></li>
@@ -224,7 +227,7 @@
                     <!-- /store top filter -->
                     <!-- store products -->
                     <div class="row">
-                        @foreach (var item in Model)
+                        @foreach (var item in ViewBag.OnePageOfProducts)
                         {
                             <!-- product -->
                             <div class="col-md-4 col-xs-6">
@@ -267,17 +270,28 @@
                             <!-- /product -->
                         }
                     </div>
+
                     <!-- /store products -->
                     <!-- store bottom filter -->
                     <div class="store-filter clearfix">
-                        <span class="store-qty">Showing 20-100 products</span>
-                        <ul class="store-pagination">
-                            <li class="active">1</li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">4</a></li>
-                            <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
-                        </ul>
+                        @Html.PagedListPager((IPagedList)ViewBag.OnePageOfProducts, page => Url.Action("Category", new { name = ViewBag.CategoryName, page, pageSize = ViewBag.SelectedPageSize }),
+                        new PagedListRenderOptions
+                        {
+                            DisplayLinkToFirstPage = PagedListDisplayMode.IfNeeded,
+                            DisplayLinkToLastPage = PagedListDisplayMode.IfNeeded,
+                            Display = PagedListDisplayMode.IfNeeded,
+                            DisplayLinkToNextPage = PagedListDisplayMode.IfNeeded,
+                            DisplayLinkToPreviousPage = PagedListDisplayMode.IfNeeded,
+                            UlElementClasses = new[] { "store-pagination" },
+                            MaximumPageNumbersToDisplay = 5,
+                            LinkToFirstPageFormat = "««",
+                            LinkToPreviousPageFormat = "«",
+                            LinkToNextPageFormat = "»",
+                            LinkToLastPageFormat = "»»"
+                            //ItemSliceAndTotalFormat = "Showing {1}-{2} products",
+                            //DisplayItemSliceAndTotal = true,
+                            //ClassToApplyToFirstListItemInPager = "store-qty"
+                        })
                     </div>
                     <!-- /store bottom filter -->
                 </div>
@@ -287,3 +301,33 @@
         <!-- /row -->
     </div>
 </div>
+
+<script>
+
+    $(function () {
+        /*
+        * Select page size
+        */
+
+        $("#pageSizeList").change(function (event) {
+            $("#hidcategoryId").val($("#categoryId").val());
+            var form = $(event.target).parents("form");
+            form.submit();
+        });
+
+        /////////////////////////////////////////////////////////////
+
+        /*
+        * Change Pagination summary element from anchor to label
+        */
+
+        //$(".store-qty a").replaceWith(function () {
+        //    return $("<label>" + $(this).html() + "</label>");
+        //});
+
+
+        /////////////////////////////////////////////////////////////
+
+    });
+
+</script>

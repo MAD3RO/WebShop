@@ -291,10 +291,13 @@ namespace WebShop.Areas.Admin.Controllers
         }
 
         // POST: Admin/Shop/Products
-        public ActionResult Products(int? page, int? pageSize, int? categoryId)
+        public ActionResult Products(int? page, int? pageSize, int? categoryId, string sortOrder)
         {
             // Declare a list of ProductVM
-            List<ProductVM> productVMList;
+            IEnumerable<ProductVM> productVMList;
+
+            ViewBag.NameSortParm = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.DateSortParm = sortOrder == "Price" ? "price_desc" : "Price";
 
             // Set page number
             var pageNumber = page ?? 1;
@@ -306,8 +309,24 @@ namespace WebShop.Areas.Admin.Controllers
                 // Init the list
                 productVMList = db.Products.ToArray()
                     .Where(x => categoryId == null || categoryId == 0 || x.CategoryId == categoryId)
-                    .Select(x => new ProductVM(x))
-                    .ToList();
+                    .Select(x => new ProductVM(x));
+
+                // Sort order
+                switch (sortOrder)
+                {
+                    case "name_desc":
+                        productVMList = productVMList.OrderByDescending(s => s.Name);
+                        break;
+                    case "Date":
+                        productVMList = productVMList.OrderBy(s => s.NewPrice);
+                        break;
+                    case "date_desc":
+                        productVMList = productVMList.OrderByDescending(s => s.NewPrice);
+                        break;
+                    default:
+                        productVMList = productVMList.OrderBy(s => s.Name);
+                        break;
+                }
 
                 // Populate categories select list
                 ViewBag.Categories = new SelectList(db.Categories.ToList(), "Id", "Name");
@@ -316,15 +335,15 @@ namespace WebShop.Areas.Admin.Controllers
                 ViewBag.SelectedCat = categoryId.ToString();
 
                 // Set selected page size
-                ViewBag.SelectedPageSize = pageSize;
+                ViewBag.SelectedPageSize = pageSizeNumber;
             }
 
             // Set pagination
-            var onePageOfProducts = productVMList.ToPagedList(pageNumber, pageSizeNumber); // will only contain 25 products max because of the pageSize
+            var onePageOfProducts = productVMList.ToPagedList(pageNumber, pageSizeNumber);
             ViewBag.OnePageOfProducts = onePageOfProducts;
 
             // Return view with list
-            return View(productVMList);
+            return View(productVMList.ToList());
         }
 
         // GET: Admin/Shop/EditProduct/id

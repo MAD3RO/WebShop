@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PagedList;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -33,10 +34,15 @@ namespace WebShop.Controllers
         }
 
         // GET: /shop/category/name
-        public ActionResult Category(string name)
+        public ActionResult Category(string name, int? page, int? pageSize)
         {
             // Declare a list of ProductVM
             List<ProductVM> productVMList;
+
+            // Set page number
+            var pageNumber = page ?? 1;
+            // Set page size
+            var pageSizeNumber = pageSize ?? 10;
 
             using (Db db = new Db())
             {
@@ -52,12 +58,19 @@ namespace WebShop.Controllers
 
                 ViewBag.CategoryName = categoryDTO.Name;
 
-                if(productCat == null)
+                if (productCat == null)
                 {
                     ViewBag.Message = "There are no products in " + categoryDTO.Name + " category.";
                     return View();
                 }
+
+                // Set selected page size
+                ViewBag.SelectedPageSize = pageSizeNumber;
             }
+
+            // Set pagination
+            var onePageOfProducts = productVMList.ToPagedList(pageNumber, pageSizeNumber);
+            ViewBag.OnePageOfProducts = onePageOfProducts;
 
             // Return view with list
             return View(productVMList);
