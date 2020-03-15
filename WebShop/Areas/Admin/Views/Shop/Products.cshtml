@@ -9,20 +9,25 @@
 
 <h2>Products</h2>
 
-<select id="SelectCategory" name="SelectCategory">
-    <option value="0">All</option>
-    @foreach (var item in ViewBag.Categories)
+<div class="store-sort">
+    @using (Html.BeginForm("Products", "Shop", FormMethod.Get, new { @class = "form-inline", enctype = "multipart/form-data" }))
     {
-        if (ViewBag.SelectedCat == item.Value)
-        {
-            <option selected="selected" value="@item.Value">@item.Text</option>
-        }
-        else
-        {
-            <option value="@item.Value">@item.Text</option>
-        }
+        <label>
+            <input id="hidPageSize" name="pageSize" type="hidden" />
+            Categories:
+            @Html.DropDownList("categoryId", new SelectList(ViewBag.Categories, "Value", "Text"), "All", new { id = "categoryId" })
+        </label>
     }
-</select>
+    @using (Html.BeginForm("Products", "Shop", FormMethod.Get, new { @class = "form-inline", enctype = "multipart/form-data" }))
+    {
+        <label>
+            <input id="hidcategoryId" name="categoryId" type="hidden" />
+            Show:
+            @Html.DropDownList("pageSize", new SelectList(new Dictionary<string, int> { { "3", 3 }, { "25", 25 }, { "50", 50 } }, "Key", "Value"), new { id = "pageSizeList" })
+        </label>
+    }
+</div>
+
 <br /><br />
 
 <p>
@@ -59,19 +64,52 @@
             </td>
             <td>
                 <a href="/Admin/Shop/EditProduct/@product.Id">
-                    <img src="/Images/Uploads/Products/@product.Id/Thumbs/@product.ImageName" />
+                    <img src="/Images/Uploads/Products/@product.Id/Thumbs/@product.ImageName" style="max-width:50px; max-height:50px;" />
                 </a>
             </td>
             <td>
                 @Html.ActionLink("Edit", "EditProduct", new { id = product.Id }) |
-                @Html.ActionLink("Delete", "DeleteProduct", new { id = product.Id }, new { @class="delete"})
+                @Html.ActionLink("Delete", "DeleteProduct", new { id = product.Id }, new { @class = "delete" })
             </td>
         </tr>
     }
 
 </table>
 
-@Html.PagedListPager((IPagedList)ViewBag.OnePageOfProducts, page => Url.Action("Products", new { page, catId = ViewBag.SelectedCat }))
+@Html.PagedListPager((IPagedList)ViewBag.OnePageOfProducts, page => Url.Action("Products", new { page, pageSize = ViewBag.SelectedPageSize, categoryId = ViewBag.SelectedCat }),
+    new PagedListRenderOptions
+    {
+        Display = PagedListDisplayMode.IfNeeded,
+        DisplayLinkToNextPage = PagedListDisplayMode.Never,
+        DisplayLinkToPreviousPage = PagedListDisplayMode.Never
+    })
+
+@*//new PagedListRenderOptions
+    //{
+    //    DisplayLinkToFirstPage = PagedListDisplayMode.IfNeeded,
+    //    DisplayLinkToLastPage = PagedListDisplayMode.IfNeeded,
+    //    DisplayLinkToPreviousPage = PagedListDisplayMode.IfNeeded,
+    //    DisplayLinkToNextPage = PagedListDisplayMode.IfNeeded,
+    //    DisplayLinkToIndividualPages = true,
+    //    DisplayPageCountAndCurrentLocation = false,
+    //    MaximumPageNumbersToDisplay = 10,
+    //    DisplayEllipsesWhenNotShowingAllPageNumbers = true,
+    //    EllipsesFormat = "&#8230;",
+    //    LinkToFirstPageFormat = "««",
+    //    LinkToPreviousPageFormat = "«",
+    //    LinkToIndividualPageFormat = "{0}",
+    //    LinkToNextPageFormat = "»",
+    //    LinkToLastPageFormat = "»»",
+    //    PageCountAndCurrentLocationFormat = "Page {0} of {1}.",
+    //    ItemSliceAndTotalFormat = "Showing items {0} through {1} of {2}.",
+    //    FunctionToDisplayEachPageNumber = null,
+    //    ClassToApplyToFirstListItemInPager = null,
+    //    ClassToApplyToLastListItemInPager = null,
+    //    ContainerDivClasses = new[] { "pagination-container" },
+    //    UlElementClasses = new[] { "pagination" },
+    //    LiElementClasses = Enumerable.Empty<string>
+        ()
+        //})*@
 
 @section Scripts{
     <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
@@ -82,15 +120,25 @@
              * Select products from specified category
              */
 
-            $("#SelectCategory").on("change", function () {
-                var url = $(this).val();
-
-                if (url) {
-                    window.location = "/Admin/Shop/Products?catId=" + url;
-                }
-
-                return false;
+            $("#categoryId").change(function (event) {
+                $("#hidPageSize").val($("#pageSizeList").val());
+                var form = $(event.target).parents("form");
+                form.submit();
             });
+
+
+            /////////////////////////////////////////////////////////////
+
+            /*
+             * Select page size
+             */
+
+            $("#pageSizeList").change(function (event) {
+                $("#hidcategoryId").val($("#categoryId").val());
+                var form = $(event.target).parents("form");
+                form.submit();
+            });
+
 
             /////////////////////////////////////////////////////////////
 

@@ -291,19 +291,21 @@ namespace WebShop.Areas.Admin.Controllers
         }
 
         // POST: Admin/Shop/Products
-        public ActionResult Products(int? page, int? catId)
+        public ActionResult Products(int? page, int? pageSize, int? categoryId)
         {
             // Declare a list of ProductVM
             List<ProductVM> productVMList;
 
             // Set page number
             var pageNumber = page ?? 1;
+            // Set page size
+            var pageSizeNumber = pageSize ?? 10;
 
             using (Db db = new Db())
             {
                 // Init the list
                 productVMList = db.Products.ToArray()
-                    .Where(x => catId == null || catId == 0 || x.CategoryId == catId)
+                    .Where(x => categoryId == null || categoryId == 0 || x.CategoryId == categoryId)
                     .Select(x => new ProductVM(x))
                     .ToList();
 
@@ -311,12 +313,14 @@ namespace WebShop.Areas.Admin.Controllers
                 ViewBag.Categories = new SelectList(db.Categories.ToList(), "Id", "Name");
 
                 // Set selected category
-                ViewBag.SelectedCat = catId.ToString();
+                ViewBag.SelectedCat = categoryId.ToString();
 
+                // Set selected page size
+                ViewBag.SelectedPageSize = pageSize;
             }
 
             // Set pagination
-            var onePageOfProducts = productVMList.ToPagedList(pageNumber, 3); // will only contain 25 products max because of the pageSize
+            var onePageOfProducts = productVMList.ToPagedList(pageNumber, pageSizeNumber); // will only contain 25 products max because of the pageSize
             ViewBag.OnePageOfProducts = onePageOfProducts;
 
             // Return view with list

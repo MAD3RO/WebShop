@@ -17,6 +17,7 @@ namespace WebShop
 
             bundles.Add(new ScriptBundle("~/bundles/scripts").Include(
             "~/Scripts/jquery-{version}.js",
+            //"~/Scripts/popper.min.js",
             "~/Scripts/bootstrap.min.js",
             "~/Scripts/slick.min.js",
             "~/Scripts/nouislider.min.js",

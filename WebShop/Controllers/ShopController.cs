@@ -50,12 +50,13 @@ namespace WebShop.Controllers
                 // Get category name
                 ProductModel productCat = db.Products.Where(x => x.CategoryId == catId).FirstOrDefault();
 
+                ViewBag.CategoryName = categoryDTO.Name;
+
                 if(productCat == null)
                 {
-                    ViewBag.Message = "There are no products in " + categoryDTO.Name + " category";
+                    ViewBag.Message = "There are no products in " + categoryDTO.Name + " category.";
                     return View();
                 }
-                ViewBag.CategoryName = productCat.CategoryName;
             }
 
             // Return view with list
