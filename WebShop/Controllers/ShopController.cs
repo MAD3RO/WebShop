@@ -34,15 +34,18 @@ namespace WebShop.Controllers
         }
 
         // GET: /shop/category/name
-        public ActionResult Category(string name, int? page, int? pageSize)
+        public ActionResult Category(string name, int? page, int? pageSize, string orderBy)
         {
             // Declare a list of ProductVM
-            List<ProductVM> productVMList;
+            IEnumerable<ProductVM> productVMList;
+
+            //ViewBag.NameSortParm = string.IsNullOrEmpty(orderBy) ? "name_desc" : "";
+            //ViewBag.PriceSortParm = orderBy == "priceAsc" ? "priceDesc" : "priceAsc";
 
             // Set page number
             var pageNumber = page ?? 1;
             // Set page size
-            var pageSizeNumber = pageSize ?? 10;
+            var pageSizeNumber = pageSize ?? 12;
 
             using (Db db = new Db())
             {
@@ -51,7 +54,25 @@ namespace WebShop.Controllers
                 int catId = categoryDTO.Id;
 
                 // Init the list
-                productVMList = db.Products.ToArray().Where(x => x.CategoryId == catId).Select(x => new ProductVM(x)).ToList();
+                productVMList = db.Products.ToArray().Where(x => x.CategoryId == catId).Select(x => new ProductVM(x));
+
+                // Sort order
+                switch (orderBy)
+                {
+                    case "nameDesc":
+                        productVMList = productVMList.OrderByDescending(s => s.Name);
+                        break;
+                    case "priceAsc":
+                        productVMList = productVMList.OrderBy(s => s.NewPrice);
+                        break;
+                    case "priceDesc":
+                        productVMList = productVMList.OrderByDescending(s => s.NewPrice);
+                        break;
+                    case "nameAsc":
+                    default:
+                        productVMList = productVMList.OrderBy(s => s.Name);
+                        break;
+                }
 
                 // Get category name
                 ProductModel productCat = db.Products.Where(x => x.CategoryId == catId).FirstOrDefault();
@@ -66,6 +87,8 @@ namespace WebShop.Controllers
 
                 // Set selected page size
                 ViewBag.SelectedPageSize = pageSizeNumber;
+                // Set selected order
+                ViewBag.OrderBy = string.IsNullOrEmpty(orderBy) ? "name_asc" : orderBy;
             }
 
             // Set pagination
@@ -73,7 +96,7 @@ namespace WebShop.Controllers
             ViewBag.OnePageOfProducts = onePageOfProducts;
 
             // Return view with list
-            return View(productVMList);
+            return View(productVMList.ToList());
         }
 
         // GET: /shop/product-details/name

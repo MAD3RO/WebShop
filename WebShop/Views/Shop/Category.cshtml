@@ -14,7 +14,6 @@
 
         <!-- row -->
         <div class="row">
-            <h2>@ViewBag.CategoryName</h2>
 
             @if (ViewBag.Message != null)
             {
@@ -200,22 +199,26 @@
                 <!-- /ASIDE -->
                 <!-- STORE -->
                 <div id="store" class="col-md-9">
+
+                    <h2 style="margin-bottom:30px;">@ViewBag.CategoryName</h2>
+
                     <!-- store top filter -->
                     <div class="store-filter clearfix">
                         <div class="store-sort">
-                            @using (Html.BeginForm("Category", "Shop", FormMethod.Get))
+                            @using (Html.BeginForm("Category", "Shop", FormMethod.Get, new { style = "display: inline;" }))
                             {
                                 <label>
+                                    <input id="hidPageSize" name="pageSize" type="hidden" />
                                     Sort By:
-                                    <select class="input-select">
-                                        <option value="0">Popular</option>
-                                        <option value="1">Position</option>
-                                    </select>
+                                    @Html.DropDownList("orderBy", new SelectList(new Dictionary<string, string> { { "nameAsc", "Name (A-Z)" }, { "nameDesc", "Name (Z-A)" }, { "priceAsc", "Lowest price" }, { "priceDesc", "Highest price" } }, "Key", "Value"), new { id = "orderByList", @class = "input-select" })
                                 </label>
+                            }
+                            @using (Html.BeginForm("Category", "Shop", FormMethod.Get, new { style = "display: inline;" }))
+                            {
                                 <label>
-                                    <input id="hidcategoryId" name="categoryId" type="hidden" />
+                                    <input id="hidOrderBy" name="orderBy" type="hidden" />
                                     Show:
-                                    @Html.DropDownList("pageSize", new SelectList(new Dictionary<string, int> { { "3", 3 }, { "25", 25 }, { "50", 50 } }, "Key", "Value"), new { id = "pageSizeList", @class = "input-select" })
+                                    @Html.DropDownList("pageSize", new SelectList(new Dictionary<string, int> { { "12", 12 }, { "24", 24 }, { "36", 36 } }, "Key", "Value"), new { id = "pageSizeList", @class = "input-select" })
                                 </label>
                             }
                         </div>
@@ -230,7 +233,7 @@
                         @foreach (var item in ViewBag.OnePageOfProducts)
                         {
                             <!-- product -->
-                            <div class="col-md-4 col-xs-6">
+                            <div class="col-md-3 col-xs-4" style="padding:0px 5px;">
                                 <div class="product">
                                     <div class="product-img">
                                         <img src="/Images/Uploads/Products/@item.Id/Thumbs/@item.ImageName" alt="" />
@@ -243,8 +246,8 @@
                                         </div>
                                     </div>
                                     <div class="product-body">
-                                        <p class="product-category">@item.CategoryName</p>
-                                        <h3 class="product-name"><a href="/shop/product-details/@item.Slug">@item.Name</a></h3>
+                                        @*<p class="product-category">@item.CategoryName</p>*@
+                                        <h4 class="product-name" style="height:40px;"><a href="/shop/product-details/@item.Slug">@item.Name</a></h4>
                                         <h4 class="product-price">
                                             $@item.NewPrice @if (item.Discount > 0)
                                             {<del class="product-old-price">$@item.Price</del>}
@@ -272,9 +275,9 @@
                     </div>
 
                     <!-- /store products -->
-                    <!-- store bottom filter -->
+                    <!-- store bottom pagination -->
                     <div class="store-filter clearfix">
-                        @Html.PagedListPager((IPagedList)ViewBag.OnePageOfProducts, page => Url.Action("Category", new { name = ViewBag.CategoryName, page, pageSize = ViewBag.SelectedPageSize }),
+                        @Html.PagedListPager((IPagedList)ViewBag.OnePageOfProducts, page => Url.Action("Category", new { name = ViewBag.CategoryName, page, pageSize = ViewBag.SelectedPageSize, orderBy = ViewBag.OrderBy }),
                         new PagedListRenderOptions
                         {
                             DisplayLinkToFirstPage = PagedListDisplayMode.IfNeeded,
@@ -293,7 +296,7 @@
                             //ClassToApplyToFirstListItemInPager = "store-qty"
                         })
                     </div>
-                    <!-- /store bottom filter -->
+                    <!-- /store bottom pagination -->
                 </div>
                 <!-- /STORE -->
             }
@@ -310,7 +313,7 @@
         */
 
         $("#pageSizeList").change(function (event) {
-            $("#hidcategoryId").val($("#categoryId").val());
+            $("#hidOrderBy").val($("#orderByList").val());
             var form = $(event.target).parents("form");
             form.submit();
         });
@@ -318,12 +321,14 @@
         /////////////////////////////////////////////////////////////
 
         /*
-        * Change Pagination summary element from anchor to label
+        * Select order
         */
 
-        //$(".store-qty a").replaceWith(function () {
-        //    return $("<label>" + $(this).html() + "</label>");
-        //});
+        $("#orderByList").change(function (event) {
+            $("#hidPageSize").val($("#pageSizeList").val());
+            var form = $(event.target).parents("form");
+            form.submit();
+        });
 
 
         /////////////////////////////////////////////////////////////

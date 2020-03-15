@@ -10,15 +10,15 @@
 <h2>Products</h2>
 
 <div class="store-sort">
-    @using (Html.BeginForm("Products", "Shop", FormMethod.Get, new { @class = "form-inline", enctype = "multipart/form-data" }))
+    @using (Html.BeginForm("Products", "Shop", FormMethod.Get, new { style = "display: inline;" }))
     {
         <label>
             <input id="hidPageSize" name="pageSize" type="hidden" />
             Categories:
-            @Html.DropDownList("categoryId", new SelectList(ViewBag.Categories, "Value", "Text"), "All", new { id = "categoryId" })
+            @Html.DropDownList("categoryId", new SelectList(ViewBag.Categories, "Value", "Text"), "All", new { id = "categoryIdList" })
         </label>
     }
-    @using (Html.BeginForm("Products", "Shop", FormMethod.Get, new { @class = "form-inline", enctype = "multipart/form-data" }))
+    @using (Html.BeginForm("Products", "Shop", FormMethod.Get, new { style = "display: inline;" }))
     {
         <label>
             <input id="hidcategoryId" name="categoryId" type="hidden" />
@@ -120,7 +120,7 @@
              * Select products from specified category
              */
 
-            $("#categoryId").change(function (event) {
+            $("#categoryIdList").change(function (event) {
                 $("#hidPageSize").val($("#pageSizeList").val());
                 var form = $(event.target).parents("form");
                 form.submit();
@@ -134,7 +134,7 @@
              */
 
             $("#pageSizeList").change(function (event) {
-                $("#hidcategoryId").val($("#categoryId").val());
+                $("#hidcategoryId").val($("#categoryIdList").val());
                 var form = $(event.target).parents("form");
                 form.submit();
             });
