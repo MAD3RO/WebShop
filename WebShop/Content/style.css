@@ -184,11 +184,11 @@ textarea.input {
 /*-- Select input --*/
 
 .input-select {
-  padding: 0px 15px;
-  background: #FFF;
-  border: 1px solid #E4E7ED;
-  height: 40px;
-  font-size:small;
+    padding: 0px 15px;
+    background: #FFF;
+    border: 1px solid #E4E7ED;
+    height: 40px;
+    font-size: small;
 }
 
 /*-- checkbox & radio input --*/
@@ -1081,7 +1081,7 @@ textarea.input {
             background-color: #FFF;
             color: #D10024;
             border-color: #D10024;
-            padding: 0px 30px 0px 50px;
+            padding: 0px 25px 0px 45px;
         }
 
             .product .add-to-cart .add-to-cart-btn:hover > i {
@@ -1341,7 +1341,7 @@ textarea.input {
             color: #D10024;
         }
 
-        .store-grid li.active {
+        .store-grid li a.active {
             background-color: #D10024;
             border-color: #D10024;
             color: #FFF;
@@ -1351,6 +1351,80 @@ textarea.input {
         .store-grid li a {
             display: block;
         }
+
+#product.list-group-item {
+    float: none;
+    width: 100%;
+    background-color: #fff;
+    margin-bottom: 5px;
+    -ms-flex: 0 0 100%;
+    flex: 0 0 100%;
+    max-width: 100%;
+    padding: 0 1rem;
+    border: 0;
+}
+
+.product-body .product-name {
+    height: 40px;
+}
+
+#product.list-group-item .product-img {
+    float: left;
+    width: 30%;
+}
+
+#product.list-group-item .list-group-image {
+    margin-right: 10px;
+}
+
+#product.list-group-item .product {
+    margin-bottom: 0px;
+    display: inline-block;
+}
+
+#product.list-group-item .product-body {
+    float: left;
+    width: 70%;
+    margin: 0;
+}
+
+#product.list-group-item:before, #product.list-group-item:after {
+    display: table;
+    content: " ";
+}
+
+#product.list-group-item:after {
+    clear: both;
+}
+
+#product.list-group-item .product-name {
+    text-align: left;
+    height: 20px;
+}
+
+#product.list-group-item .product-price {
+    text-align: right;
+    width: 100px;
+    float: right;
+}
+
+#product.list-group-item .product-description {
+    text-align: left;
+    max-width: 400px;
+    float: left;
+}
+
+#product.list-group-item .product-rating {
+    width: 100px;
+    float: right;
+}
+
+#product.list-group-item .product-btns {
+    width: 100px;
+    /*display:inline-block;*/
+    flex-direction: row;
+    /*float: ;*/
+}
 
 /*-- Store Pagination --*/
 
@@ -2658,12 +2732,12 @@ h3.other-nw {
     float: right;
 }
 
-#RememberMe{
+#RememberMe {
     margin: 0px 0px 0px 5px;
 }
 
 /*-- //login --*/
 
-#body-section{
-    min-height:329px;
+#body-section {
+    min-height: 329px;
 }

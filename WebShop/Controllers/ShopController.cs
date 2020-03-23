@@ -34,13 +34,10 @@ namespace WebShop.Controllers
         }
 
         // GET: /shop/category/name
-        public ActionResult Category(string name, int? page, int? pageSize, string orderBy)
+        public ActionResult Category(string name, int? page, int? pageSize, string orderBy, string gridToggle)
         {
             // Declare a list of ProductVM
             IEnumerable<ProductVM> productVMList;
-
-            //ViewBag.NameSortParm = string.IsNullOrEmpty(orderBy) ? "name_desc" : "";
-            //ViewBag.PriceSortParm = orderBy == "priceAsc" ? "priceDesc" : "priceAsc";
 
             // Set page number
             var pageNumber = page ?? 1;
@@ -94,6 +91,9 @@ namespace WebShop.Controllers
             // Set pagination
             var onePageOfProducts = productVMList.ToPagedList(pageNumber, pageSizeNumber);
             ViewBag.OnePageOfProducts = onePageOfProducts;
+
+            // Set show toggle
+            ViewBag.GridToggle = string.IsNullOrEmpty(gridToggle) ? "grid" : gridToggle;
 
             // Return view with list
             return View(productVMList.ToList());
