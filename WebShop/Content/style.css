@@ -59,7 +59,23 @@ body {
     font-family: 'Montserrat', sans-serif;
     font-weight: 400;
     color: #333;
-    /*min-height:1000px;*/
+}
+
+input:focus {
+    outline: none !important;
+    border: 1px solid #D10024;
+    box-shadow: 0 0 10px #D10024;
+}
+
+button:focus {
+    outline: none !important;
+    border: 1px solid #D10024;
+    box-shadow: 0 0 8px #D10024;
+}
+
+select:focus {
+    outline: none !important;
+    border: 0.5px solid #D10024;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -451,6 +467,15 @@ textarea.input {
     background-color: #15161D;
 }
 
+#startHeader {
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    width: 100%;
+    -webkit-transition: all 0.6s ease;
+    transition: all 0.6s ease;
+}
+
 .header-logo {
     float: left;
 }
@@ -564,7 +589,7 @@ textarea.input {
 
 .cart-dropdown .cart-list {
     max-height: 180px;
-    overflow-y: scroll;
+    overflow-y: auto;
     margin-bottom: 15px;
 }
 
@@ -1428,7 +1453,7 @@ textarea.input {
         /*flex-direction: row;*/
         /*display:inline-block;*/
         /*margin:0px 60px 40px 0px;*/
-        margin-bottom:40px;
+        margin-bottom: 40px;
     }
 
     #product.list-group-item .add-to-cart-btn {

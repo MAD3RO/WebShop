@@ -24,7 +24,7 @@
         }
     </style>
     <!-- START-HEADER -->
-    <header>
+    <header id="startHeader">
         <!-- START-TOP-HEADER -->
         <div id="top-header">
             <div class="container">
@@ -304,7 +304,6 @@
         });
     </script>
     <!-- //login form validation -->
-
     <!-- categories dropdown -->
     <script>
         //$(".dropdown-categories").hover(
@@ -319,6 +318,18 @@
         //);
     </script>
     <!-- //categories dropdown -->
+    <!-- sticky header -->
+    <script>
+        $(window).scroll(function () {
+            if ($(this).scrollTop() > 250) {
+                document.getElementById("startHeader").style.top = "-50px";
+            }
+            else {
+                document.getElementById("startHeader").style.top = "0";
+            }
+        });
+    </script>
+    <!-- //sticky header -->
     <!-- smooth-scrolling-of-move-up -->
     <script>
         $(document).ready(function () {
