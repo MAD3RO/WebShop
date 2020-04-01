@@ -7,25 +7,10 @@
     <title>@ViewBag.Title - WebShop</title>
     <!-- GOOGLE-FONT -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
-    <!-- START-SMOOTH-SCROLLING -->
-    <script>
-        addEventListener("load", function () {
-            setTimeout(hideURLbar, 0);
-        }, false);
 
-        function hideURLbar() {
-            window.scrollTo(0, 1);
-        }
-    </script>
-    <!-- END-SMOOTH-SCROLLING -->
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     <link href="https://use.fontawesome.com/releases/v5.0.4/css/all.css" rel="stylesheet">
-    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
-    <script src="~/Scripts/bootstrap.min.js"></script>
-    <script src="~/Scripts/jquery.validate.min.js"></script>
-    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
-    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 </head>
 <body>
 
@@ -77,15 +62,6 @@
                     {
                         <li><i class="fas fa-chart-line"></i>@Html.ActionLink("Admin Area", "Index", "Dashboard", new { area = "Admin" }, null) </li>
                     }
-                    else
-                    {
-                        if (ViewBag.Title != "Cart Details")
-                        {
-                            <li class="navbar-collapse collapse navbar-right">
-                                @Html.Action("CartPartial", "Cart")
-                            </li>
-                        }
-                    }
                 </ul>
             </div>
         </div>
@@ -128,55 +104,11 @@
                             </div>
                             <!-- /Wishlist -->
                             <!-- Cart -->
-                            <div class="dropdown">
-                                <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-                                    <i class="fa fa-shopping-cart"></i>
-                                    <span>Your Cart</span>
-                                    <div class="qty">3</div>
-                                </a>
-                                <div class="cart-dropdown">
-                                    <div class="cart-list">
-                                        <div class="product-widget">
-                                            <div class="product-img">
-                                                <img src="./Content/img/product01.png" alt="">
-                                            </div>
-                                            <div class="product-body">
-                                                <h3 class="product-name"><a href="#">product name goes here</a></h3>
-                                                <h4 class="product-price"><span class="qty">1x</span>$980.00</h4>
-                                            </div>
-                                            <button class="delete"><i class="fa fa-close"></i></button>
-                                        </div>
-
-                                        <div class="product-widget">
-                                            <div class="product-img">
-                                                <img src="./Content/img/product02.png" alt="">
-                                            </div>
-                                            <div class="product-body">
-                                                <h3 class="product-name"><a href="#">product name goes here</a></h3>
-                                                <h4 class="product-price"><span class="qty">3x</span>$980.00</h4>
-                                            </div>
-                                            <button class="delete"><i class="fa fa-close"></i></button>
-                                        </div>
-                                    </div>
-                                    <div class="cart-summary">
-                                        <small>3 Item(s) selected</small>
-                                        <h5>SUBTOTAL: $2940.00</h5>
-                                    </div>
-                                    <div class="cart-btns">
-                                        <a href="#">View Cart</a>
-                                        <a href="#">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
-                                    </div>
-                                </div>
-                            </div>
+                            @if (ViewBag.Title != "Cart Details")
+                            {
+                                @Html.Action("CartPartial", "Cart")
+                            }
                             <!-- /Cart -->
-                            <!-- Menu Toogle -->
-                            <div class="menu-toggle">
-                                <a href="#">
-                                    <i class="fa fa-bars"></i>
-                                    <span>Menu</span>
-                                </a>
-                            </div>
-                            <!-- /Menu Toogle -->
                         </div>
                     </div>
                     <!-- /ACCOUNT -->
@@ -207,21 +139,21 @@
                     @*@Html.Action("PagesMenuPartial", "Pages")*@
                     @Html.Action("CategoryMenuPartial", "Shop")
                     @*<li class="nav-item dropdown-categories mr-lg-2 mb-lg-0 mb-2">
-                        <a class="nav-link dropdown-toggle" href="#" onclick="return false;" data-toggle="dropdown-navbar" aria-haspopup="true" aria-expanded="false">
-                            Categories <i class="fa fa-caret-down" style="margin-left:5px;" aria-hidden="true"></i>
-                        </a>
-                        <div class="dropdown-menu">
-                            <div class="agile_inner_drop_nav_info p-4">
-                                <div class="row">
-                                    <div class="col-sm-6 multi-gd-img">
-                                        <ul class="multi-column-dropdown">
-                                            @Html.Action("CategoryMenuPartial", "Shop")
-                                        </ul>
+                            <a class="nav-link dropdown-toggle" href="#" onclick="return false;" data-toggle="dropdown-navbar" aria-haspopup="true" aria-expanded="false">
+                                Categories <i class="fa fa-caret-down" style="margin-left:5px;" aria-hidden="true"></i>
+                            </a>
+                            <div class="dropdown-menu">
+                                <div class="agile_inner_drop_nav_info p-4">
+                                    <div class="row">
+                                        <div class="col-sm-6 multi-gd-img">
+                                            <ul class="multi-column-dropdown">
+                                                @Html.Action("CategoryMenuPartial", "Shop")
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </li>*@
+                        </li>*@
                 </ul>
                 <!-- /NAV -->
             </div>
@@ -258,7 +190,6 @@
     <!-- BODY -->
     @RenderBody()
     <!-- /BODY -->
-
     <!-- FOOTER -->
     <footer id="footer">
         <!-- top footer -->
@@ -344,44 +275,50 @@
         <!-- /bottom footer -->
     </footer>
     <!-- /FOOTER -->
-    @*@Scripts.Render("~/bundles/jquery")*@
-    @*@Scripts.Render("~/bundles/bootstrap")*@
-    @*@Scripts.Render("~/bundles/jqueryval")*@
-    @*@Scripts.Render("~/bundles/ajax")*@
+
     @Scripts.Render("~/bundles/scripts")
     @RenderSection("scripts", required: false)
 
-    <!-- nav smooth scroll -->
+    <!-- login form validation -->
     <script>
         $(document).ready(function () {
-            //var test = '@TempData["LoginMessage"]';
+            $("#headerModal").on("submit", "#loginForm", function (e) {
+                e.preventDefault();
 
-            $(".dropdown-categories").hover(
-                function () {
-                    $('.dropdown-menu', this).stop(true, true).slideDown("fast");
-                    $(this).toggleClass('open');
-                },
-                function () {
-                    $('.dropdown-menu', this).stop(true, true).slideUp("fast");
-                    $(this).toggleClass('open');
-                }
-            );
-        });
-    </script>
-    <!-- //nav smooth scroll -->
-    <!-- start-smooth-scrolling -->
-    <script>
-        jQuery(document).ready(function ($) {
-            $(".scroll").click(function (event) {
-                event.preventDefault();
-
-                $('html,body').animate({
-                    scrollTop: $(this.hash).offset().top
-                }, 1000);
+                var form = $(this);
+                $.ajax({
+                    url: form.attr("action"),
+                    method: form.attr("method"),
+                    data: form.serialize(),
+                    success: function (partialResult) {
+                        if (partialResult === "error") {
+                            $("#login-error").show();
+                        }
+                        else if (partialResult === "success") {
+                            $("#headerModal").modal("hide");
+                            setTimeout(function () { window.location.href = "/Shop/Index"; }, 35);
+                        }
+                    }
+                });
             });
         });
     </script>
-    <!-- //end-smooth-scrolling -->
+    <!-- //login form validation -->
+
+    <!-- categories dropdown -->
+    <script>
+        //$(".dropdown-categories").hover(
+        //    function () {
+        //        $('.dropdown-menu', this).stop(true, true).slideDown("fast");
+        //        $(this).toggleClass('open');
+        //    },
+        //    function () {
+        //        $('.dropdown-menu', this).stop(true, true).slideUp("fast");
+        //        $(this).toggleClass('open');
+        //    }
+        //);
+    </script>
+    <!-- //categories dropdown -->
     <!-- smooth-scrolling-of-move-up -->
     <script>
         $(document).ready(function () {
