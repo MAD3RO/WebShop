@@ -48,8 +48,11 @@ namespace WebShop.Controllers
             // Init quantity
             int qty = 0;
 
-            // Init price
+            // Init  price
             decimal price = 0m;
+
+            // Init total price
+            decimal total = 0m;
 
             // Check for cart session
             if (Session["cart"] != null)
@@ -60,12 +63,12 @@ namespace WebShop.Controllers
                 foreach (var item in list)
                 {
                     qty += item.Quantity;
-                    price += item.Quantity * item.Price;
+                    total += item.Total;
                 }
 
                 model.Quantity = qty;
-                model.Price = price;
-
+                ViewBag.GrandTotal = total;
+                ViewBag.CartVMList = list;
             }
             else
             {
@@ -78,7 +81,7 @@ namespace WebShop.Controllers
             return PartialView(model);
         }
 
-        public ActionResult AddToCartPartial(int id)
+        public JsonResult AddToCartPartial(int id)
         {
             // Init CartVM list
             List<CartVM> cart = Session["cart"] as List<CartVM> ?? new List<CartVM>();
@@ -102,8 +105,9 @@ namespace WebShop.Controllers
                         ProductId = product.Id,
                         ProductName = product.Name,
                         Quantity = 1,
-                        Price = product.Price,
-                        Image = product.ImageName
+                        Price = product.NewPrice,
+                        Image = product.ImageName,
+                        Slug = product.Slug
                     });
                 }
                 else
@@ -130,9 +134,68 @@ namespace WebShop.Controllers
             // Save cart back to session
             Session["cart"] = cart;
 
-            // Return partial view with model
-            return PartialView(model);
+            // Store needed data
+            var result = new { qty = model.Quantity, total = model.Price };
+
+            // Return json
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
+
+        //public ActionResult AddToCartPartial(int id)
+        //{
+        //    // Init CartVM list
+        //    List<CartVM> cart = Session["cart"] as List<CartVM> ?? new List<CartVM>();
+
+        //    // Init CartVM
+        //    CartVM model = new CartVM();
+
+        //    using (Db db = new Db())
+        //    {
+        //        // Get the product
+        //        ProductModel product = db.Products.Find(id);
+
+        //        // Check if the product is already in cart
+        //        var productInCart = cart.FirstOrDefault(x => x.ProductId == id);
+
+        //        // If not, add new
+        //        if (productInCart == null)
+        //        {
+        //            cart.Add(new CartVM()
+        //            {
+        //                ProductId = product.Id,
+        //                ProductName = product.Name,
+        //                Quantity = 1,
+        //                Price = product.Price,
+        //                Image = product.ImageName
+        //            });
+        //        }
+        //        else
+        //        {
+        //            // If it is, increment
+        //            productInCart.Quantity++;
+        //        }
+        //    }
+
+        //    // Get total qty and price and add to model
+
+        //    int qty = 0;
+        //    decimal price = 0m;
+
+        //    foreach (var item in cart)
+        //    {
+        //        qty += item.Quantity;
+        //        price += item.Quantity * item.Price;
+        //    }
+
+        //    model.Quantity = qty;
+        //    model.Price = price;
+
+        //    // Save cart back to session
+        //    Session["cart"] = cart;
+
+        //    // Return partial view with model
+        //    return PartialView(model);
+        //}
 
         // GET: /Cart/IncrementProduct
         public JsonResult IncrementProduct(int productId)
@@ -154,7 +217,6 @@ namespace WebShop.Controllers
                 // Return json with data
                 return Json(result, JsonRequestBehavior.AllowGet);
             }
-
         }
 
         // GET: /Cart/DecrementProduct
@@ -222,7 +284,6 @@ namespace WebShop.Controllers
 
             // Get username
             string username = User.Identity.Name;
-
             int orderId = 0;
 
             using (Db db = new Db())
@@ -239,7 +300,6 @@ namespace WebShop.Controllers
                 orderDTO.CreatedAt = DateTime.Now;
 
                 db.Orders.Add(orderDTO);
-
                 db.SaveChanges();
 
                 // Get inserted id

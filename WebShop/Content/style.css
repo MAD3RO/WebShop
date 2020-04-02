@@ -70,7 +70,7 @@ input:focus {
 button:focus {
     outline: none !important;
     border: 1px solid #D10024;
-    box-shadow: 0 0 8px #D10024;
+    box-shadow: 0 0 7px #D10024;
 }
 
 select:focus {
@@ -909,6 +909,10 @@ textarea.input {
     .product .product-img {
         position: relative;
     }
+
+        .product .product-img .productImg > img {
+            width: 100%;
+        }
 
         .product .product-img > img {
             width: 100%;
@@ -2608,6 +2612,10 @@ ul.multi-column-dropdown li {
 /*-- //bottom-to-top --*/
 
 /*--banner-modal--*/
+/*.modal-body {
+    background-color: #1e1f29;
+}*/
+
 .modal-body iframe {
     width: 100%;
     min-height: 400px;
@@ -2797,9 +2805,21 @@ h3.other-nw {
         transform: scale(1.01);
     }
 
+#btnRegister {
+    background-color: #1e1f29;
+    opacity: 0.8;
+    color: #FFF;
+}
+
+    #btnRegister:hover {
+        -webkit-transform: scale(1.01);
+        -ms-transform: scale(1.01);
+        transform: scale(1.01);
+    }
+
 #modalIcon {
-    color: #15161d;
-    opacity: 0.3;
+    color: #1e1f29;
+    opacity: 0.6;
     float: right;
 }
 
@@ -2807,8 +2827,14 @@ h3.other-nw {
     margin: 0px 0px 0px 5px;
 }
 
+.form-horizontal input:focus {
+    outline: none !important;
+    border: 0.5px solid #D10024;
+    box-shadow: 0 0 2px #D10024;
+}
 /*-- //login --*/
 
 #body-section {
     min-height: 329px;
 }
+

@@ -20,6 +20,7 @@ namespace WebShop.Models.Data
         public int CategoryId { get; set; }
         public string ImageName { get; set; }
         public decimal Discount { get; set; }
+        public decimal NewPrice { get { return Math.Round(Discount > 0 ? Price - (Discount / 100) * Price : Price, 2); } }
 
         [ForeignKey("CategoryId")]
         public virtual CategoryModel Category { get; set; }

@@ -23,7 +23,7 @@ namespace WebShop.Models.ViewModels.Shop
             Description = row.Description;
             Price = row.Price;
             Discount = row.Discount;
-            NewPrice = Math.Round(row.Discount > 0 ? row.Price - (row.Discount / 100) * row.Price : row.Price, 2);
+            NewPrice = row.NewPrice;
             CategoryName = row.CategoryName;
             CategoryId = row.CategoryId;
             ImageName = row.ImageName;
