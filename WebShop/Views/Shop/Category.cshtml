@@ -451,9 +451,10 @@
                     var total = data.total;
                     var cart = data.cart;
                     cart.forEach(product => console.log(product));
+                    $("cart-list").html(cart);
                     $("small.qty").text(quantity + " products(s) selected");
                     $("div.qty").text(quantity);
-                    $(".subtotal").text("SUBTOTAL: " + total);
+                    $(".subtotal").text("SUBTOTAL: $" + total);
                 }).done(function () {
 
                 });

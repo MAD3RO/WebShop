@@ -120,23 +120,23 @@ namespace WebShop.Controllers
             // Get total qty and price and add to model
 
             int qty = 0;
-            decimal price = 0m;
+            decimal total = 0m;
 
             foreach (var item in cart)
             {
                 qty += item.Quantity;
-                price += item.Quantity * item.Price;
+                total += item.Total;
             }
 
             model.Quantity = qty;
-            model.Price = price;
+            //model.Price = price;
 
             // Save cart back to session
             Session["cart"] = cart;
 
             // Store needed data
             //var result = new { qty = model.Quantity, total = model.Price };
-            var result = new { qty = model.Quantity, total = model.Price, cart };
+            var result = new { qty = model.Quantity, total, cart };
 
             // Return json
             return Json(result, JsonRequestBehavior.AllowGet);
