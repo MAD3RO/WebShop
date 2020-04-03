@@ -81,7 +81,7 @@ namespace WebShop.Controllers
             return PartialView(model);
         }
 
-        public JsonResult AddToCartPartial(int id)
+        public ActionResult AddToCartPartial(int id)
         {
             // Init CartVM list
             List<CartVM> cart = Session["cart"] as List<CartVM> ?? new List<CartVM>();
@@ -133,13 +133,14 @@ namespace WebShop.Controllers
 
             // Save cart back to session
             Session["cart"] = cart;
-
+            ViewBag.CartVMList = cart;
             // Store needed data
             //var result = new { qty = model.Quantity, total = model.Price };
-            var result = new { qty = model.Quantity, total, cart };
+            //var result = new { qty = model.Quantity, total, cart };
 
             // Return json
-            return Json(result, JsonRequestBehavior.AllowGet);
+            //return Json(result, JsonRequestBehavior.AllowGet);
+            return PartialView("CartPartial", model);
         }
 
         //public ActionResult AddToCartPartial(int id)

@@ -446,17 +446,16 @@
                 var productId = $(this).data("id");
                 var url = "/cart/AddToCartPartial";
 
-                $.getJSON(url, { id: productId }, function (data) {
-                    var quantity = data.qty;
-                    var total = data.total;
-                    var cart = data.cart;
-                    cart.forEach(product => console.log(product));
-                    $("cart-list").html(cart);
-                    $("small.qty").text(quantity + " products(s) selected");
-                    $("div.qty").text(quantity);
-                    $(".subtotal").text("SUBTOTAL: $" + total);
-                }).done(function () {
-
+                $.get(url, { id: productId }, function (data) {
+                    //var quantity = data.qty;
+                    //var total = data.total;
+                    //var cart = data.cart;
+                    location.reload();
+                    //cart.forEach(product => console.log(product));
+                    //$("cart-list").html(cart);
+                    //$("small.qty").text(quantity + " products(s) selected");
+                    //$("div.qty").text(quantity);
+                    //$(".subtotal").text("SUBTOTAL: $" + total);
                 });
             });
 
