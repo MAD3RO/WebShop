@@ -135,7 +135,8 @@ namespace WebShop.Controllers
             Session["cart"] = cart;
 
             // Store needed data
-            var result = new { qty = model.Quantity, total = model.Price };
+            //var result = new { qty = model.Quantity, total = model.Price };
+            var result = new { qty = model.Quantity, total = model.Price, cart };
 
             // Return json
             return Json(result, JsonRequestBehavior.AllowGet);
@@ -265,7 +266,6 @@ namespace WebShop.Controllers
                 // Remove model from list
                 cart.Remove(model);
             }
-
         }
 
         public ActionResult PaypalPartial()

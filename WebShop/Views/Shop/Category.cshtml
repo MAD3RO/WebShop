@@ -287,9 +287,9 @@
                                             </div>
                                         </div>
                                         <div class="add-to-cart">
-                                            <button class="add-to-cart-btn">
-                                                <a href="javascript:" data-id="@item.Id" class="addtocart"><i class="fa fa-shopping-cart"></i> add to cart</a>
-                                            </button>
+                                            @*<button class="add-to-cart-btn">
+                                                </button>*@
+                                            <a href="javascript:" data-id="@item.Id" class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</a>
                                         </div>
                                     </div>
                                 </div>
@@ -332,7 +332,7 @@
                                                     <button class="add-to-compare"><i class="fas fa-exchange-alt"></i><span class="tooltipp">add to compare</span></button>
                                                     <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
                                                 </div>
-                                                <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                                                <a href="javascript:" data-id="@item.Id" class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</a>
                                             </div>
                                         </div>
                                     </div>
@@ -440,7 +440,7 @@
             * Add to cart
             */
 
-            $("a.addtocart").click(function (e) {
+            $("a.add-to-cart-btn").click(function (e) {
                 e.preventDefault();
 
                 var productId = $(this).data("id");
@@ -449,6 +449,8 @@
                 $.getJSON(url, { id: productId }, function (data) {
                     var quantity = data.qty;
                     var total = data.total;
+                    var cart = data.cart;
+                    cart.forEach(product => console.log(product));
                     $("small.qty").text(quantity + " products(s) selected");
                     $("div.qty").text(quantity);
                     $(".subtotal").text("SUBTOTAL: " + total);
@@ -458,6 +460,24 @@
             });
 
             ////////////////////////////////////////////////////////
+
+            /*
+            * Remove product from cart
+            */
+
+            $("a.removeproduct").click(function (e) {
+                e.preventDefault();
+
+                var $this = $(this);
+                var productId = $(this).data("id");
+                var url = "/cart/RemoveProduct";
+
+                $.get(url, { productId: productId }, function (data) {
+                    location.reload();
+                });
+            });
+
+            //////////////////////////////////////////////////////////////
         });
     </script>
 }

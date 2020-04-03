@@ -1067,7 +1067,7 @@ textarea.input {
     left: 1px;
     right: 1px;
     bottom: 1px;
-    padding: 15px;
+    padding: 15px 10px;
     background: #1e1f29;
     text-align: center;
     -webkit-transform: translateY(0%);
@@ -1084,13 +1084,20 @@ textarea.input {
     transform: translateY(100%);
 }
 
+a.add-to-cart-btn:focus {
+    outline: none !important;
+    border: 1px solid #D10024;
+    box-shadow: 0 0 10px #D10024;
+}
+
 .product .add-to-cart .add-to-cart-btn {
     position: relative;
     border: 2px solid transparent;
-    height: 40px;
-    padding: 0 30px;
+    /*height: 20px;*/
+    padding: 5px 12px;
     background-color: #ef233c;
     color: #FFF;
+    /*line-height: 20px;*/
     text-transform: uppercase;
     font-weight: 700;
     border-radius: 40px;
@@ -1100,11 +1107,11 @@ textarea.input {
 
     .product .add-to-cart .add-to-cart-btn > i {
         position: absolute;
-        left: 0;
-        top: 0;
-        width: 40px;
-        height: 40px;
-        line-height: 38px;
+        left: 8px;
+        top: 2px;
+        width: 20px;
+        height: 20px;
+        line-height: 20px;
         color: #D10024;
         opacity: 0;
         visibility: hidden;
@@ -1114,7 +1121,7 @@ textarea.input {
         background-color: #FFF;
         color: #D10024;
         border-color: #D10024;
-        padding: 0px 25px 0px 45px;
+        padding: 5px 12px 5px 32px;
     }
 
         .product .add-to-cart .add-to-cart-btn:hover > i {
@@ -1194,7 +1201,8 @@ textarea.input {
         text-align: center;
         font-size: 10px;
         padding: 0;
-        background: #1e1f29;
+        /*background: #1e1f29;*/
+        background: #D10024;
         border: none;
         color: #FFF;
     }
@@ -1468,10 +1476,12 @@ textarea.input {
         width: 100px;
         background-color: #ef233c;
         color: #FFF;
+        line-height: 27px;
         text-transform: uppercase;
         font-weight: 700;
         font-size: 10px;
         border-radius: 40px;
+        overflow: hidden;
         -webkit-transition: 0.2s all;
         transition: 0.2s all;
     }
@@ -2837,4 +2847,3 @@ h3.other-nw {
 #body-section {
     min-height: 329px;
 }
-
