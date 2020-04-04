@@ -109,6 +109,14 @@
                                 @Html.Action("CartPartial", "Cart")
                             }
                             <!-- /Cart -->
+                            <!-- Menu Toogle -->
+                            <div class="menu-toggle">
+                                <a href="#">
+                                    <i class="fa fa-bars"></i>
+                                    <span>Menu</span>
+                                </a>
+                            </div>
+                            <!-- /Menu Toogle -->
                         </div>
                     </div>
                     <!-- /ACCOUNT -->
@@ -306,6 +314,41 @@
     <!-- //login form validation -->
     <!-- categories dropdown -->
     <script>
+        /*
+            * Add to cart
+            */
+
+        $("a.add-to-cart-btn").click(function (e) {
+            e.preventDefault();
+
+            var productId = $(this).data("id");
+            var url = "/cart/AddToCartPartial";
+
+            $.get(url, { id: productId }, function (data) {
+                location.reload();
+            });
+        });
+
+        ////////////////////////////////////////////////////////
+
+        /*
+        * Remove product from cart
+        */
+
+        $("a.removeproduct").click(function (e) {
+            e.preventDefault();
+
+            var $this = $(this);
+            var productId = $(this).data("id");
+            var url = "/cart/RemoveProduct";
+
+            $.get(url, { productId: productId }, function (data) {
+                location.reload();
+            });
+        });
+
+        /////////////////////////////////////////////////////////////
+
         //$(".dropdown-categories").hover(
         //    function () {
         //        $('.dropdown-menu', this).stop(true, true).slideDown("fast");

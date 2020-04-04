@@ -9,75 +9,70 @@
 <div class="section" id="body-section">
     <!-- container -->
     <div class="container">
-        <h2>Cart Details</h2>
+        <h2 class="page-header">Cart Details</h2>
 
         @if (ViewBag.Message != null)
         {
-            <h3>@ViewBag.Message</h3>
+            <h4 class="text-center">@ViewBag.Message</h4>
         }
         else
         {
-            <table class="table">
-                <tr>
-                    <th>
-                        Name
-                    </th>
-                    <th>
-                        Quantity
-                    </th>
-                    <th>
-                        Price
-                    </th>
-                    <th>
-                        Image
-                    </th>
-                    <th>
-
-                    </th>
-                    <th>
-                        Total
-                    </th>
-                    <th>
-
-                    </th>
-                </tr>
-
-                @foreach (var item in Model)
-                {
+            <table id="cart" class="table table-hover table-condensed">
+                <thead>
                     <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ProductName)
-                        </td>
-                        <td class="qty@(item.ProductId)">
-                            @Html.DisplayFor(modelItem => item.Quantity)
-                        </td>
-                        <td>
-                            $@Html.DisplayFor(modelItem => item.Price)
-                        </td>
-                        <td>
-                            <img src="/Images/Uploads/Products/@item.ProductId/Thumbs/@item.Image" />
-                        </td>
-                        <td>
-                            <a href="#" class="incrproduct" data-id="@item.ProductId">+</a>
-                            <a href="#" class="decrproduct" data-id="@item.ProductId">-</a>
-                            <a href="#" class="removeproduct" data-id="@item.ProductId">Remove</a>
-                        </td>
-                        <td class="total@(item.ProductId)">
-                            $@Html.DisplayFor(modelItem => item.Total)
-                        </td>
+                        <th style="width:60%">Product</th>
+                        <th style="width:8%" class="text-center">Price</th>
+                        <th style="width:7%" class="text-center">Quantity</th>
+                        <th style="width:10%" class="text-center">Subtotal</th>
+                        <th style="width:15%"></th>
                     </tr>
-                }
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
 
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="grandtotal"><b>Grand total</b> $<span>@ViewBag.GrandTotal</span></td>
-                </tr>
-
+                            <td data-th="Product">
+                                <div class="row">
+                                    <div class="col-sm-3 hidden-xs">
+                                        <a href="/shop/product-details/@item.Slug">
+                                            <img src="/Images/Uploads/Products/@item.ProductId/Thumbs/@item.Image" class="img-responsive" />
+                                        </a>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <a href="/shop/product-details/@item.Slug">
+                                            <h4 class="nomargin">@item.ProductName</h4>
+                                        </a>
+                                        <p>@item.Description</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="text-center" data-th="Price">$@item.Price</td>
+                            <td class="text-center qty@(item.ProductId)" data-th="Quantity">
+                                @*<input type="number" class="form-control text-center" value="1">*@
+                                @item.Quantity
+                            </td>
+                            <td class="text-center total@(item.ProductId)" data-th="Subtotal">$@item.Total</td>
+                            <td class="actions text-center" data-th="">
+                                @*<button class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>*@
+                                <a href="#" class="incrproduct" data-id="@item.ProductId"><span class="qty-up">+</span></a>
+                                <a href="#" class="decrproduct" data-id="@item.ProductId"><span class="qty-down">-</span></a>
+                                <a href="#" class="removeproduct btn btn-danger btn-sm" data-id="@item.ProductId"><i class="fas fa-trash"></i> Remove</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr class="visible-xs">
+                        <td class="text-center"><strong>$<span>@ViewBag.GrandTotal</span></strong></td>
+                    </tr>
+                    <tr>
+                        <td><a href="javascript:history.back()" class="btn back"><i class="fa fa-arrow-circle-left"></i> Continue Shopping</a></td>
+                        <td colspan="2" class="hidden-xs"></td>
+                        <td class="grandtotal hidden-xs text-center"><strong>$<span>@ViewBag.GrandTotal</span></strong></td>
+                        <td><a href="#" class="btn placeorder">Checkout <i class="fa fa-arrow-circle-right"></i></a></td>
+                    </tr>
+                </tfoot>
             </table>
 
             <div class="paypaldiv">
@@ -98,9 +93,6 @@
                     <input type="image" src="http://www.paypal.com/en_US/i/btn/x-click-but01.gif" name="submit" alt="Make payments with PayPal - it's fast, free and secure!">
                 </form>
             </div>
-            <br />
-            <a href="#" class="placeorder btn btn-primary pull-right">Checkout</a>
-
         }
     </div>
 </div>

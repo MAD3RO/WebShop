@@ -1,12 +1,11 @@
 /*
 Template Name: Electro - HTML Ecommerce Template
-Author: yaminncco
 
 Colors:
 	Body 		: #333
 	Headers 	: #2B2D42
 	Primary 	: #D10024
-	Dark 		: #15161D ##1E1F29
+	Dark 		: #15161D #1E1F29
 	Grey 		: #E4E7ED #FBFBFC #8D99AE #B9BABC
 
 Fonts: Montserrat
@@ -103,10 +102,12 @@ ul, ol {
     list-style: none
 }
 
+.page-header {
+    margin: 0px 0px 30px;
+}
 /*----------------------------*\
 	Buttons
 \*----------------------------*/
-
 .primary-btn {
     display: inline-block;
     padding: 12px 30px;
@@ -470,7 +471,7 @@ textarea.input {
 #startHeader {
     position: sticky;
     top: 0;
-    z-index: 999;
+    z-index: 998;
     width: 100%;
     -webkit-transition: all 0.6s ease;
     transition: all 0.6s ease;
@@ -706,7 +707,7 @@ textarea.input {
         max-width: 250px;
         width: 0%;
         overflow: hidden;
-        z-index: 22;
+        z-index: 999;
         padding-top: 60px;
         -webkit-transform: translateX(-100%);
         -ms-transform: translateX(-100%);
@@ -1707,10 +1708,11 @@ a.add-to-cart-btn:focus {
     .product-details .add-to-cart .add-to-cart-btn {
         position: relative;
         border: 2px solid transparent;
-        height: 40px;
-        padding: 0 30px;
+        /*height: 20px;*/
+        padding: 5px 12px;
         background-color: #ef233c;
         color: #FFF;
+        /*line-height: 20px;*/
         text-transform: uppercase;
         font-weight: 700;
         border-radius: 40px;
@@ -1720,11 +1722,11 @@ a.add-to-cart-btn:focus {
 
         .product-details .add-to-cart .add-to-cart-btn > i {
             position: absolute;
-            left: 0;
-            top: 0;
-            width: 40px;
-            height: 40px;
-            line-height: 38px;
+            left: 8px;
+            top: 2px;
+            width: 20px;
+            height: 20px;
+            line-height: 20px;
             color: #D10024;
             opacity: 0;
             visibility: hidden;
@@ -1734,7 +1736,7 @@ a.add-to-cart-btn:focus {
             background-color: #FFF;
             color: #D10024;
             border-color: #D10024;
-            padding: 0px 30px 0px 50px;
+            padding: 5px 12px 5px 32px;
         }
 
             .product-details .add-to-cart .add-to-cart-btn:hover > i {
@@ -2087,89 +2089,97 @@ a.add-to-cart-btn:focus {
 }
 
 /*=========================================================
-	10 -> NEWSLETTER
+	10 -> CART DETAILS
 ===========================================================*/
 
-#newsletter.section {
-    border-top: 2px solid #E4E7ED;
-    border-bottom: 3px solid #D10024;
-    margin-top: 30px;
+.table > tbody > tr > td, .table > tfoot > tr > td {
+    vertical-align: middle;
 }
 
-.newsletter {
-    text-align: center;
+table#cart tbody tr td div div img {
+    min-width: 100px;
+    min-height: 100px;
 }
 
-    .newsletter p {
-        font-size: 24px;
+.placeorder {
+    color: #FFF;
+    background-color: #D10024;
+}
+
+.back {
+    color: #FFF;
+    background-color: #1e1f29;
+}
+
+    .back:hover, .placeorder:hover {
+        color: #FFF;
+        opacity: 0.9;
     }
 
-    .newsletter form {
-        position: relative;
-        max-width: 520px;
-        margin: 30px auto;
+.removeproduct {
+    padding: 0px;
+    display: inline-block;
+    padding:5px 5px;
+    background-color:#D10024;
+    opacity:0.9;
+}
+
+    .removeproduct:hover {
+        background-color: #D10024;
+        opacity: 0.8;
     }
 
-        .newsletter form:after {
-            content: "\f003";
-            font-family: FontAwesome;
-            position: absolute;
-            font-size: 160px;
-            color: #E4E7ED;
-            top: 15px;
-            -webkit-transform: translateY(-50%) rotate(15deg);
-            -ms-transform: translateY(-50%) rotate(15deg);
-            transform: translateY(-50%) rotate(15deg);
-            z-index: -1;
-            left: -90px;
-        }
+.incrproduct .qty-up, .decrproduct .qty-down {
+    display: inline-block;
+    padding: 5px 5px;
+    border: 1px solid #E4E7ED;
+    background-color: #FFF;
+    font-weight: 800;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    vertical-align: middle;
+}
 
-        .newsletter form .input {
-            width: calc(100% - 160px);
-            margin-right: -4px;
-            border-radius: 40px 0px 0px 40px;
-        }
-
-        .newsletter form .newsletter-btn {
-            width: 160px;
-            height: 40px;
-            font-weight: 700;
-            background: #D10024;
-            color: #FFF;
-            border: none;
-            border-radius: 0px 40px 40px 0px;
-        }
-
-    .newsletter .newsletter-follow {
-        text-align: center;
+@media screen and (max-width: 600px) {
+    table#cart tbody td .form-control {
+        width: 20%;
+        display: inline !important;
     }
 
-        .newsletter .newsletter-follow li {
+    .actions .btn {
+        width: 40%;
+        margin: 1.5em 0;
+    }
+
+    table#cart thead {
+        display: none;
+    }
+
+
+    table#cart tbody td {
+        display: block;
+        padding: .6rem;
+        min-width: 320px;
+    }
+
+        table#cart tbody td:before {
+            content: attr(data-th);
+            font-weight: bold;
             display: inline-block;
-            margin-right: 5px;
+            width: 8rem;
         }
 
-            .newsletter .newsletter-follow li:last-child {
-                margin-right: 0px;
-            }
+    table#cart tfoot td {
+        display: block;
+    }
 
-            .newsletter .newsletter-follow li a {
-                position: relative;
-                display: block;
-                width: 40px;
-                height: 40px;
-                text-align: center;
-                line-height: 40px;
-                border: 1px solid #E4E7ED;
-                background-color: #FFF;
-                -webkit-transition: 0.2s all;
-                transition: 0.2s all;
-            }
-
-                .newsletter .newsletter-follow li a:hover, .newsletter .newsletter-follow li a:focus {
-                    background-color: #E4E7ED;
-                    color: #D10024;
-                }
+        table#cart tfoot td .btn {
+            display: block;
+        }
+}
 
 /*=========================================================
 	11 -> FOOTER
@@ -2809,22 +2819,14 @@ h3.other-nw {
     color: #FFF;
 }
 
-    #btnLogin:hover {
-        -webkit-transform: scale(1.01);
-        -ms-transform: scale(1.01);
-        transform: scale(1.01);
-    }
-
 #btnRegister {
     background-color: #1e1f29;
     opacity: 0.8;
     color: #FFF;
 }
 
-    #btnRegister:hover {
-        -webkit-transform: scale(1.01);
-        -ms-transform: scale(1.01);
-        transform: scale(1.01);
+    #btnRegister:hover, #btnLogin:hover {
+        opacity: 0.9;
     }
 
 #modalIcon {
