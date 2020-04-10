@@ -6,6 +6,7 @@ using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
 using WebShop.Models.Data;
+using WebShop.Models.ViewModels.Account;
 using WebShop.Models.ViewModels.Cart;
 
 namespace WebShop.Controllers
@@ -270,6 +271,70 @@ namespace WebShop.Controllers
 
             // Reset session
             Session["cart"] = null;
+        }
+
+        //[ActionName("checkout-as-guest")]
+        //public ActionResult CheckoutAsGuest()
+        //{
+        //    List<CartVM> cart = Session["cart"] as List<CartVM>;
+        //    int qty = 0;
+        //    decimal total = 0m;
+
+        //    foreach (var item in cart)
+        //    {
+        //        total += item.Total;
+        //    }
+
+        //    ViewBag.GrandTotal = total;
+        //    ViewBag.CartVMList = cart;
+
+        //    return View("Checkout");
+        //}
+
+        //public ActionResult Checkout()
+        //{
+        //    return View("Checkout");
+        //}
+
+        public ActionResult Checkout()
+        {
+            List<CartVM> cart = Session["cart"] as List<CartVM>;
+            decimal total = 0m;
+
+            foreach (var item in cart)
+            {
+                total += item.Total;
+            }
+
+            ViewBag.GrandTotal = total;
+            ViewBag.CartVMList = cart;
+
+            // Get username
+            string username = User.Identity.Name;
+
+            if (string.IsNullOrEmpty(username))
+            {
+                return View();
+            }
+            else
+            {
+                UserProfileVM model;
+
+                using (Db db = new Db())
+                {
+                    // Get user
+                    UserModel dto = db.Users.FirstOrDefault(x => x.Username == username);
+
+                    // Build model
+                    model = new UserProfileVM(dto);
+                }
+                return View(model);
+            }
+        }
+
+        public ActionResult CheckoutPartial()
+        {
+            return PartialView();
         }
     }
 }

@@ -1,0 +1,187 @@
+﻿@model WebShop.Models.ViewModels.Account.UserProfileVM
+
+@{
+    ViewBag.Title = "Checkout";
+    int count = 1;
+}
+
+<!-- BREADCRUMB -->
+<div id="breadcrumb" class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="breadcrumb-header">Checkout</h3>
+            </div>
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /BREADCRUMB -->
+<!-- SECTION -->
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row" id="preCheckoutDiv">
+            <div class="col-md-7">
+                <!-- Billing Details -->
+                <div class="billing-details">
+                    <div class="section-title">
+                        <h3 class="title">Billing address</h3>
+                    </div>
+                    @using (Html.BeginForm())
+                    {
+                        <div class="form-group">
+                            <label class="control-label col-md-2">First name</label>
+                            @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "input", disabled = "true" } })
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">Last name</label>
+                            @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "input", disabled = "true" } })
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">E-mail</label>
+                            @Html.EditorFor(model => model.EmailAddress, new { htmlAttributes = new { @class = "input", disabled = "true" } })
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">Address</label>
+                            @Html.EditorFor(model => model.StreetAddress, new { htmlAttributes = new { @class = "input", disabled = "true" } })
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">City</label>
+                            @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "input", disabled = "true" } })
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">Zip code</label>
+                            @Html.EditorFor(model => model.ZipCode, new { htmlAttributes = new { @class = "input", disabled = "true" } })
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">Contact</label>
+                            @Html.EditorFor(model => model.Contact, new { htmlAttributes = new { @class = "input", disabled = "true" } })
+                        </div>
+                    }
+                </div>
+                <div class="form-group">
+                    <a href="/account/user-profile">
+                        Change details
+                    </a>
+                </div>
+                <!-- /Billing Details -->
+            </div>
+
+            <!-- Order Details -->
+            <div class="col-md-5 order-details">
+                <div class="section-title text-center">
+                    <h3 class="title">Your Order</h3>
+                </div>
+
+                <div class="order-summary">
+                    <div class="order-col">
+                        <div><strong>PRODUCT</strong></div>
+                        <div><strong>TOTAL</strong></div>
+                    </div>
+                    @if (ViewBag.CartVMList != null && ViewBag.CartVMList.Count > 0)
+                    {
+                        <div class="order-products">
+                            @foreach (var product in ViewBag.CartVMList)
+                            {
+                                <div class="order-col">
+                                    <div>@product.ProductName</div>
+                                    <div>@product.Quantity x  $@product.Price</div>
+                                </div>
+                            }
+                        </div>
+                    }
+                    <div class="order-col">
+                        <div>Shipping</div>
+                        <div><strong>FREE</strong></div>
+                    </div>
+                    <div class="order-col">
+                        <div><strong>TOTAL</strong></div>
+                        <div><strong class="order-total">$@ViewBag.GrandTotal</strong></div>
+                    </div>
+                </div>
+                <div class="payment-method">
+                    <div class="input-radio">
+                        <input type="radio" name="payment" id="payment-1">
+                        <label for="payment-1">
+                            <span></span>
+                            Direct Bank Transfer
+                        </label>
+                        <div class="caption">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                        </div>
+                    </div>
+                    <div class="input-radio">
+                        <input type="radio" name="payment" id="payment-2">
+                        <label for="payment-2">
+                            <span></span>
+                            Cheque Payment
+                        </label>
+                        <div class="caption">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                        </div>
+                    </div>
+                    <div class="input-radio">
+                        <input type="radio" name="payment" id="payment-3">
+                        <label for="payment-3">
+                            <span></span>
+                            Paypal System
+                        </label>
+                        <div class="caption">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-checkbox">
+                    <input type="checkbox" id="terms">
+                    <label for="terms">
+                        <span></span>
+                        I've read and accept the <a href="#">terms & conditions</a>
+                    </label>
+                </div>
+                <a href="#" class="placeorder primary-btn order-submit">Place order</a>
+            </div>
+            <!-- /Order Details -->
+        </div>
+        <!-- /row -->
+
+        @Html.Action("PaypalPartial", "Cart")
+        @Html.Action("CheckoutPartial", "Cart")
+    </div>
+    <!-- /container -->
+</div>
+<!-- /SECTION -->
+
+@section Scripts{
+    <script>
+
+        $(function () {
+
+            /*
+            * Place order
+            */
+
+            $("a.placeorder").click(function (e) {
+                e.preventDefault();
+
+                var $this = $(this);
+                var url = "/cart/PlaceOrder";
+                $(".ajaxbg").show();
+                document.getElementById("postCheckoutDiv").classList.remove("hidden");
+                $.post(url, {}, function (data) {
+                    $(".ajaxbg span").text("Thank you. You will now be redirected to paypal.");
+                    setTimeout(function () {
+                        $('form input[name="submit"]').click();
+                    }, 2000);
+                });
+            });
+
+            //////////////////////////////////////////////////////////////
+
+        });
+    </script>
+}

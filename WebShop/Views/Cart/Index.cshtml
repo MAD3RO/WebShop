@@ -2,14 +2,27 @@
 
 @{
     ViewBag.Title = "Cart Details";
-    int count = 1;
 }
 
+<!-- BREADCRUMB -->
+<div id="breadcrumb" class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="breadcrumb-header">Cart Details</h3>
+            </div>
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /BREADCRUMB -->
 <!-- SECTION -->
 <div class="section" id="body-section">
     <!-- container -->
     <div class="container">
-        <h2 class="page-header">Cart Details</h2>
 
         @if (ViewBag.Message != null)
         {
@@ -70,29 +83,17 @@
                         <td><a href="javascript:history.back()" class="btn back"><i class="fa fa-arrow-circle-left"></i> Continue Shopping</a></td>
                         <td colspan="2" class="hidden-xs"></td>
                         <td class="grandtotal hidden-xs text-center"><strong>$<span>@ViewBag.GrandTotal</span></strong></td>
-                        <td><a href="#" class="btn placeorder">Checkout <i class="fa fa-arrow-circle-right"></i></a></td>
+                        @if (Request.IsAuthenticated)
+                        {
+                            <td><a class="checkout btn" href="#" onclick="location.href='@Url.Action("Checkout", "cart")'">Checkout <i class="fa fa-arrow-circle-right"></i></a></td>
+                        }
+                        else
+                        {
+                            <td><a class="checkout btn" href="#" data-toggle="modal" data-target="#headerModal">Checkout <i class="fa fa-arrow-circle-right"></i></a></td>
+                        }
                     </tr>
                 </tfoot>
             </table>
-
-            <div class="paypaldiv">
-                <form class="paypalform" action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
-                    <input type="hidden" name="cmd" value="_cart">
-                    <input type="hidden" name="upload" value="1">
-                    <input type="hidden" name="business" value="tylerdurden_seller@gmail.com">
-
-                    @foreach (var item in Model)
-                    {
-                        <input type="hidden" name="item_name_@count" value="@item.ProductName">
-                        <input type="hidden" name="amount_@count" value="@item.Price">
-                        <input type="hidden" name="quantity_@count" value="@item.Quantity">
-                        count++;
-
-                    }
-                    <input type="hidden" name="currency_code" value="USD">
-                    <input type="image" src="http://www.paypal.com/en_US/i/btn/x-click-but01.gif" name="submit" alt="Make payments with PayPal - it's fast, free and secure!">
-                </form>
-            </div>
         }
     </div>
 </div>
@@ -189,27 +190,6 @@
 
                 $.get(url, { productId: productId }, function (data) {
                     location.reload();
-                });
-            });
-
-            //////////////////////////////////////////////////////////////
-
-            /*
-            * Place order
-            */
-
-            $("a.placeorder").click(function (e) {
-                e.preventDefault();
-
-                var $this = $(this);
-                var url = "/cart/PlaceOrder";
-                $(".ajaxbg").show();
-
-                $.post(url, {}, function (data) {
-                    $(".ajaxbg span").text("Thank you. You will now be redirected to paypal.");
-                    setTimeout(function () {
-                        $('form input[name="submit"]').click();
-                    }, 2000);
                 });
             });
 

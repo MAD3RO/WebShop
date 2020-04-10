@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = ViewBag.CategoryName;
+    TempData["CategoryName"] = ViewBag.CategoryName;
 }
 
 @using PagedList.Mvc;
@@ -199,7 +200,7 @@
                 <!-- /ASIDE -->
                 <!-- STORE -->
                 <div id="store" class="col-md-9 col-xs-9">
-                    <h2 class="page-header">@ViewBag.CategoryName</h2>
+                    <h2 class="page-header text-uppercase">@ViewBag.CategoryName</h2>
                     <!-- store top filter -->
                     <div class="store-filter clearfix">
                         <div class="store-sort">

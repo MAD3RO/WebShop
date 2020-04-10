@@ -42,7 +42,8 @@ namespace WebShop
                       "~/Content/slick-theme.css",
                       "~/Content/nouislider.min.css",
                       "~/Content/font-awesome.min.css",
-                      "~/Content/style.css"));
+                      "~/Content/style.css",
+                      "~/Content/Site.css"));
             //"~/Content/creditly.css",
             //"~/Content/easy-responsive-tabs.css",
             //"~/Content/flexslider.css",

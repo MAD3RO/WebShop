@@ -4,15 +4,29 @@
     ViewBag.Title = "Orders";
 }
 
+<!-- BREADCRUMB -->
+<div id="breadcrumb" class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="breadcrumb-header">Orders</h3>
+            </div>
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /BREADCRUMB -->
 <!-- SECTION -->
 <div class="section" id="body-section">
     <!-- container -->
     <div class="container">
-        <h2>Orders</h2>
 
         @if (!Model.Any())
         {
-            <h3 class="text-center">You have no orders.</h3>
+            <h3 class="text-center text-danger">You have no orders.</h3>
         }
         else
         {

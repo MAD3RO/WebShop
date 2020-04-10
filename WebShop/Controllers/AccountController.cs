@@ -185,12 +185,20 @@ namespace WebShop.Controllers
 
         // GET: /account/Logout
         [Authorize]
-        public ActionResult Logout()
+        public ActionResult Logout(bool isCheckout)
         {
             FormsAuthentication.SignOut();
             //return Redirect("~/account/login");
             //return Redirect("~/shop/");
-            return RedirectToAction("Index", "Shop");
+            //return RedirectToAction("Index", "Shop");
+            if (isCheckout)
+            {
+                return RedirectToAction("Index", "Cart");
+            }
+            else
+            {
+                return Redirect(Request.UrlReferrer.ToString());
+            }
         }
 
         [Authorize]

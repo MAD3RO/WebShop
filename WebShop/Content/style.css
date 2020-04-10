@@ -380,7 +380,7 @@ textarea.input {
     padding: 30px 0px;
     background: #FBFBFC;
     border-bottom: 1px solid #E4E7ED;
-    margin-bottom: 30px;
+    /*margin-bottom: 30px;*/
 }
 
     #breadcrumb .breadcrumb-header {
@@ -2101,7 +2101,7 @@ table#cart tbody tr td div div img {
     min-height: 100px;
 }
 
-.placeorder {
+.checkout {
     color: #FFF;
     background-color: #D10024;
 }
@@ -2111,7 +2111,7 @@ table#cart tbody tr td div div img {
     background-color: #1e1f29;
 }
 
-    .back:hover, .placeorder:hover {
+    .back:hover, .checkout:hover {
         color: #FFF;
         opacity: 0.9;
     }
@@ -2119,9 +2119,9 @@ table#cart tbody tr td div div img {
 .removeproduct {
     padding: 0px;
     display: inline-block;
-    padding:5px 5px;
-    background-color:#D10024;
-    opacity:0.9;
+    padding: 5px 5px;
+    background-color: #D10024;
+    opacity: 0.9;
 }
 
     .removeproduct:hover {
@@ -2825,7 +2825,13 @@ h3.other-nw {
     color: #FFF;
 }
 
-    #btnRegister:hover, #btnLogin:hover {
+#btnGuest {
+    background-color: #1e1f29;
+    opacity: 0.8;
+    color: #FFF;
+}
+
+    #btnRegister:hover, #btnLogin:hover, #btnGuest:hover {
         opacity: 0.9;
     }
 

@@ -35,17 +35,7 @@
                 </ul>
                 <ul class="header-links pull-right">
                     @*<li><a href="#"><i class="fa fa-dollar"></i> USD</a></li>
-                        <li><a href="#"><i class="fa fa-user-o"></i> My Account</a></li>*@
-                    @if (Request.IsAuthenticated)
-                    {
-                        <li><a href="/account/logout"><i class="fas fa-sign-out-alt"></i>Logout</a></li>
-                    }
-                    else
-                    {
-                        <li><a href="#" data-toggle="modal" data-target="#headerModal"><i class="far fa-user"></i>Login</a></li>
-                        <li><a href="/account/create-account"><i class="fas fa-sign-in-alt"></i>Register</a></li>
-                    }
-
+        <li><a href="#"><i class="fa fa-user-o"></i> My Account</a></li>*@
                     @if (Request.IsAuthenticated && User.IsInRole("User"))
                     {
                         if (ViewBag.Title == "User Profile" || ViewBag.Title == "Orders")
@@ -61,6 +51,23 @@
                     @if (Request.IsAuthenticated && User.IsInRole("Admin"))
                     {
                         <li><i class="fas fa-chart-line"></i>@Html.ActionLink("Admin Area", "Index", "Dashboard", new { area = "Admin" }, null) </li>
+                    }
+
+                    @if (Request.IsAuthenticated)
+                    {
+                        if (ViewBag.Title == "Checkout")
+                        {
+                            <li><a href="#" onclick="location.href='@Url.Action("Logout", "Account", new { isCheckout = true})'"><i class="fas fa-sign-out-alt"></i>Logout</a></li>
+                        }
+                        else
+                        {
+                            <li><a href="#" onclick="location.href='@Url.Action("Logout", "Account", new { isCheckout = false})'"><i class="fas fa-sign-out-alt"></i>Logout</a></li>
+                        }
+                    }
+                    else
+                    {
+                        <li><a href="#" data-toggle="modal" data-target="#headerModal"><i class="far fa-user"></i>Login</a></li>
+                        <li><a href="/account/create-account"><i class="fas fa-sign-in-alt"></i>Register</a></li>
                     }
                 </ul>
             </div>
@@ -104,7 +111,7 @@
                             </div>
                             <!-- /Wishlist -->
                             <!-- Cart -->
-                            @if (ViewBag.Title != "Cart Details")
+                            @if (ViewBag.Title != "Cart Details" && !User.IsInRole("Admin") && ViewBag.Title != "Checkout")
                             {
                                 @Html.Action("CartPartial", "Cart")
                             }
@@ -304,7 +311,8 @@
                         }
                         else if (partialResult === "success") {
                             $("#headerModal").modal("hide");
-                            setTimeout(function () { window.location.href = "/Shop/Index"; }, 35);
+                            //setTimeout(function () { window.location.href = "/Shop/Index"; }, 35);
+                            setTimeout(function () { location.reload(); }, 35);
                         }
                     }
                 });
@@ -315,8 +323,8 @@
     <!-- categories dropdown -->
     <script>
         /*
-            * Add to cart
-            */
+        * Add to cart
+        */
 
         $("a.add-to-cart-btn").click(function (e) {
             e.preventDefault();
@@ -348,6 +356,21 @@
         });
 
         /////////////////////////////////////////////////////////////
+
+        /*
+        * Checkout as a guest
+        */
+
+        $("a.checkout").click(function (e) {
+            e.preventDefault();
+            document.getElementById("checkout-as-guest").classList.remove("hidden");
+        });
+
+        $("#headerModal").on('hidden.bs.modal', function () {
+            document.getElementById("checkout-as-guest").classList.add("hidden");
+        })
+
+        //////////////////////////////////////////////////////////////
 
         //$(".dropdown-categories").hover(
         //    function () {

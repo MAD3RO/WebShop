@@ -1,16 +1,5 @@
 ﻿@model WebShop.Models.ViewModels.Account.LoginUserVM
 
-@{
-    ViewBag.Title = "Login";
-}
-
-@*@if (TempData["SM"] != null)
-    {
-        <div class="alert alert-success">
-            @TempData["SM"]
-        </div>
-    }*@
-
 <!-- START-HEADER-MODAL -->
 <div class="modal fade" id="headerModal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg">
@@ -103,6 +92,9 @@
                                         <form action="/account/create-account">
                                             <input class="btn" id="btnRegister" type="submit" style="width:100%;" value="Register" />
                                         </form>
+                                    </div>
+                                    <div class="col-md-10 hidden" id="checkout-as-guest" style="margin-top:10px;">
+                                        <a class="btn" id="btnGuest" style="width:100%;" href="#" onclick="location.href='@Url.Action("Checkout", "cart")'">Continue as a guest</a>
                                     </div>
                                 </div>
                             </div>
