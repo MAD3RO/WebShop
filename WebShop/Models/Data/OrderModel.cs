@@ -12,10 +12,19 @@ namespace WebShop.Models.Data
     {
         [Key]
         public int OrderId { get; set; }
+
         public int UserId { get; set; }
+
+        public int PaymentMethodId { get; set; }
+
+        public string Status { get; set; }
+
         public DateTime? CreatedAt { get; set; }
 
         [ForeignKey("UserId")]
         public virtual UserModel Users { get; set; }
+
+        [ForeignKey("PaymentMethodId")]
+        public virtual PaymentMethodModel PaymentMethod { get; set; }
     }
 }

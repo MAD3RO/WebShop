@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using WebShop.Models.Data;
 using WebShop.Models.ViewModels.Account;
 using WebShop.Models.ViewModels.Cart;
+using WebShop.Models.ViewModels.Shop;
 
 namespace WebShop.Controllers
 {
@@ -252,7 +253,7 @@ namespace WebShop.Controllers
                 foreach (var item in cart)
                 {
                     orderDetailsDTO.OrderId = orderId;
-                    orderDetailsDTO.UserId = userId;
+                    //orderDetailsDTO.UserId = userId;
                     orderDetailsDTO.ProductId = item.ProductId;
                     orderDetailsDTO.Quantity = item.Quantity;
 
@@ -268,6 +269,9 @@ namespace WebShop.Controllers
                 EnableSsl = true
             };
             client.Send("admin@example.com", "admin@example.com", "New Order", "You have a new order. Order number " + orderId);
+
+            // Create a TempData message
+            ViewBag.Message = "Your order was completed successfully.";
 
             // Reset session
             Session["cart"] = null;
@@ -309,6 +313,13 @@ namespace WebShop.Controllers
             ViewBag.GrandTotal = total;
             ViewBag.CartVMList = cart;
 
+            //using (Db db = new Db())
+            //{
+            //    // Init list of payment methods
+            //    List<PaymentMethodModel> paymentMethods = db.PaymentMethods.ToList();
+            //    ViewBag.CheckoutVM = paymentMethods;
+            //}
+
             // Get username
             string username = User.Identity.Name;
 
@@ -332,9 +343,29 @@ namespace WebShop.Controllers
             }
         }
 
+        [HttpGet]
         public ActionResult CheckoutPartial()
         {
-            return PartialView();
+            var checkoutVM = new CheckoutPartialVM();
+            using (Db db = new Db())
+            {
+                // Init list of payment methods
+                List<PaymentMethodModel> paymentMethods = db.PaymentMethods.ToList();
+                checkoutVM.PaymentMethod = paymentMethods;
+            }
+            return PartialView(checkoutVM);
+        }
+
+        [HttpPost]
+        public ActionResult CheckoutPartial(CheckoutPartialVM model)
+        {
+            using (Db db = new Db())
+            {
+                // Init list of payment methods
+                //List<PaymentMethodModel> paymentMethods = db.PaymentMethods.ToList();
+                //model.PaymentMethodName = paymentMethods;
+            }
+            return PartialView(model);
         }
     }
 }

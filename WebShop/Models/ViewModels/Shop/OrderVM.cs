@@ -16,10 +16,12 @@ namespace WebShop.Models.ViewModels.Shop
             OrderId = row.OrderId;
             UserId = row.UserId;
             CreatedAt = row.CreatedAt;
+            Status = row.Status;
         }
 
         public int OrderId { get; set; }
         public int UserId { get; set; }
         public DateTime? CreatedAt { get; set; }
+        public string Status { get; set; }
     }
 }

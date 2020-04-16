@@ -1,7 +1,7 @@
 ﻿@model WebShop.Models.ViewModels.Account.UserProfileVM
 
 @{
-    ViewBag.Title = "User Profile";
+    ViewBag.Title = "Profile Details";
 }
 
 <!-- SECTION -->
@@ -22,7 +22,7 @@
             </div>
             <!-- /ASIDE -->
             <div id="store" class="col-md-10 col-xs-9">
-                <h3 class="page-header text-uppercase">Profile Details</h3>
+                <h3 class="page-header text-uppercase">@ViewBag.Title</h3>
 
                 @if (TempData["SM"] != null)
                 {

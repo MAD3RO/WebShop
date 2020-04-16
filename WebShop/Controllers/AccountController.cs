@@ -324,7 +324,7 @@ namespace WebShop.Controllers
         public ActionResult Orders()
         {
             // Init list of OrdersForUserVM
-            List<OrdersForUserVM> ordersForUser = new List<OrdersForUserVM>();
+            var ordersForUser = new List<OrdersForUserVM>();
 
             using (Db db = new Db())
             {
@@ -372,7 +372,8 @@ namespace WebShop.Controllers
                         OrderNumber = order.OrderId,
                         Total = total,
                         ProductsAndQty = productsAndQty,
-                        CreatedAt = order.CreatedAt
+                        CreatedAt = order.CreatedAt,
+                        Status = order.Status
                     });
                 }
             }

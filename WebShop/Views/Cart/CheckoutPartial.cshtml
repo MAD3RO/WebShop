@@ -1,9 +1,28 @@
-﻿<div class="ajaxbg"><span><img src="~/Content/img/ajax-loader.gif" /></span></div>
-<!-- row -->
-<div class="row hidden" id="postCheckoutDiv">
-    <i class="fa fa-shopping-cart"></i>
-    <h3 class="text-center">Thank you for purchasing</h3>
-    <h5 class="text-center">Your order was completed successfully</h5>
-    <a href="javascript:history.back()" class="btn back"><i class="fa fa-arrow-circle-left"></i> Continue Shopping</a>
-</div>
-<!-- /row -->
+﻿@model WebShop.Models.ViewModels.Shop.CheckoutPartialVM
+
+@using (Html.BeginForm("CheckoutPartial", "Cart", FormMethod.Post))
+{
+    <div class="payment-method">
+        @foreach (var payment in Model.PaymentMethod.ToList())
+        {
+            <div class="input-radio">
+                <input type="radio" name="payment" id="@payment.PaymentMethodId">
+                <label for="@payment.PaymentMethodId">
+                    <span></span>
+                    @payment.PaymentMethodName
+                </label>
+                <div class="caption">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="input-checkbox">
+        <input type="checkbox" id="terms" required>
+        <label for="terms">
+            <span></span>
+            I've read and accept the <a href="#">terms & conditions</a>
+        </label>
+    </div>
+    <a href="#" class="placeorder primary-btn order-submit">Place order</a>
+}
