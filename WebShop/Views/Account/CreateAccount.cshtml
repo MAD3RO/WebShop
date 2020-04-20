@@ -18,10 +18,9 @@
         }
         else
         {
-            using (Html.BeginForm())
+            using (Html.BeginForm("create-account", "Account", FormMethod.Post))
             {
                 @Html.AntiForgeryToken()
-
                 <div class="form-horizontal">
                     <hr />
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -107,7 +106,7 @@
 
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Create" class="btn btn-default" />
+                            <input type="submit" value="Create" formaction=@Url.Action("create-account") formmethod="post" class="btn btn-default" />
                         </div>
                     </div>
                 </div>

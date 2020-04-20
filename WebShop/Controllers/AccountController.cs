@@ -44,7 +44,7 @@ namespace WebShop.Controllers
         //POST: /account/login-partial
         //[ActionName("login-partial")]
         [HttpPost]
-        //[ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         [HandleError]
         public JsonResult LoginPartial(LoginUserVM model)
         {

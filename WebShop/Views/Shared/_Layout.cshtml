@@ -258,7 +258,6 @@
         $(document).ready(function () {
             $("#headerModal").on("submit", "#loginForm", function (e) {
                 e.preventDefault();
-
                 var form = $(this);
                 $.ajax({
                     url: form.attr("action"),
