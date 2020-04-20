@@ -46,14 +46,7 @@
 
                     @if (Request.IsAuthenticated)
                     {
-                        if (ViewBag.Title == "Checkout")
-                        {
-                            <li><a href="#" onclick="location.href='@Url.Action("Logout", "Account", new { isCheckout = true})'"><i class="fas fa-sign-out-alt"></i>Logout</a></li>
-                        }
-                        else
-                        {
-                            <li><a href="#" onclick="location.href='@Url.Action("Logout", "Account", new { isCheckout = false})'"><i class="fas fa-sign-out-alt"></i>Logout</a></li>
-                        }
+                        <li><a href="#" onclick="location.href='@Url.Action("Logout", "Account")'"><i class="fas fa-sign-out-alt"></i>Logout</a></li>
                     }
                     else
                     {

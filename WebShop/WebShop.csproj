@@ -158,9 +158,11 @@
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\PagesController.cs" />
     <Compile Include="Controllers\ShopController.cs" />
-    <Compile Include="Migrations\202004161412264_initial.cs" />
-    <Compile Include="Migrations\202004161412264_initial.designer.cs">
-      <DependentUpon>202004161412264_initial.cs</DependentUpon>
+    <Compile Include="Enums\OrderStatus.cs" />
+    <Compile Include="Enums\PaymentMethod.cs" />
+    <Compile Include="Migrations\202004201204329_INITIAL.cs" />
+    <Compile Include="Migrations\202004201204329_INITIAL.designer.cs">
+      <DependentUpon>202004201204329_INITIAL.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Data\CategoryModel.cs" />
@@ -173,7 +175,6 @@
     <Compile Include="Models\Data\UserRoleModel.cs" />
     <Compile Include="Models\Data\WebShopInitializer.cs" />
     <Compile Include="Models\Data\PageModel.cs" />
-    <Compile Include="Models\Data\PaymentMethodModel.cs" />
     <Compile Include="Models\ViewModels\Account\LoginUserVM.cs" />
     <Compile Include="Models\ViewModels\Account\OrdersForUserVM.cs" />
     <Compile Include="Models\ViewModels\Account\UserProfileVM.cs" />
@@ -184,7 +185,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ViewModels\Shop\CategoryVM.cs" />
-    <Compile Include="Models\ViewModels\Shop\CheckoutPartialVM.cs" />
     <Compile Include="Models\ViewModels\Shop\OrderVM.cs" />
     <Compile Include="Models\ViewModels\Shop\ProductVM.cs" />
     <Compile Include="Models\ViewModels\UserNavPartialVM.cs" />
@@ -1430,7 +1430,6 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper.min.js.map" />
     <Content Include="Views\Cart\Checkout.cshtml" />
-    <Content Include="Views\Cart\CheckoutPartial.cshtml" />
     <None Include="_bin_deployableAssemblies\x86\sqlcese40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceqp40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceme40.dll" />
@@ -1475,8 +1474,8 @@
     <TypeScriptCompile Include="Scripts\index.d.ts" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202004161412264_initial.resx">
-      <DependentUpon>202004161412264_initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202004201204329_INITIAL.resx">
+      <DependentUpon>202004201204329_INITIAL.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

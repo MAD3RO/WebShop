@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
+using WebShop.Enums;
 using WebShop.Models.Data;
 using WebShop.Models.ViewModels.Account;
 using WebShop.Models.ViewModels.Cart;
@@ -239,6 +240,8 @@ namespace WebShop.Controllers
                 // Add to OrderDTO and save
                 orderDTO.UserId = userId;
                 orderDTO.CreatedAt = DateTime.Now;
+                orderDTO.Status = Enum.GetName(typeof(OrderStatus), OrderStatus.Pending);
+                orderDTO.PaymentMethod = Enum.GetName(typeof(PaymentMethod), PaymentMethod.Paypal);
 
                 db.Orders.Add(orderDTO);
                 db.SaveChanges();
@@ -341,31 +344,6 @@ namespace WebShop.Controllers
                 }
                 return View(model);
             }
-        }
-
-        [HttpGet]
-        public ActionResult CheckoutPartial()
-        {
-            var checkoutVM = new CheckoutPartialVM();
-            using (Db db = new Db())
-            {
-                // Init list of payment methods
-                List<PaymentMethodModel> paymentMethods = db.PaymentMethods.ToList();
-                checkoutVM.PaymentMethod = paymentMethods;
-            }
-            return PartialView(checkoutVM);
-        }
-
-        [HttpPost]
-        public ActionResult CheckoutPartial(CheckoutPartialVM model)
-        {
-            using (Db db = new Db())
-            {
-                // Init list of payment methods
-                //List<PaymentMethodModel> paymentMethods = db.PaymentMethods.ToList();
-                //model.PaymentMethodName = paymentMethods;
-            }
-            return PartialView(model);
         }
     }
 }

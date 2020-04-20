@@ -97,7 +97,14 @@ namespace WebShop.Controllers
         [HttpGet]
         public ActionResult CreateAccount()
         {
+            if (!string.IsNullOrEmpty(User.Identity.Name))
+            {
+                return RedirectToAction("Index", "Shop");
+            }
+            else
+            {
             return View("CreateAccount");
+            }
         }
 
         // POST: /account/create-account
@@ -185,15 +192,19 @@ namespace WebShop.Controllers
 
         // GET: /account/Logout
         [Authorize]
-        public ActionResult Logout(bool isCheckout)
+        public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
             //return Redirect("~/account/login");
             //return Redirect("~/shop/");
             //return RedirectToAction("Index", "Shop");
-            if (isCheckout)
+            if (Request.UrlReferrer.ToString().ToLower().Contains("checkout"))
             {
                 return RedirectToAction("Index", "Cart");
+            }
+            else if (Request.UrlReferrer.ToString().Contains("user-profile"))
+            {
+                return RedirectToAction("Index", "Shop");
             }
             else
             {
@@ -373,7 +384,8 @@ namespace WebShop.Controllers
                         Total = total,
                         ProductsAndQty = productsAndQty,
                         CreatedAt = order.CreatedAt,
-                        Status = order.Status
+                        Status = order.Status,
+                        PaymentMethod = order.PaymentMethod
                     });
                 }
             }

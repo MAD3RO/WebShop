@@ -40,24 +40,36 @@
                             <th>
                                 Total
                             </th>
+                            <th>
+                                Status
+                            </th>
+                            <th>
+                                Payment Method
+                            </th>
                         </tr>
 
-                        @foreach (var item in Model)
+                        @foreach (var order in Model)
                         {
-                            <tr>
-                                <td>
-                                    @foreach (var item2 in item.ProductsAndQty)
-                                    {
-                                        @item2.Key @:x @item2.Value <br />
-                                    }
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.CreatedAt)
-                                </td>
-                                <td>
-                                    $@Html.DisplayFor(modelItem => item.Total)
-                                </td>
-                            </tr>
+                        <tr>
+                            <td>
+                                @foreach (var orderDetails in order.ProductsAndQty)
+                                {
+                                    @orderDetails.Key @:x @orderDetails.Value <br />
+                                }
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => order.CreatedAt)
+                            </td>
+                            <td>
+                                $@Html.DisplayFor(modelItem => order.Total)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => order.Status)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => order.PaymentMethod)
+                            </td>
+                        </tr>
                         }
                     </table>
                 }

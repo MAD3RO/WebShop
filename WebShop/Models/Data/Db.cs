@@ -18,7 +18,6 @@ namespace WebShop.Models.Data
         public DbSet<UserRoleModel> UserRoles { get; set; }
         public DbSet<OrderModel> Orders { get; set; }
         public DbSet<OrderDetailsModel> OrderDetails { get; set; }
-        public DbSet<PaymentMethodModel> PaymentMethods { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

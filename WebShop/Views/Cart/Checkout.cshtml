@@ -117,13 +117,52 @@
                             <div><strong class="order-total">$@ViewBag.GrandTotal</strong></div>
                         </div>
                     </div>
-                    @Html.Action("CheckoutPartial", "Cart");
+                    <div class="payment-method">
+                        <div class="input-radio">
+                            <input type="radio" name="payment" id="payment-1">
+                            <label for="payment-1">
+                                <span></span>
+                                Cash on Delivery
+                            </label>
+                            <div class="caption">
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                            </div>
+                        </div>
+                        <div class="input-radio">
+                            <input type="radio" name="payment" id="payment-2">
+                            <label for="payment-2">
+                                <span></span>
+                                Paypal System
+                            </label>
+                            <div class="caption">
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                            </div>
+                        </div>
+                        <div class="input-radio">
+                            <input type="radio" name="payment" id="payment-3">
+                            <label for="payment-3">
+                                <span></span>
+                                Direct Bank Transfer
+                            </label>
+                            <div class="caption">
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-checkbox">
+                        <input type="checkbox" id="terms">
+                        <label for="terms">
+                            <span></span>
+                            I've read and accept the <a href="#">terms & conditions</a>
+                        </label>
+                    </div>
+                    <a href="#" class="placeorder primary-btn order-submit">Place order</a>
                 </div>
                 <!-- /ORDER DETAILS-->
             </div>
             <!-- /ROW -->
         }
-        @*<div class="ajaxbg"><span><img src="~/Content/img/ajax-loader.gif" /></span></div>*@
+        <div class="ajaxbg"><span><img src="~/Content/img/ajax-loader.gif" /></span></div>
 
         @Html.Action("PaypalPartial", "Cart")
     </div>
@@ -145,18 +184,18 @@
                 var $this = $(this);
                 var url = "/cart/PlaceOrder";
 
-                if (document.getElementById('payment-3').checked) {
+                if (document.getElementById('payment-1').checked) {
+                    $.post(url, {}, function (data) {
+                        setTimeout(function () {
+                        }, 2000);
+                    });
+                }
+                if (document.getElementById('payment-2').checked) {
                     $(".ajaxbg").show();
                     $.post(url, {}, function (data) {
                         $(".ajaxbg span").text("Thank you. You will now be redirected to paypal.");
                         setTimeout(function () {
                             $('form input[name="submit"]').click();
-                        }, 2000);
-                    });
-                }
-                if (document.getElementById('payment-2').checked) {
-                    $.post(url, {}, function (data) {
-                        setTimeout(function () {
                         }, 2000);
                     });
                 }

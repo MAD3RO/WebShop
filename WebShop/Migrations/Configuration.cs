@@ -42,17 +42,6 @@
             Categories.ForEach(category => context.Categories.AddOrUpdate(s => s.Name, category));
             context.SaveChanges();
 
-            // Payment methods initializer
-            var PaymentMethods = new List<PaymentMethodModel>
-                {
-                    new PaymentMethodModel{PaymentMethodName="Cash on Delivery"},
-                    new PaymentMethodModel{PaymentMethodName="PayPal System"},
-                    new PaymentMethodModel{PaymentMethodName="Direct Bank Transfer"}
-                };
-
-            PaymentMethods.ForEach(paymentMethod => context.PaymentMethods.AddOrUpdate(s => s.PaymentMethodName, paymentMethod));
-            context.SaveChanges();
-
             // Products initializer
             var Products = new List<ProductModel>
                 {

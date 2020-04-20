@@ -15,7 +15,6 @@ namespace WebShop.Models.ViewModels.Account
 
         public UserVM(UserModel row)
         {
-            Id = row.Id;
             FirstName = row.FirstName;
             LastName = row.LastName;
             Username = row.Username;
@@ -26,8 +25,6 @@ namespace WebShop.Models.ViewModels.Account
             Contact = row.Contact;
             Password = row.PasswordHash;
         }
-
-        public int Id { get; set; }
 
         [Required(ErrorMessage = "Firstname is required.")]
         public string FirstName { get; set; }
@@ -42,12 +39,16 @@ namespace WebShop.Models.ViewModels.Account
         [DataType(DataType.EmailAddress)]
         public string EmailAddress { get; set; }
 
+        [Required(ErrorMessage = "Street is required.")]
         public string StreetAddress { get; set; }
 
+        [Required(ErrorMessage = "City is required.")]
         public string City { get; set; }
 
+        [Required(ErrorMessage = "Zip code is required.")]
         public long? ZipCode { get; set; }
 
+        [Required(ErrorMessage = "Contact number is required.")]
         public long? Contact { get; set; }
 
         [Required(ErrorMessage = "Password is required.")]
@@ -59,6 +60,5 @@ namespace WebShop.Models.ViewModels.Account
         [DataType(DataType.Password)]
         [Compare("Password", ErrorMessage = "Confirm password and password do not match.")]
         public string ConfirmPassword { get; set; }
-
     }
 }
