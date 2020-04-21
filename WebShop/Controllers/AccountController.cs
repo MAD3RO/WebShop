@@ -133,6 +133,7 @@ namespace WebShop.Controllers
                 {
                     ModelState.AddModelError("", "Username " + model.Username + " is taken.");
                     model.Username = "";
+                    ViewBag.LoginPartial = "remove";
                     return View("CreateAccount", model);
                 }
 
@@ -141,6 +142,7 @@ namespace WebShop.Controllers
                 {
                     ModelState.AddModelError("", "Email address " + model.EmailAddress + " already exists.");
                     model.EmailAddress = "";
+                    ViewBag.LoginPartial = "remove";
                     return View("CreateAccount", model);
                 }
 
@@ -195,20 +197,22 @@ namespace WebShop.Controllers
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
+
+            var url = Request.UrlReferrer.ToString().ToLower();
             //return Redirect("~/account/login");
             //return Redirect("~/shop/");
             //return RedirectToAction("Index", "Shop");
-            if (Request.UrlReferrer.ToString().ToLower().Contains("checkout"))
+            if (url.Contains("checkout"))
             {
                 return RedirectToAction("Index", "Cart");
             }
-            else if (Request.UrlReferrer.ToString().Contains("user-profile"))
+            else if (url.Contains("user-profile") || url.Contains("orders"))
             {
                 return RedirectToAction("Index", "Shop");
             }
             else
             {
-                return Redirect(Request.UrlReferrer.ToString());
+                return Redirect(url);
             }
         }
 
@@ -365,7 +369,7 @@ namespace WebShop.Controllers
                         ProductModel product = db.Products.Where(x => x.Id == orderDetails.ProductId).FirstOrDefault();
 
                         // Get product price
-                        decimal price = product.Price;
+                        decimal price = product.NewPrice;
 
                         // Get product name
                         string productName = product.Name;

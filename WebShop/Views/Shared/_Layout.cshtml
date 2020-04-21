@@ -14,7 +14,10 @@
 </head>
 <body>
 
-    @Html.Action("LoginPartial", "Account")
+    @if (ViewBag.LoginPartial != "remove")
+    {
+        @Html.Action("LoginPartial", "Account")
+    }
 
     <!-- modal onClose padding right fix -->
     <style>

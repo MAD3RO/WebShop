@@ -748,7 +748,7 @@ textarea.input {
 \*----------------------------*/
 
 .user-nav > li > a {
-    padding:5px;
+    padding: 5px;
 }
 
     .user-nav > li > a:hover, .user-nav > li > a:focus, .user-nav > li.active > a {
@@ -2212,11 +2212,36 @@ table#cart tbody tr td div div img {
 	11 -> CHECKOUT
 ===========================================================*/
 
-back-checkout{
-align-content:center;
-text-align:center;
+.checkout-complete {
+    margin-top: 30px;
 }
 
+.cart-checkout {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    margin-bottom: 5px;
+}
+
+    .cart-checkout img {
+        margin-bottom: 20px;
+        width: 60px;
+        filter: invert(12%) sepia(98%) saturate(6252%) hue-rotate(346deg) brightness(81%) contrast(105%);
+    }
+
+    .cart-checkout a {
+        color: #FFF;
+        background-color: #D10024;
+        align-content: center;
+        text-align: center;
+        position: center;
+        margin-bottom:100px;
+    }
+
+        .cart-checkout a:hover {
+            color: #FFF;
+            opacity: 0.9;
+        }
 /*=========================================================
 	12 -> FOOTER
 ===========================================================*/

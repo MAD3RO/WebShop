@@ -160,11 +160,13 @@
     <Compile Include="Controllers\ShopController.cs" />
     <Compile Include="Enums\OrderStatus.cs" />
     <Compile Include="Enums\PaymentMethod.cs" />
-    <Compile Include="Migrations\202004201331054_initial.cs" />
-    <Compile Include="Migrations\202004201331054_initial.designer.cs">
-      <DependentUpon>202004201331054_initial.cs</DependentUpon>
+    <Compile Include="Migrations\202004211135236_initial.cs" />
+    <Compile Include="Migrations\202004211135236_initial.designer.cs">
+      <DependentUpon>202004211135236_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Data\CartDetailsModel.cs" />
+    <Compile Include="Models\Data\CartModel.cs" />
     <Compile Include="Models\Data\CategoryModel.cs" />
     <Compile Include="Models\Data\Db.cs" />
     <Compile Include="Models\Data\OrderDetailsModel.cs" />
@@ -612,6 +614,7 @@
     <Content Include="Content\img\shop01.png" />
     <Content Include="Content\img\shop02.png" />
     <Content Include="Content\img\shop03.png" />
+    <Content Include="Content\img\tick.svg" />
     <Content Include="Content\jquery.fancybox-buttons.css" />
     <Content Include="Content\jquery.fancybox-thumbs.css" />
     <Content Include="Content\jquery.fancybox.css" />
@@ -622,6 +625,7 @@
     <Content Include="Content\slick-theme.css" />
     <Content Include="Content\slick.css" />
     <Content Include="Content\style.css" />
+    <Content Include="Content\img\tick.png" />
     <Content Include="favicon.ico" />
     <Content Include="fileman\css\images\animated-overlay.gif" />
     <Content Include="fileman\css\images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -1474,8 +1478,8 @@
     <TypeScriptCompile Include="Scripts\index.d.ts" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202004201331054_initial.resx">
-      <DependentUpon>202004201331054_initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202004211135236_initial.resx">
+      <DependentUpon>202004211135236_initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

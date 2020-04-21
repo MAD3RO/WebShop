@@ -210,16 +210,20 @@ namespace WebShop.Controllers
             }
         }
 
+        [HttpGet]
         public ActionResult PaypalPartial()
         {
             List<CartVM> cart = Session["cart"] as List<CartVM>;
+
+            if (cart == null)
+                return PartialView();
 
             return PartialView(cart);
         }
 
         // POST: /Cart/PlaceOrder
         [HttpPost]
-        public void PlaceOrder()
+        public void PlaceOrder(string paymentMethod)
         {
             // Get cart list
             List<CartVM> cart = Session["cart"] as List<CartVM>;
@@ -240,8 +244,8 @@ namespace WebShop.Controllers
                 // Add to OrderDTO and save
                 orderDTO.UserId = userId;
                 orderDTO.CreatedAt = DateTime.Now;
-                orderDTO.Status = Enum.GetName(typeof(OrderStatus), OrderStatus.Pending);
-                orderDTO.PaymentMethod = Enum.GetName(typeof(PaymentMethod), PaymentMethod.Paypal);
+                orderDTO.Status = Enum.GetName(typeof(OrderStatus), paymentMethod == "paypal" ? OrderStatus.Paid : OrderStatus.Pending);
+                orderDTO.PaymentMethod = Enum.GetName(typeof(PaymentMethod), paymentMethod == "paypal" ? PaymentMethod.Paypal : PaymentMethod.Cash);
 
                 db.Orders.Add(orderDTO);
                 db.SaveChanges();
@@ -274,7 +278,7 @@ namespace WebShop.Controllers
             client.Send("admin@example.com", "admin@example.com", "New Order", "You have a new order. Order number " + orderId);
 
             // Create a TempData message
-            ViewBag.Message = "Your order was completed successfully.";
+            TempData["Checkout"] = "Your order was completed successfully.";
 
             // Reset session
             Session["cart"] = null;
@@ -308,6 +312,13 @@ namespace WebShop.Controllers
             List<CartVM> cart = Session["cart"] as List<CartVM>;
             decimal total = 0m;
 
+            if (cart == null)
+            {
+                // Create a TempData message
+                TempData["Checkout"] = "Your order was completed successfully.";
+                return View();
+            }
+
             foreach (var item in cart)
             {
                 total += item.Total;
@@ -316,18 +327,12 @@ namespace WebShop.Controllers
             ViewBag.GrandTotal = total;
             ViewBag.CartVMList = cart;
 
-            //using (Db db = new Db())
-            //{
-            //    // Init list of payment methods
-            //    List<PaymentMethodModel> paymentMethods = db.PaymentMethods.ToList();
-            //    ViewBag.CheckoutVM = paymentMethods;
-            //}
-
             // Get username
             string username = User.Identity.Name;
 
             if (string.IsNullOrEmpty(username))
             {
+                ViewBag.IsAuthenticated = "false";
                 return View();
             }
             else
@@ -342,6 +347,8 @@ namespace WebShop.Controllers
                     // Build model
                     model = new UserProfileVM(dto);
                 }
+
+                ViewBag.IsAuthenticated = "true";
                 return View(model);
             }
         }
