@@ -4,9 +4,9 @@
     ViewBag.Title = "Checkout";
 
     var htmlAttributes = new Dictionary<string, object>
-    {
-        { "class", "input"}
-    };
+{
+{ "class", "input"}
+};
     if (ViewBag.IsAuthenticated == "true")
     {
         htmlAttributes.Add("disabled", "disabled");
@@ -49,7 +49,6 @@
                         <h5 class="alert alert-success text-center">@TempData["Checkout"]</h5>
                     </div>
                     <div class="cart-checkout">
-                        @*@Html.ActionLink("Continue Shopping", "Index", "Shop", new { area = "" }, new { @class= "btn checkout back-checkout" })*@
                         <a href="/Shop/Index" class="btn"><i class="fa fa-arrow-circle-left"></i> Continue Shopping</a>
                     </div>
                 </div>
@@ -69,7 +68,6 @@
                         </div>
                         @using (Html.BeginForm())
                         {
-                            @ViewBag.IsAuthenticated
                             <div class="form-group">
                                 <label class="control-label col-md-2">First name</label>
                                 @Html.EditorFor(model => model.FirstName, new { htmlAttributes = htmlAttributes })
@@ -100,11 +98,15 @@
                             </div>
                         }
                     </div>
-                    <div class="form-group">
-                        <a class="edit btn btn-default" href="/account/user-profile">
-                            Edit profile
-                        </a>
-                    </div>
+
+                    @if (Request.IsAuthenticated)
+                    {
+                        <div class="form-group">
+                            <a class="edit btn btn-default" href="/account/user-profile">
+                                Edit profile
+                            </a>
+                        </div>
+                    }
                     <!-- /BILLING DETAILS-->
                 </div>
 

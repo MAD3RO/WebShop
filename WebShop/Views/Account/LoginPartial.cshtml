@@ -13,89 +13,83 @@
             <div class="modal-body modal-body-sub">
                 <div class="row">
                     <div class="col-md-6" style="border-right: 1px dotted #C2C2C2;">
-                        <div class="sap_tabs">
-                            @*<div id="horizontalTab" style="display: block; width: 100%; margin: 0px;">*@
-                            <div class="col-md-10 text-center" style="display:inline-block;">
-                                <h3>
-                                    Existing user
-                                    <span class="input-group-text">
-                                        <i class="fas fa-user-circle fa-3x" id="modalIcon"></i>
-                                    </span>
-                                </h3>
-
-                            </div>
-                            <div class="tab-1 resp-tab-content">
-                                @using (Html.BeginForm("LoginPartial", "Account", FormMethod.Post, new { id = "loginForm" }))
-                                {
-                                    @Html.AntiForgeryToken()
-                                    <div class="form-horizontal" style="margin-top:10px;">
-                                        <div class="col-md-10">
-                                            <span class="text-danger" id="login-error">Incorrect username or password</span>
-                                        </div>
-                                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                                        <div class="form-group">
-                                            <div class="col-md-10">
-                                                <span class="input-group-text">
-                                                    <i class="fas fa-user"></i>
-                                                </span>
-                                                @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control", @placeholder = "Username", @id = "asd" } })
-                                                @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="col-md-10">
-                                                <span class="input-group-text">
-                                                    <i class="fas fa-unlock-alt"></i>
-                                                </span>
-                                                @Html.PasswordFor(model => model.Password, new { @class = "form-control", @placeholder = "Password" })
-                                                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="col-md-10">
-                                                <label for="RememberMe">Remember me</label>
-                                                @*<div class="checkbox" style="float:left;">*@
-                                                @Html.EditorFor(model => model.RememberMe, new { @class = "form-control" })
-                                                @*@Html.ValidationMessageFor(model => model.RememberMe, "", new { @class = "text-danger" })*@
-                                                @*</div>*@
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="col-md-10">
-                                                <input class="btn" id="btnLogin" type="submit" name="loginSubmit" value="Login" style="width:100%;" />
-                                            </div>
+                        <div class="col-md-12 text-center">
+                            <h3>
+                                Returning customer
+                                <span class="input-group-text">
+                                    <i class="fas fa-user-circle fa-3x" id="modalIcon"></i>
+                                </span>
+                            </h3>
+                        </div>
+                        <div class="col-md-12">
+                            @using (Html.BeginForm("LoginPartial", "Account", FormMethod.Post, new { id = "loginForm" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <div class="form-horizontal" style="margin-top:10px;">
+                                    <div class="col-md-12">
+                                        <span class="text-danger" id="login-error">Incorrect username or password</span>
+                                    </div>
+                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                    <div class="form-group">
+                                        <div class="col-md-12">
+                                            <span class="input-group-text">
+                                                <i class="fas fa-user"></i>
+                                            </span>
+                                            @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control", @placeholder = "Username" } })
+                                            @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
-                                }
-                            </div>
+                                    <div class="form-group">
+                                        <div class="col-md-12">
+                                            <span class="input-group-text">
+                                                <i class="fas fa-unlock-alt"></i>
+                                            </span>
+                                            @Html.PasswordFor(model => model.Password, new { @class = "form-control", @placeholder = "Password" })
+                                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-12">
+                                            <label for="RememberMe">Remember me</label>
+                                            @*<div class="checkbox" style="float:left;">*@
+                                            @Html.EditorFor(model => model.RememberMe, new { @class = "form-control" })
+                                            @*@Html.ValidationMessageFor(model => model.RememberMe, "", new { @class = "text-danger" })*@
+                                            @*</div>*@
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-12">
+                                            <input class="btn" id="btnLogin" type="submit" name="loginSubmit" value="Login" style="width:100%;" />
+                                        </div>
+                                    </div>
+                                </div>
+                            }
                         </div>
                         <div id="OR" class="hidden-xs">OR</div>
                     </div>
-                    <div class="col-md-6" style="padding:0px 15px;">
-                        <div class="sap_tabs">
-                            <div id="horizontalTab" style="display: block; width: 100%; margin: 0px;">
-                                <div class="col-md-10 text-center" style="margin-bottom:20px;">
-                                    <h3>
-                                        New user
-                                        <span class="input-group-text">
-                                            <i class="fas fa-user-plus fa-3x" id="modalIcon"></i>
-                                        </span>
-                                    </h3>
+                    <div class="col-md-6">
+                        <div id="horizontalTab" style="display: block; width: 100%; margin: 0px;">
+                            <div class="col-md-12 text-center" style="margin-bottom:20px;">
+                                <h3>
+                                    New customer
+                                    <span class="input-group-text">
+                                        <i class="fas fa-user-plus fa-3x" id="modalIcon"></i>
+                                    </span>
+                                </h3>
+                            </div>
+                            <div class="tab-1 resp-tab-content">
+                                <div class="col-md-12" style="margin:18px;">
+                                    <p class="align-content-center">
+                                        Opening an account on our site will allow you to shop faster, stay up-to-date on the status of your account, and keep track of the account you previously created.
+                                    </p>
                                 </div>
-                                <div class="tab-1 resp-tab-content">
-                                    <div class="col-md-10">
-                                        <p style="margin:20px; margin-top:10px;">
-                                            Opening an account on our site will allow you to shop faster, stay up-to-date on the status of your account, and keep track of the account you previously created.
-                                        </p>
-                                    </div>
-                                    <div class="col-md-10">
-                                        <form action="/account/create-account">
-                                            <input class="btn" id="btnRegister" type="submit" style="width:100%;" value="Register" />
-                                        </form>
-                                    </div>
-                                    <div class="col-md-10 hidden" id="checkout-as-guest" style="margin-top:10px;">
-                                        <a class="btn" id="btnGuest" style="width:100%;" href="#" onclick="location.href='@Url.Action("Checkout", "cart")'">Checkout as a guest</a>
-                                    </div>
+                                <div class="col-md-12">
+                                    <form action="/account/create-account">
+                                        <input class="btn" id="btnRegister" type="submit" style="width:100%;" value="Register" />
+                                    </form>
+                                </div>
+                                <div class="col-md-12 hidden" id="checkout-as-guest" style="margin-top:10px;">
+                                    <a class="btn" id="btnGuest" style="width:100%;" href="#" onclick="location.href='@Url.Action("Checkout", "cart")'">Checkout as a guest</a>
                                 </div>
                             </div>
                         </div>

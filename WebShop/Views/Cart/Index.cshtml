@@ -40,7 +40,7 @@
                         <th style="width:15%"></th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody style="border-bottom:2px solid #dddddd;">
                     @foreach (var item in Model)
                     {
                         <tr>
@@ -75,25 +75,24 @@
                         </tr>
                     }
                 </tbody>
-                <tfoot>
-                    <tr class="visible-xs">
-                        <td class="text-center"><strong>$<span>@ViewBag.GrandTotal</span></strong></td>
-                    </tr>
-                    <tr>
-                        <td><a href="javascript:history.back()" class="btn back"><i class="fa fa-arrow-circle-left"></i> Continue Shopping</a></td>
-                        <td colspan="2" class="hidden-xs"></td>
-                        <td class="grandtotal hidden-xs text-center"><strong>$<span>@ViewBag.GrandTotal</span></strong></td>
-                        @if (Request.IsAuthenticated)
-                        {
-                            <td><a class="checkout btn" href="#" onclick="location.href='@Url.Action("Checkout", "cart")'">Checkout <i class="fa fa-arrow-circle-right"></i></a></td>
-                        }
-                        else
-                        {
-                            <td><a class="checkout btn" href="#" data-toggle="modal" data-target="#headerModal">Checkout <i class="fa fa-arrow-circle-right"></i></a></td>
-                        }
-                    </tr>
-                </tfoot>
             </table>
+            <a href="javascript:history.back()" class="btn back"><i class="fa fa-arrow-circle-left"></i> Continue Shopping</a>
+
+            @*<div class="cart-summary">
+                </div>*@
+            @*<h5 class="subtotal">TOTAL: $@ViewBag.GrandTotal</h5>*@
+
+            <div class="grandtotal text-center">
+                <strong>TOTAL: $<span>@ViewBag.GrandTotal</span></strong>
+                @if (Request.IsAuthenticated)
+                {
+                    <a class="checkout btn" href="#" onclick="location.href='@Url.Action("Checkout", "cart")'">Checkout <i class="fa fa-arrow-circle-right"></i></a>
+                }
+                else
+                {
+                    <a class="checkout btn" href="#" data-toggle="modal" data-target="#headerModal">Checkout <i class="fa fa-arrow-circle-right"></i></a>
+                }
+            </div>
         }
     </div>
 </div>
@@ -121,10 +120,10 @@
 
                     $("td.total" + productId).html(priceHtml);
 
-                    var gt = parseFloat($("td.grandtotal span").text());
+                    var gt = parseFloat($("div.grandtotal span").text());
                     var grandtotal = (gt + data.price).toFixed(2);
 
-                    $("td.grandtotal span").text(grandtotal);
+                    $("div.grandtotal span").text(grandtotal);
                 }).done(function (data) {
                     var url2 = "/cart/PaypalPartial";
 
@@ -160,10 +159,10 @@
 
                         $("td.total" + productId).html(priceHtml);
 
-                        var gt = parseFloat($("td.grandtotal span").text());
+                        var gt = parseFloat($("div.grandtotal span").text());
                         var grandtotal = (gt - data.price).toFixed(2);
 
-                        $("td.grandtotal span").text(grandtotal);
+                        $("div.grandtotal span").text(grandtotal);
                     }
 
                 }).done(function (data) {

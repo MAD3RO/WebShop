@@ -2119,6 +2119,10 @@ a.add-to-cart-btn:focus {
 	10 -> CART DETAILS
 ===========================================================*/
 
+table#cart{
+    margin-bottom:50px;
+}
+
 .table > tbody > tr > td, .table > tfoot > tr > td {
     vertical-align: middle;
 }
@@ -2128,9 +2132,10 @@ table#cart tbody tr td div div img {
     min-height: 100px;
 }
 
-.checkout {
+.grandtotal .checkout {
     color: #FFF;
     background-color: #D10024;
+    margin-left: 20px;
 }
 
 .back {
@@ -2168,6 +2173,10 @@ table#cart tbody tr td div div img {
     -ms-user-select: none;
     user-select: none;
     vertical-align: middle;
+}
+
+.grandtotal {
+    float: right;
 }
 
 @media screen and (max-width: 600px) {
@@ -2745,58 +2754,6 @@ ul.multi-column-dropdown li {
 }
 
 /*-- login --*/
-/*-- sap --*/
-/*.sap_tabs {
-    margin: 0 auto;
-    -webkit-appearance: none;
-}
-
-.resp-tab-item {
-    color: #212121;
-    font-size: 1em;
-    text-transform: uppercase;
-    cursor: pointer;
-    padding: 5px 30px;
-    margin: 5px;
-    display: inline-block;
-    list-style: none;
-    outline: none;
-    border: 1px solid;
-    -webkit-transition: all 0.3s ease-out;
-    -moz-transition: all 0.3s ease-out;
-    -ms-transition: all 0.3s ease-out;
-    -o-transition: all 0.3s ease-out;
-    transition: all 0.3s ease-out;
-    -webkit-appearance: none;
-}
-
-    .resp-tab-item:hover {
-        background-color: transparent;
-        text-shadow: none;
-        color: #3c43a4;
-    }
-
-.resp-tab-active, .resp-tab-active:hover {
-    border-color: #3c43a4;
-    text-shadow: none;
-    color: #fff;
-    background: #3c43a4;
-}
-
-h2.resp-accordion {
-    cursor: pointer;
-    padding: 5px;
-    display: none;
-}
-
-.resp-tab-content {
-    display: none;
-}
-
-.resp-content-active, .resp-accordion-active {
-    display: block;
-}*/
-/*-- //sap --*/
 .modal-body-sub {
     padding: 3em !important;
 }
