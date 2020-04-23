@@ -20,7 +20,7 @@ namespace WebShop.Models.ViewModels.Account
             LastName = row.LastName;
             Username = row.Username;
             EmailAddress = row.EmailAddress;
-            StreetAddress = row.StreetAddress;
+            Address = row.Address;
             City = row.City;
             ZipCode = row.ZipCode;
             Contact = row.Contact;
@@ -39,7 +39,7 @@ namespace WebShop.Models.ViewModels.Account
         [DataType(DataType.EmailAddress)]
         public string EmailAddress { get; set; }
 
-        public string StreetAddress { get; set; }
+        public string Address { get; set; }
 
         public string City { get; set; }
 

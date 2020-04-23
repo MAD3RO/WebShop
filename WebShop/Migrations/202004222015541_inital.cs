@@ -3,7 +3,7 @@
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class initial : DbMigration
+    public partial class inital : DbMigration
     {
         public override void Up()
         {
@@ -42,13 +42,14 @@
                         LastName = c.String(),
                         Username = c.String(),
                         EmailAddress = c.String(),
-                        StreetAddress = c.String(),
+                        Address = c.String(),
                         City = c.String(),
                         ZipCode = c.Long(),
                         Contact = c.Long(),
                         PasswordHash = c.String(),
                         Salt = c.String(),
                         DateCreated = c.DateTime(),
+                        IsGuest = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
             

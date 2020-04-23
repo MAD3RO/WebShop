@@ -1,4 +1,4 @@
-﻿@model WebShop.Models.ViewModels.Account.UserProfileVM
+﻿@model WebShop.Models.ViewModels.Shop.CheckoutVM
 
 @{
     ViewBag.Title = "Checkout";
@@ -9,7 +9,8 @@
 };
     if (ViewBag.IsAuthenticated == "true")
     {
-        htmlAttributes.Add("disabled", "disabled");
+        //htmlAttributes.Add("disabled", "disabled");
+        htmlAttributes.Add("readonly", "readonly");
     }
 }
 
@@ -59,7 +60,7 @@
         else
         {
             <!-- ROW -->
-            <div class="row">
+            <div class="row" id="checkoutDiv">
                 <div class="col-md-7">
                     <!-- BILLING DETAILS -->
                     <div class="billing-details">
@@ -68,34 +69,49 @@
                         </div>
                         @using (Html.BeginForm())
                         {
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                             <div class="form-group">
                                 <label class="control-label col-md-2">First name</label>
                                 @Html.EditorFor(model => model.FirstName, new { htmlAttributes = htmlAttributes })
+                                @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-md-2">Last name</label>
                                 @Html.EditorFor(model => model.LastName, new { htmlAttributes = htmlAttributes })
+                                @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-md-2">E-mail</label>
                                 @Html.EditorFor(model => model.EmailAddress, new { htmlAttributes = htmlAttributes })
+                                @Html.ValidationMessageFor(model => model.EmailAddress, "", new { @class = "text-danger" })
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-md-2">Address</label>
-                                @Html.EditorFor(model => model.StreetAddress, new { htmlAttributes = htmlAttributes })
+                                @Html.EditorFor(model => model.Address, new { htmlAttributes = htmlAttributes })
+                                @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-md-2">City</label>
                                 @Html.EditorFor(model => model.City, new { htmlAttributes = htmlAttributes })
+                                @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-md-2">Zip code</label>
                                 @Html.EditorFor(model => model.ZipCode, new { htmlAttributes = htmlAttributes })
+                                @Html.ValidationMessageFor(model => model.ZipCode, "", new { @class = "text-danger" })
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-md-2">Contact</label>
                                 @Html.EditorFor(model => model.Contact, new { htmlAttributes = htmlAttributes })
+                                @Html.ValidationMessageFor(model => model.Contact, "", new { @class = "text-danger" })
                             </div>
+                            @*<div class="form-group hidden">
+                                    <label class="control-label col-md-2">Payment Method</label>
+                                    @Html.EditorFor(model => model.PaymentMethod, new { htmlAttributes = htmlAttributes })
+                                    @Html.ValidationMessageFor(model => model.PaymentMethod, "", new { @class = "text-danger" })
+                                </div>*@
+                            @*<input class="placeorder btn btn-default" type="image" name="checkoutSubmit" />*@
                         }
                     </div>
 
@@ -176,8 +192,14 @@
                 <!-- /ORDER DETAILS-->
             </div>
             <!-- /ROW -->
+            @*if (ViewBag.IsValid != null && ViewBag.IsValid == "true")
+                {
+                    <div class="ajaxbg"><span><img src="~/Content/img/ajax-loader.gif" /></span></div>
+                    @Html.Action("PaypalPartial", "Cart")
+                }*@
             <div class="ajaxbg"><span><img src="~/Content/img/ajax-loader.gif" /></span></div>
             @Html.Action("PaypalPartial", "Cart")
+
         }
     </div>
     <!-- /container -->
@@ -193,10 +215,62 @@
             * Place order
             */
 
+            //$("#checkoutDiv").on("submit", "#checkoutForm", function (e) {
+            //    e.preventDefault();
+            //    var form = $(this);
+            //    $.ajax({
+            //        url: form.attr("action"),
+            //        method: form.attr("method"),
+            //        data: form.serialize(),
+            //        success: function (partialResult) {
+            //            if (partialResult === "error") {
+            //                //$("#login-error").show();
+            //            }
+            //            else if (partialResult === "success") {
+            //                //$("#headerModal").modal("hide");
+            //                //setTimeout(function () { window.location.href = "/Shop/Index"; }, 35);
+            //                //setTimeout(function () { location.reload(); }, 35);
+            //                if (document.getElementById('payment-2').checked) {
+            //                    $("#PaymentMethod").val("paypal");
+            //                    $('form input[name="checkoutSubmit"]').click();
+            //                    $(".ajaxbg").show();
+            //                    setTimeout(function () {
+            //                        $('form input[name="paypalSubmit"]').click();
+            //                    }, 2000);
+            //                }
+            //            }
+            //        }
+            //    });
+            //});
+
             $("a.placeorder").click(function (e) {
                 e.preventDefault();
-                //var $this = $(this);
-                 var url = "@Url.Action("PlaceOrder", "cart")?paymentMethod=";
+
+
+
+                //if (document.getElementById('payment-1').checked) {
+                //    $("#PaymentMethod").val("cash");
+                //    $('form input[name="checkoutSubmit"]').click();
+                //    location.reload();
+                //}
+                //if (document.getElementById('payment-2').checked) {
+                //    $("#PaymentMethod").val("paypal");
+                //    $('form input[name="checkoutSubmit"]').click();
+                //    //$(".ajaxbg").show();
+                //    setTimeout(function () {
+                //        $('form input[name="paypalSubmit"]').click();
+                //    }, 2000);
+                //}
+
+                var firstName = $("#FirstName").val();
+                var lastName = $("#LastName").val();
+                var email = $("#EmailAddress").val();
+                var address = $("#Address").val();
+                var city = $("#City").val();
+                var zipCode = $("#ZipCode").val();
+                var contact = $("#Contact").val();
+
+                var url = "@Url.Action("PlaceOrder", "cart")?firstName=" + firstName + "&lastName=" + lastName + "&email=" + email + "&address=" + address + "&city=" + city + "&zipCode=" + zipCode + "&contact=" + contact + "&paymentMethod=";
 
                 if (document.getElementById('payment-1').checked) {
                     var paymentMethod = "cash";

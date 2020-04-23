@@ -119,13 +119,6 @@ namespace WebShop.Controllers
                 return View("CreateAccount", model);
             }
 
-            //// Check if passwords match
-            //if (!model.Password.Equals(model.ConfirmPassword))
-            //{
-            //    ModelState.AddModelError("", "Passwords do not match.");
-            //    return View("CreateAccount", model);
-            //}
-
             using (Db db = new Db())
             {
                 // Make sure username is unique
@@ -156,13 +149,14 @@ namespace WebShop.Controllers
                     LastName = model.LastName,
                     Username = model.Username,
                     EmailAddress = model.EmailAddress,
-                    StreetAddress = model.StreetAddress,
+                    Address = model.Address,
                     City = model.City,
                     ZipCode = model.ZipCode,
                     Contact = model.Contact,
                     PasswordHash = CreatePasswordHash(model.Password, salt),
                     Salt = salt,
-                    DateCreated = DateTime.Now
+                    DateCreated = DateTime.Now,
+                    IsGuest = false
                 };
 
                 // Add the DTO
@@ -177,7 +171,7 @@ namespace WebShop.Controllers
                 UserRoleModel userRolesDTO = new UserRoleModel()
                 {
                     UserId = id,
-                    RoleId = 2 // 2 is for user, 1 is for admin
+                    RoleId = 2 // 1 is for admin, 2 is for user, 3 is for guest
                 };
 
                 db.UserRoles.Add(userRolesDTO);
@@ -312,7 +306,7 @@ namespace WebShop.Controllers
                 dto.LastName = model.LastName;
                 dto.Username = model.Username;
                 dto.EmailAddress = model.EmailAddress;
-                dto.StreetAddress = model.StreetAddress;
+                dto.Address = model.Address;
                 dto.City = model.City;
                 dto.ZipCode = model.ZipCode;
                 dto.Contact = model.Contact;
