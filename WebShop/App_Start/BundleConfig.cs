@@ -9,7 +9,7 @@ namespace WebShop
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/scripts").Include(
-            "~/Scripts/jquery-3.4.1.min.js",
+            "~/Scripts/jquery-3.5.0.min.js",
             //"~/Scripts/popper.min.js",
             "~/Scripts/bootstrap.min.js",
             "~/Scripts/jquery.validate.min.js",

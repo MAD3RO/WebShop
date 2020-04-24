@@ -34,15 +34,12 @@ namespace WebShop.Controllers
         }
 
         // GET: /shop/category/name
-        public ActionResult Category(string name, int? page, int? pageSize, string orderBy, string gridToggle)
+        public ActionResult Category(string name, string orderBy, string gridToggle, int page = 1, int pageSize = 12, decimal priceRangeFrom = 0.00m, decimal priceRangeTo = 3000.00m)
         {
             // Declare a list of ProductVM
             IEnumerable<ProductVM> productVMList;
 
-            // Set page number
-            var pageNumber = page ?? 1;
-            // Set page size
-            var pageSizeNumber = pageSize ?? 12;
+            // Set price range to
 
             using (Db db = new Db())
             {
@@ -52,6 +49,9 @@ namespace WebShop.Controllers
 
                 // Init the list
                 productVMList = db.Products.ToArray().Where(x => x.CategoryId == catId).Select(x => new ProductVM(x));
+
+                // Filter product list with price range
+                productVMList = productVMList.Where(x => x.NewPrice >= priceRangeFrom && x.NewPrice <= priceRangeTo);
 
                 // Sort order
                 switch (orderBy)
@@ -83,17 +83,23 @@ namespace WebShop.Controllers
                 }
 
                 // Set selected page size
-                ViewBag.SelectedPageSize = pageSizeNumber;
+                ViewBag.SelectedPageSize = pageSize;
                 // Set selected order
                 ViewBag.OrderBy = string.IsNullOrEmpty(orderBy) ? "name_asc" : orderBy;
             }
 
             // Set pagination
-            var onePageOfProducts = productVMList.ToPagedList(pageNumber, pageSizeNumber);
+            var onePageOfProducts = productVMList.ToPagedList(page, pageSize);
             ViewBag.OnePageOfProducts = onePageOfProducts;
 
             // Set show toggle
             ViewBag.GridToggle = string.IsNullOrEmpty(gridToggle) ? "grid" : gridToggle;
+
+            // Set price range from
+            ViewBag.PriceRangeFrom = priceRangeFrom;
+
+            // Set price range to
+            ViewBag.PriceRangeTo = priceRangeTo;
 
             // Return view with list
             return View(productVMList.ToList());
@@ -145,19 +151,18 @@ namespace WebShop.Controllers
 
         // GET: /shop/search/searchString
         //[HttpGet]
-        public ActionResult Search(int? page, int? pageSize, string orderBy, string gridToggle, string searchString)
+        public ActionResult Search(string orderBy, string gridToggle, string searchString, int page = 1, int pageSize = 12, decimal priceRangeFrom = 0.00m, decimal priceRangeTo = 3000.00m)
         {
             // Declare a list of ProductVM
             IEnumerable<ProductVM> productVMList;
 
-            // Set page number
-            var pageNumber = page ?? 1;
-            // Set page size
-            var pageSizeNumber = pageSize ?? 12;
-
             using (Db db = new Db())
             {
+                // Init the list
                 productVMList = db.Products.ToArray().Where(x => x.Name.ToLower().Contains(searchString.ToLower())).Select(x => new ProductVM(x));
+
+                // Filter product list with price range
+                productVMList = productVMList.Where(x => x.NewPrice >= priceRangeFrom && x.NewPrice <= priceRangeTo);
 
                 // Sort order
                 switch (orderBy)
@@ -184,20 +189,26 @@ namespace WebShop.Controllers
                 }
 
                 // Set selected page size
-                ViewBag.SelectedPageSize = pageSizeNumber;
+                ViewBag.SelectedPageSize = pageSize;
                 // Set selected order
                 ViewBag.OrderBy = string.IsNullOrEmpty(orderBy) ? "name_asc" : orderBy;
             }
 
             // Set pagination
-            var onePageOfProducts = productVMList.ToPagedList(pageNumber, pageSizeNumber);
+            var onePageOfProducts = productVMList.ToPagedList(page, pageSize);
             ViewBag.OnePageOfProducts = onePageOfProducts;
 
             // Set show toggle
             ViewBag.GridToggle = string.IsNullOrEmpty(gridToggle) ? "grid" : gridToggle;
 
             // Save search result
-            TempData["SearchString"] = searchString;
+            ViewBag.SearchString = searchString;
+
+            // Set price range from
+            ViewBag.PriceRangeFrom = priceRangeFrom;
+
+            // Set price range to
+            ViewBag.PriceRangeTo = priceRangeTo;
 
             // Return view with list
             return View(productVMList.ToList());

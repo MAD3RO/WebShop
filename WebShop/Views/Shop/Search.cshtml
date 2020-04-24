@@ -2,7 +2,6 @@
 
 @{
     ViewBag.Title = "Search result";
-    ViewBag.SearchString = "asus";
 }
 
 @using PagedList.Mvc;
@@ -25,173 +24,28 @@
                 <div id="aside" class="col-md-3 col-xs-3">
                     <!-- aside Widget -->
                     <div class="aside">
-                        <h3 class="aside-title">Categories</h3>
-                        <div class="checkbox-filter">
-
-                            <div class="input-checkbox">
-                                <input type="checkbox" id="category-1">
-                                <label for="category-1">
-                                    <span></span>
-                                    Laptops
-                                    <small>(120)</small>
-                                </label>
-                            </div>
-
-                            <div class="input-checkbox">
-                                <input type="checkbox" id="category-2">
-                                <label for="category-2">
-                                    <span></span>
-                                    Smartphones
-                                    <small>(740)</small>
-                                </label>
-                            </div>
-
-                            <div class="input-checkbox">
-                                <input type="checkbox" id="category-3">
-                                <label for="category-3">
-                                    <span></span>
-                                    Cameras
-                                    <small>(1450)</small>
-                                </label>
-                            </div>
-
-                            <div class="input-checkbox">
-                                <input type="checkbox" id="category-4">
-                                <label for="category-4">
-                                    <span></span>
-                                    Accessories
-                                    <small>(578)</small>
-                                </label>
-                            </div>
-
-                            <div class="input-checkbox">
-                                <input type="checkbox" id="category-5">
-                                <label for="category-5">
-                                    <span></span>
-                                    Laptops
-                                    <small>(120)</small>
-                                </label>
-                            </div>
-
-                            <div class="input-checkbox">
-                                <input type="checkbox" id="category-6">
-                                <label for="category-6">
-                                    <span></span>
-                                    Smartphones
-                                    <small>(740)</small>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /aside Widget -->
-                    <!-- aside Widget -->
-                    <div class="aside">
-                        <h3 class="aside-title">Price</h3>
+                        <h3 class="aside-title">Price range</h3>
                         <div class="price-filter">
-                            <div id="price-slider"></div>
-                            <div class="input-number price-min">
-                                <input id="price-min" type="number">
-                                <span class="qty-up">+</span>
-                                <span class="qty-down">-</span>
-                            </div>
-                            <span>-</span>
-                            <div class="input-number price-max">
-                                <input id="price-max" type="number">
-                                <span class="qty-up">+</span>
-                                <span class="qty-down">-</span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /aside Widget -->
-                    <!-- aside Widget -->
-                    <div class="aside">
-                        <h3 class="aside-title">Brand</h3>
-                        <div class="checkbox-filter">
-                            <div class="input-checkbox">
-                                <input type="checkbox" id="brand-1">
-                                <label for="brand-1">
-                                    <span></span>
-                                    SAMSUNG
-                                    <small>(578)</small>
-                                </label>
-                            </div>
-                            <div class="input-checkbox">
-                                <input type="checkbox" id="brand-2">
-                                <label for="brand-2">
-                                    <span></span>
-                                    LG
-                                    <small>(125)</small>
-                                </label>
-                            </div>
-                            <div class="input-checkbox">
-                                <input type="checkbox" id="brand-3">
-                                <label for="brand-3">
-                                    <span></span>
-                                    SONY
-                                    <small>(755)</small>
-                                </label>
-                            </div>
-                            <div class="input-checkbox">
-                                <input type="checkbox" id="brand-4">
-                                <label for="brand-4">
-                                    <span></span>
-                                    SAMSUNG
-                                    <small>(578)</small>
-                                </label>
-                            </div>
-                            <div class="input-checkbox">
-                                <input type="checkbox" id="brand-5">
-                                <label for="brand-5">
-                                    <span></span>
-                                    LG
-                                    <small>(125)</small>
-                                </label>
-                            </div>
-                            <div class="input-checkbox">
-                                <input type="checkbox" id="brand-6">
-                                <label for="brand-6">
-                                    <span></span>
-                                    SONY
-                                    <small>(755)</small>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /aside Widget -->
-                    <!-- aside Widget -->
-                    <div class="aside">
-                        <h3 class="aside-title">Top selling</h3>
-                        <div class="product-widget">
-                            <div class="product-img">
-                                <img src="./img/product01.png" alt="">
-                            </div>
-                            <div class="product-body">
-                                <p class="product-category">Category</p>
-                                <h3 class="product-name"><a href="#">product name goes here</a></h3>
-                                <h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-                            </div>
-                        </div>
-
-                        <div class="product-widget">
-                            <div class="product-img">
-                                <img src="./img/product02.png" alt="">
-                            </div>
-                            <div class="product-body">
-                                <p class="product-category">Category</p>
-                                <h3 class="product-name"><a href="#">product name goes here</a></h3>
-                                <h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-                            </div>
-                        </div>
-
-                        <div class="product-widget">
-                            <div class="product-img">
-                                <img src="./img/product03.png" alt="">
-                            </div>
-                            <div class="product-body">
-                                <p class="product-category">Category</p>
-                                <h3 class="product-name"><a href="#">product name goes here</a></h3>
-                                <h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-                            </div>
+                            @using (Html.BeginForm("Search", "Shop", FormMethod.Get))
+                            {
+                                <div id="price-slider"></div>
+                                <div class="input-number price-min">
+                                    <input id="price-min" type="number" name="priceRangeFrom" value="@ViewBag.PriceRangeFrom">
+                                    <span class="qty-up">+</span>
+                                    <span class="qty-down">-</span>
+                                </div>
+                                <span>-</span>
+                                <div class="input-number price-max">
+                                    <input id="price-max" type="number" name="priceRangeTo" value="@ViewBag.PriceRangeTo">
+                                    <span class="qty-up">+</span>
+                                    <span class="qty-down">-</span>
+                                </div>
+                                <input name="pageSize" type="hidden" value="@ViewBag.SelectedPageSize" />
+                                <input name="orderBy" type="hidden" value="@ViewBag.OrderBy" />
+                                <input name="gridToggle" type="hidden" value="@ViewBag.GridToggle" />
+                                <input name="searchString" type="hidden" value="@ViewBag.SearchString" />
+                                <button type="submit" class="search-btn">Search</button>
+                            }
                         </div>
                     </div>
                     <!-- /aside Widget -->
@@ -199,7 +53,7 @@
                 <!-- /ASIDE -->
                 <!-- STORE -->
                 <div id="store" class="col-md-9 col-xs-9">
-                    <h3 class="page-header text-uppercase">Search result for "@TempData["SearchString"]"</h3>
+                    <h3 class="page-header text-uppercase">Search result for "@ViewBag.SearchString"</h3>
                     <!-- store top filter -->
                     <div class="store-filter clearfix">
                         <div class="store-sort">
@@ -208,7 +62,9 @@
                                 <label>
                                     <input id="hidPageSizeOrderBy" name="pageSize" type="hidden" />
                                     <input id="hidGridToggleOrderBy" name="gridToggle" type="hidden" />
-                                    <input id="hidSearchStringOrderBy" name="searchString" type="hidden" value="@TempData["SearchString"]" />
+                                    <input id="hidSearchStringOrderBy" name="searchString" type="hidden" value="@ViewBag.SearchString" />
+                                    <input name="priceRangeFrom" type="hidden" value="@ViewBag.PriceRangeFrom" />
+                                    <input name="priceRangeTo" type="hidden" value="@ViewBag.PriceRangeTo" />
                                     Sort By:
                                     @Html.DropDownList("orderBy", new SelectList(new Dictionary<string, string> { { "nameAsc", "Name (A-Z)" }, { "nameDesc", "Name (Z-A)" }, { "priceAsc", "Lowest price" }, { "priceDesc", "Highest price" } }, "Key", "Value"), new { id = "orderByList", @class = "input-select" })
                                 </label>
@@ -218,7 +74,9 @@
                                 <label>
                                     <input id="hidOrderByPageSize" name="orderBy" type="hidden" />
                                     <input id="hidGridTogglePageSize" name="gridToggle" type="hidden" />
-                                    <input id="hidSearchStringOrderBy" name="searchString" type="hidden" value="@TempData["SearchString"]" />
+                                    <input id="hidSearchStringPageSize" name="searchString" type="hidden" value="@ViewBag.SearchString" />
+                                    <input name="priceRangeFrom" type="hidden" value="@ViewBag.PriceRangeFrom" />
+                                    <input name="priceRangeTo" type="hidden" value="@ViewBag.PriceRangeTo" />
                                     Show:
                                     @Html.DropDownList("pageSize", new SelectList(new Dictionary<string, int> { { "12", 12 }, { "24", 24 }, { "36", 36 } }, "Key", "Value"), new { id = "pageSizeList", @class = "input-select" })
                                 </label>
@@ -229,7 +87,9 @@
                             <input id="hidPageSizeGridToggle" name="pageSize" type="hidden" />
                             <input id="hidOrderByGridToggle" name="orderBy" type="hidden" />
                             <input id="hidGridToggle" name="gridToggle" type="hidden" />
-                            <input id="hidSearchStringOrderBy" name="searchString" type="hidden" value="@TempData["SearchString"]" />
+                            <input id="hidSearchStringOrderBy" name="searchString" type="hidden" value="@ViewBag.SearchString" />
+                            <input name="priceRangeFrom" type="hidden" value="@ViewBag.PriceRangeFrom" />
+                            <input name="priceRangeTo" type="hidden" value="@ViewBag.PriceRangeTo" />
                             <ul class="store-grid">
                                 @if (ViewBag.GridToggle != "list")
                                 {
@@ -345,7 +205,7 @@
                     <!-- store bottom pagination -->
                     <div class="store-filter clearfix">
                         @*@Html.PagedListPager((IPagedList)ViewBag.OnePageOfProducts, page => Url.Action("Search", new { page, pageSize = ViewBag.SelectedPageSize, orderBy = ViewBag.OrderBy, gridToggle = ViewBag.GridToggle, name = HttpUtility.ParseQueryString(Request.UrlReferrer.Query)["name"] }),*@
-                        @Html.PagedListPager((IPagedList)ViewBag.OnePageOfProducts, page => Url.Action("Search", new { page, pageSize = ViewBag.SelectedPageSize, orderBy = ViewBag.OrderBy, gridToggle = ViewBag.GridToggle, searchString = ViewBag.SearchString }),
+                        @Html.PagedListPager((IPagedList)ViewBag.OnePageOfProducts, page => Url.Action("Search", new { orderBy = ViewBag.OrderBy, gridToggle = ViewBag.GridToggle, searchString = ViewBag.SearchString, page, pageSize = ViewBag.SelectedPageSize, priceRangeFrom = ViewBag.PriceRangeFrom, priceRangeTo = ViewBag.PriceRangeTo }),
                             new PagedListRenderOptions
                             {
                                 DisplayLinkToFirstPage = PagedListDisplayMode.IfNeeded,
