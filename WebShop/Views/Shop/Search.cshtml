@@ -1,8 +1,8 @@
 ﻿@model IEnumerable<WebShop.Models.ViewModels.Shop.ProductVM>
 
 @{
-    ViewBag.Title = ViewBag.CategoryName;
-    TempData["CategoryName"] = ViewBag.CategoryName;
+    ViewBag.Title = "Search result";
+    ViewBag.SearchString = "asus";
 }
 
 @using PagedList.Mvc;
@@ -12,7 +12,6 @@
 <div class="section">
     <!-- container -->
     <div class="container">
-
         <!-- row -->
         <div class="row">
 
@@ -200,34 +199,37 @@
                 <!-- /ASIDE -->
                 <!-- STORE -->
                 <div id="store" class="col-md-9 col-xs-9">
-                    <h2 class="page-header text-uppercase">@ViewBag.CategoryName</h2>
+                    <h3 class="page-header text-uppercase">Search result for "@TempData["SearchString"]"</h3>
                     <!-- store top filter -->
                     <div class="store-filter clearfix">
                         <div class="store-sort">
-                            @using (Html.BeginForm("Category", "Shop", FormMethod.Get, new { style = "display: inline;" }))
+                            @using (Html.BeginForm("Search", "Shop", FormMethod.Get, new { style = "display: inline;" }))
                             {
                                 <label>
                                     <input id="hidPageSizeOrderBy" name="pageSize" type="hidden" />
                                     <input id="hidGridToggleOrderBy" name="gridToggle" type="hidden" />
+                                    <input id="hidSearchStringOrderBy" name="searchString" type="hidden" value="@TempData["SearchString"]" />
                                     Sort By:
                                     @Html.DropDownList("orderBy", new SelectList(new Dictionary<string, string> { { "nameAsc", "Name (A-Z)" }, { "nameDesc", "Name (Z-A)" }, { "priceAsc", "Lowest price" }, { "priceDesc", "Highest price" } }, "Key", "Value"), new { id = "orderByList", @class = "input-select" })
                                 </label>
                             }
-                            @using (Html.BeginForm("Category", "Shop", FormMethod.Get, new { style = "display: inline;" }))
+                            @using (Html.BeginForm("Search", "Shop", FormMethod.Get, new { style = "display: inline;" }))
                             {
                                 <label>
                                     <input id="hidOrderByPageSize" name="orderBy" type="hidden" />
                                     <input id="hidGridTogglePageSize" name="gridToggle" type="hidden" />
+                                    <input id="hidSearchStringOrderBy" name="searchString" type="hidden" value="@TempData["SearchString"]" />
                                     Show:
                                     @Html.DropDownList("pageSize", new SelectList(new Dictionary<string, int> { { "12", 12 }, { "24", 24 }, { "36", 36 } }, "Key", "Value"), new { id = "pageSizeList", @class = "input-select" })
                                 </label>
                             }
                         </div>
-                        @using (Html.BeginForm("Category", "Shop", FormMethod.Get, new { style = "display: inline;" }))
+                        @using (Html.BeginForm("Search", "Shop", FormMethod.Get, new { style = "display: inline;" }))
                         {
                             <input id="hidPageSizeGridToggle" name="pageSize" type="hidden" />
                             <input id="hidOrderByGridToggle" name="orderBy" type="hidden" />
                             <input id="hidGridToggle" name="gridToggle" type="hidden" />
+                            <input id="hidSearchStringOrderBy" name="searchString" type="hidden" value="@TempData["SearchString"]" />
                             <ul class="store-grid">
                                 @if (ViewBag.GridToggle != "list")
                                 {
@@ -342,7 +344,8 @@
                     <!-- /store products -->
                     <!-- store bottom pagination -->
                     <div class="store-filter clearfix">
-                        @Html.PagedListPager((IPagedList)ViewBag.OnePageOfProducts, page => Url.Action("Category", new { name = ViewBag.CategoryName, page, pageSize = ViewBag.SelectedPageSize, orderBy = ViewBag.OrderBy, gridToggle = ViewBag.GridToggle }),
+                        @*@Html.PagedListPager((IPagedList)ViewBag.OnePageOfProducts, page => Url.Action("Search", new { page, pageSize = ViewBag.SelectedPageSize, orderBy = ViewBag.OrderBy, gridToggle = ViewBag.GridToggle, name = HttpUtility.ParseQueryString(Request.UrlReferrer.Query)["name"] }),*@
+                        @Html.PagedListPager((IPagedList)ViewBag.OnePageOfProducts, page => Url.Action("Search", new { page, pageSize = ViewBag.SelectedPageSize, orderBy = ViewBag.OrderBy, gridToggle = ViewBag.GridToggle, searchString = ViewBag.SearchString }),
                             new PagedListRenderOptions
                             {
                                 DisplayLinkToFirstPage = PagedListDisplayMode.IfNeeded,

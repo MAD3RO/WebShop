@@ -78,10 +78,11 @@
                     <!-- SEARCH BAR -->
                     <div class="col-md-6">
                         <div class="header-search">
-                            <form>
-                                <input class="input" placeholder="Search for products">
-                                <button class="search-btn">Search</button>
-                            </form>
+                            @using (Html.BeginForm("Search", "Shop", FormMethod.Get))
+                            {
+                                <input type="text" class="input" name="searchString" placeholder="Search for products">
+                                <button type="submit" class="search-btn">Search</button>
+                            }
                         </div>
                     </div>
                     <!-- /SEARCH BAR -->
@@ -89,13 +90,13 @@
                     <div class="col-md-3 clearfix">
                         <div class="header-ctn">
                             <!-- Wishlist -->
-                            <div>
-                                <a href="#">
-                                    <i class="fas fa-heart"></i>
-                                    <span>Your Wishlist</span>
-                                    <div class="qty">2</div>
-                                </a>
-                            </div>
+                            @*<div>
+                                    <a href="#">
+                                        <i class="fas fa-heart"></i>
+                                        <span>Your Wishlist</span>
+                                        <div class="qty">2</div>
+                                    </a>
+                                </div>*@
                             <!-- /Wishlist -->
                             <!-- Cart -->
                             @if (ViewBag.Title != "Cart Details" && !User.IsInRole("Admin") && ViewBag.Title != "Checkout")

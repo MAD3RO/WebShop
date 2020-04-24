@@ -142,5 +142,65 @@ namespace WebShop.Controllers
             // Return view with model
             return View("ProductDetails", model);
         }
+
+        // GET: /shop/search/searchString
+        //[HttpGet]
+        public ActionResult Search(int? page, int? pageSize, string orderBy, string gridToggle, string searchString)
+        {
+            // Declare a list of ProductVM
+            IEnumerable<ProductVM> productVMList;
+
+            // Set page number
+            var pageNumber = page ?? 1;
+            // Set page size
+            var pageSizeNumber = pageSize ?? 12;
+
+            using (Db db = new Db())
+            {
+                productVMList = db.Products.ToArray().Where(x => x.Name.ToLower().Contains(searchString.ToLower())).Select(x => new ProductVM(x));
+
+                // Sort order
+                switch (orderBy)
+                {
+                    case "nameDesc":
+                        productVMList = productVMList.OrderByDescending(s => s.Name);
+                        break;
+                    case "priceAsc":
+                        productVMList = productVMList.OrderBy(s => s.NewPrice);
+                        break;
+                    case "priceDesc":
+                        productVMList = productVMList.OrderByDescending(s => s.NewPrice);
+                        break;
+                    case "nameAsc":
+                    default:
+                        productVMList = productVMList.OrderBy(s => s.Name);
+                        break;
+                }
+
+                if (productVMList == null || productVMList.ToList().Count == 0)
+                {
+                    ViewBag.Message = "Your search for '" + searchString + "' did not match any products.";
+                    return View();
+                }
+
+                // Set selected page size
+                ViewBag.SelectedPageSize = pageSizeNumber;
+                // Set selected order
+                ViewBag.OrderBy = string.IsNullOrEmpty(orderBy) ? "name_asc" : orderBy;
+            }
+
+            // Set pagination
+            var onePageOfProducts = productVMList.ToPagedList(pageNumber, pageSizeNumber);
+            ViewBag.OnePageOfProducts = onePageOfProducts;
+
+            // Set show toggle
+            ViewBag.GridToggle = string.IsNullOrEmpty(gridToggle) ? "grid" : gridToggle;
+
+            // Save search result
+            TempData["SearchString"] = searchString;
+
+            // Return view with list
+            return View(productVMList.ToList());
+        }
     }
 }
