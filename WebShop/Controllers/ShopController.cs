@@ -39,7 +39,11 @@ namespace WebShop.Controllers
             // Declare a list of ProductVM
             IEnumerable<ProductVM> productVMList;
 
+            // Set price range from
+            ViewBag.PriceRangeFrom = priceRangeFrom;
+
             // Set price range to
+            ViewBag.PriceRangeTo = priceRangeTo;
 
             using (Db db = new Db())
             {
@@ -47,11 +51,28 @@ namespace WebShop.Controllers
                 CategoryModel categoryDTO = db.Categories.Where(x => x.Slug == name).FirstOrDefault();
                 int catId = categoryDTO.Id;
 
+                // Get category name
+                ProductModel productCat = db.Products.Where(x => x.CategoryId == catId).FirstOrDefault();
+
+                ViewBag.CategoryName = categoryDTO.Name;
+
                 // Init the list
                 productVMList = db.Products.ToArray().Where(x => x.CategoryId == catId).Select(x => new ProductVM(x));
 
+                if (productVMList == null || productVMList.ToList().Count == 0)
+                {
+                    ViewBag.Message = "There are no products in " + categoryDTO.Name + " category.";
+                    return View();
+                }
+
                 // Filter product list with price range
                 productVMList = productVMList.Where(x => x.NewPrice >= priceRangeFrom && x.NewPrice <= priceRangeTo);
+
+                if (productVMList == null || productVMList.ToList().Count == 0)
+                {
+                    ViewBag.PriceRangeNotFound = "We have found 0 products that match that price range.";
+                    return View();
+                }
 
                 // Sort order
                 switch (orderBy)
@@ -71,17 +92,6 @@ namespace WebShop.Controllers
                         break;
                 }
 
-                // Get category name
-                ProductModel productCat = db.Products.Where(x => x.CategoryId == catId).FirstOrDefault();
-
-                ViewBag.CategoryName = categoryDTO.Name;
-
-                if (productCat == null)
-                {
-                    ViewBag.Message = "There are no products in " + categoryDTO.Name + " category.";
-                    return View();
-                }
-
                 // Set selected page size
                 ViewBag.SelectedPageSize = pageSize;
                 // Set selected order
@@ -94,12 +104,6 @@ namespace WebShop.Controllers
 
             // Set show toggle
             ViewBag.GridToggle = string.IsNullOrEmpty(gridToggle) ? "grid" : gridToggle;
-
-            // Set price range from
-            ViewBag.PriceRangeFrom = priceRangeFrom;
-
-            // Set price range to
-            ViewBag.PriceRangeTo = priceRangeTo;
 
             // Return view with list
             return View(productVMList.ToList());
@@ -156,13 +160,34 @@ namespace WebShop.Controllers
             // Declare a list of ProductVM
             IEnumerable<ProductVM> productVMList;
 
+            // Save search result
+            ViewBag.SearchString = searchString;
+
+            // Set price range from
+            ViewBag.PriceRangeFrom = priceRangeFrom;
+
+            // Set price range to
+            ViewBag.PriceRangeTo = priceRangeTo;
+
             using (Db db = new Db())
             {
                 // Init the list
                 productVMList = db.Products.ToArray().Where(x => x.Name.ToLower().Contains(searchString.ToLower())).Select(x => new ProductVM(x));
 
+                if (productVMList == null || productVMList.ToList().Count == 0)
+                {
+                    ViewBag.Message = "Your search for '" + searchString + "' did not match any products.";
+                    return View();
+                }
+
                 // Filter product list with price range
                 productVMList = productVMList.Where(x => x.NewPrice >= priceRangeFrom && x.NewPrice <= priceRangeTo);
+
+                if (productVMList == null || productVMList.ToList().Count == 0)
+                {
+                    ViewBag.PriceRangeNotFound = "We have found 0 products that match that price range.";
+                    return View();
+                }
 
                 // Sort order
                 switch (orderBy)
@@ -182,12 +207,6 @@ namespace WebShop.Controllers
                         break;
                 }
 
-                if (productVMList == null || productVMList.ToList().Count == 0)
-                {
-                    ViewBag.Message = "Your search for '" + searchString + "' did not match any products.";
-                    return View();
-                }
-
                 // Set selected page size
                 ViewBag.SelectedPageSize = pageSize;
                 // Set selected order
@@ -200,15 +219,6 @@ namespace WebShop.Controllers
 
             // Set show toggle
             ViewBag.GridToggle = string.IsNullOrEmpty(gridToggle) ? "grid" : gridToggle;
-
-            // Save search result
-            ViewBag.SearchString = searchString;
-
-            // Set price range from
-            ViewBag.PriceRangeFrom = priceRangeFrom;
-
-            // Set price range to
-            ViewBag.PriceRangeTo = priceRangeTo;
 
             // Return view with list
             return View(productVMList.ToList());

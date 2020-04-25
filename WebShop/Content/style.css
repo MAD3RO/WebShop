@@ -372,6 +372,10 @@ textarea.input {
     right: 0px;
 }
 
+.section.min-height {
+    min-height: calc(100vh - 300px);
+}
+
 /*----------------------------*\
 	Breadcrumb
 \*----------------------------*/
@@ -1324,42 +1328,25 @@ a.add-to-cart-btn:focus {
     margin-bottom: 15px;
 }
 
-.noUi-target {
-    background-color: #FFF;
-    -webkit-box-shadow: none;
-    box-shadow: none;
-    border: 1px solid #E4E7ED;
-    border-radius: 0px;
-}
-
-.noUi-connect {
-    background-color: #D10024;
-}
-
-.noUi-horizontal {
-    height: 6px;
-}
-
-    .noUi-horizontal .noUi-handle {
-        width: 12px;
-        height: 12px;
-        left: -6px;
-        top: -4px;
-        border: none;
-        background: #D10024;
-        -webkit-box-shadow: none;
-        box-shadow: none;
-        border-radius: 50%;
-    }
-
-.noUi-handle:before, .noUi-handle:after {
-    display: none;
-}
-
 .price-filter .input-number {
     display: inline-block;
     width: calc(50% - 7px);
 }
+
+.apply-filter {
+    display: inline-block;
+    width: calc(50% - 7px);
+    padding: 6px;
+    margin-top: 10px;
+    color: #FFF;
+    text-align: center;
+    font-weight: 700;
+    background-color: #1e1f29;
+}
+
+    .apply-filter:hover {
+        opacity: 0.9;
+    }
 
 /*----------------------------*\
 	Store
@@ -2119,8 +2106,8 @@ a.add-to-cart-btn:focus {
 	10 -> CART DETAILS
 ===========================================================*/
 
-table#cart{
-    margin-bottom:50px;
+table#cart {
+    margin-bottom: 50px;
 }
 
 .table > tbody > tr > td, .table > tfoot > tr > td {
@@ -2244,7 +2231,7 @@ table#cart tbody tr td div div img {
         align-content: center;
         text-align: center;
         position: center;
-        margin-bottom:100px;
+        margin-bottom: 100px;
     }
 
         .cart-checkout a:hover {
