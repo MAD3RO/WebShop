@@ -47,35 +47,9 @@
                 <div class="product-details">
                     <h2 class="product-name">@Model.Name</h2>
                     <div>
-                        <div class="product-rating">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fas fa-star-half"></i>
-                        </div>
-                        <a class="review-link" href="#">10 Review(s) | Add your review</a>
-                    </div>
-                    <div>
                         <h3 class="product-price">$@Model.NewPrice <del class="product-old-price">$@Model.Price</del></h3>
-                        <span class="product-available">In Stock</span>
                     </div>
-                    <p>@Model.Description</p>
-
-                    <div class="product-options">
-                        <label>
-                            Size
-                            <select class="input-select">
-                                <option value="0">X</option>
-                            </select>
-                        </label>
-                        <label>
-                            Color
-                            <select class="input-select">
-                                <option value="0">Red</option>
-                            </select>
-                        </label>
-                    </div>
+                    <p class="product-description">@Model.Description</p>
 
                     <div class="add-to-cart">
                         <div class="qty-label">
@@ -88,9 +62,6 @@
                         </div>
                         <a href="javascript:" data-id="@Model.Id" class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</a>
                     </div>
-                    <ul class="product-btns">
-                        <li><a href="#"><i class="fas fa-heart"></i> add to wishlist</a></li>
-                    </ul>
                 </div>
             </div>
             <!-- /Product details -->
@@ -100,7 +71,7 @@
                     <!-- product tab nav -->
                     <ul class="tab-nav">
                         <li class="active"><a data-toggle="tab" href="#tab1">Description</a></li>
-                        <li><a data-toggle="tab" href="#tab2">Details</a></li>
+                        <li><a data-toggle="tab" href="#tab2">Specification</a></li>
                     </ul>
                     <!-- /product tab nav -->
                     <!-- product tab content -->
@@ -118,7 +89,7 @@
                         <div id="tab2" class="tab-pane fade in">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                    <p>@Model.Description</p>
                                 </div>
                             </div>
                         </div>

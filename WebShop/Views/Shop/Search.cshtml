@@ -140,23 +140,21 @@
                                                         $@item.NewPrice @if (item.Discount > 0)
                                                         {<del class="product-old-price">$@item.Price</del>}
                                                     </h4>
-                                                    <div class="product-rating">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                    </div>
-                                                </div>
-                                                <div class="product-btns">
-                                                    <button class="add-to-wishlist"><i class="far fa-heart"></i><span class="tooltipp">add to wishlist</span></button>
-                                                    <button class="add-to-compare"><i class="fas fa-exchange-alt"></i><span class="tooltipp">add to compare</span></button>
-                                                    <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+                                                    @*<div class="product-rating">
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                        </div>*@
                                                 </div>
                                             </div>
-                                            <div class="add-to-cart">
-                                                <a href="javascript:" data-id="@item.Id" class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</a>
-                                            </div>
+                                            @if (!User.IsInRole("Admin"))
+                                            {
+                                                <div class="add-to-cart">
+                                                    <a href="javascript:" data-id="@item.Id" class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</a>
+                                                </div>
+                                            }
                                         </div>
                                     </div>
                                 }
@@ -179,13 +177,13 @@
                                             <div class="product-body col-md-10 col-xs-8">
                                                 <div class="col-md-9 col-xs-8">
                                                     <h4 class="product-name"><a href="/shop/product-details/@item.Slug">@item.Name</a></h4>
-                                                    <div class="product-rating">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                    </div>
+                                                    @*<div class="product-rating">
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                        </div>*@
                                                     <p class="product-description">@item.Description</p>
                                                 </div>
                                                 <div class="col-md-3 col-xs-4">
@@ -193,12 +191,10 @@
                                                         $@item.NewPrice @if (item.Discount > 0)
                                                         {<del class="product-old-price">$@item.Price</del>}
                                                     </h4>
-                                                    <div class="product-btns">
-                                                        <button class="add-to-wishlist"><i class="far fa-heart"></i><span class="tooltipp">add to wishlist</span></button>
-                                                        <button class="add-to-compare"><i class="fas fa-exchange-alt"></i><span class="tooltipp">add to compare</span></button>
-                                                        <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-                                                    </div>
-                                                    <a href="javascript:" data-id="@item.Id" class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</a>
+                                                    @if (!User.IsInRole("Admin"))
+                                                    {
+                                                        <a href="javascript:" data-id="@item.Id" class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</a>
+                                                    }
                                                 </div>
                                             </div>
                                         </div>

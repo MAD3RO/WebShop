@@ -1436,6 +1436,7 @@
     <Content Include="Scripts\popper.min.js.map" />
     <Content Include="Views\Cart\Checkout.cshtml" />
     <Content Include="Views\Shop\Search.cshtml" />
+    <Content Include="Views\Shop\SpecialDeals.cshtml" />
     <None Include="_bin_deployableAssemblies\x86\sqlcese40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceqp40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceme40.dll" />

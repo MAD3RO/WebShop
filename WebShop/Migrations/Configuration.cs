@@ -28,7 +28,6 @@
             // Categories initializer
             var Categories = new List<CategoryModel>
                 {
-                    new CategoryModel{Name = "Hot Deals", Slug="hot-deals", Sorting=1},
                     new CategoryModel{Name = "Desktops", Slug="desktops", Sorting=1},
                     new CategoryModel{Name = "Laptops", Slug="laptops", Sorting=1},
                     new CategoryModel{Name = " SmartPhones", Slug="smart-phones", Sorting=1},

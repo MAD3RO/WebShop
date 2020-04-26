@@ -31,11 +31,6 @@
         <!-- START-TOP-HEADER -->
         <div id="top-header">
             <div class="container">
-                <ul class="header-links pull-left">
-                    <li><a href="#"><i class="fa fa-phone"></i> +021-95-51-84</a></li>
-                    <li><a href="#"><i class="far fa-envelope"></i> email@email.com</a></li>
-                    <li><a href="#"><i class="fas fa-map-marker-alt"></i> 1734 Stonecoal Road</a></li>
-                </ul>
                 <ul class="header-links pull-right">
                     @if (Request.IsAuthenticated && User.IsInRole("User"))
                     {
@@ -139,6 +134,14 @@
                     {
                         <li><a href="/">Home</a></li>
                     }
+                    @if (ViewBag.Title == "Special Deals")
+                    {
+                        <li class="active"><a href="/shop/SpecialDeals">Special Deals</a></li>
+                    }
+                    else
+                    {
+                        <li><a href="/shop/SpecialDeals">Special Deals</a></li>
+                    }
                     @*@Html.Action("PagesMenuPartial", "Pages")*@
                     @Html.Action("CategoryMenuPartial", "Shop")
                     @*<li class="nav-item dropdown-categories mr-lg-2 mb-lg-0 mb-2">
@@ -192,11 +195,7 @@
                         <div class="footer">
                             <h3 class="footer-title">Categories</h3>
                             <ul class="footer-links">
-                                <li><a href="#">Hot deals</a></li>
-                                <li><a href="#">Laptops</a></li>
-                                <li><a href="#">Smartphones</a></li>
-                                <li><a href="#">Cameras</a></li>
-                                <li><a href="#">Accessories</a></li>
+                                @Html.Action("CategoryMenuPartial", "Shop")
                             </ul>
                         </div>
                     </div>
@@ -205,26 +204,21 @@
 
                     <div class="col-md-3 col-xs-6">
                         <div class="footer">
-                            <h3 class="footer-title">Information</h3>
-                            <ul class="footer-links">
-                                <li><a href="#">About Us</a></li>
-                                <li><a href="#">Contact Us</a></li>
-                                <li><a href="#">Privacy Policy</a></li>
-                                <li><a href="#">Orders and Returns</a></li>
-                                <li><a href="#">Terms & Conditions</a></li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3 col-xs-6">
-                        <div class="footer">
                             <h3 class="footer-title">Service</h3>
                             <ul class="footer-links">
-                                <li><a href="#">My Account</a></li>
-                                <li><a href="#">View Cart</a></li>
-                                <li><a href="#">Wishlist</a></li>
-                                <li><a href="#">Track My Order</a></li>
-                                <li><a href="#">Help</a></li>
+                                <li><a href="#" data-toggle="modal" data-target="#headerModal">Login</a></li>
+                                <li><a href="/account/create-account">Register</a></li>
+                                @if (Request.IsAuthenticated && User.IsInRole("User"))
+                                {
+                                    <li><a href="/account/user-profile">My Account</a></li>
+                                    <li><a href="/account/orders">Order History</a></li>
+                                }
+                                else
+                                {
+                                    <li><a href="#" data-toggle="modal" data-target="#headerModal">My Account</a></li>
+                                    <li><a href="#" data-toggle="modal" data-target="#headerModal">Order History</a></li>
+                                }
+                                <li><a href="/cart/index">View Cart</a></li>
                             </ul>
                         </div>
                     </div>
