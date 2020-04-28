@@ -265,7 +265,7 @@ namespace WebShop.Areas.Admin.Controllers
                 using (Db db = new Db())
                 {
                     ProductModel dto = db.Products.Find(id);
-                    dto.ImageName = imageName;
+                    dto.Image = imageName;
 
                     db.SaveChanges();
                 }
@@ -282,8 +282,6 @@ namespace WebShop.Areas.Admin.Controllers
                 img.Resize(200, 200);
                 img.Save(path2);
             }
-
-
             #endregion
 
             // Redirect
@@ -291,18 +289,10 @@ namespace WebShop.Areas.Admin.Controllers
         }
 
         // POST: Admin/Shop/Products
-        public ActionResult Products(int? page, int? pageSize, int? categoryId, string sortOrder)
+        public ActionResult Products(int? categoryId)
         {
             // Declare a list of ProductVM
             IEnumerable<ProductVM> productVMList;
-
-            ViewBag.NameSortParm = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            ViewBag.DateSortParm = sortOrder == "Price" ? "price_desc" : "Price";
-
-            // Set page number
-            var pageNumber = page ?? 1;
-            // Set page size
-            var pageSizeNumber = pageSize ?? 10;
 
             using (Db db = new Db())
             {
@@ -311,36 +301,12 @@ namespace WebShop.Areas.Admin.Controllers
                     .Where(x => categoryId == null || categoryId == 0 || x.CategoryId == categoryId)
                     .Select(x => new ProductVM(x));
 
-                // Sort order
-                switch (sortOrder)
-                {
-                    case "name_desc":
-                        productVMList = productVMList.OrderByDescending(s => s.Name);
-                        break;
-                    case "Date":
-                        productVMList = productVMList.OrderBy(s => s.NewPrice);
-                        break;
-                    case "date_desc":
-                        productVMList = productVMList.OrderByDescending(s => s.NewPrice);
-                        break;
-                    default:
-                        productVMList = productVMList.OrderBy(s => s.Name);
-                        break;
-                }
-
                 // Populate categories select list
                 ViewBag.Categories = new SelectList(db.Categories.ToList(), "Id", "Name");
 
                 // Set selected category
                 ViewBag.SelectedCat = categoryId.ToString();
-
-                // Set selected page size
-                ViewBag.SelectedPageSize = pageSizeNumber;
             }
-
-            // Set pagination
-            var onePageOfProducts = productVMList.ToPagedList(pageNumber, pageSizeNumber);
-            ViewBag.OnePageOfProducts = onePageOfProducts;
 
             // Return view with list
             return View(productVMList.ToList());
@@ -427,7 +393,7 @@ namespace WebShop.Areas.Admin.Controllers
                 dto.Slug = model.Name.Replace(" ", "-").ToLower();
                 dto.Price = model.Price;
                 dto.CategoryId = model.CategoryId;
-                dto.ImageName = model.ImageName;
+                dto.Image = model.Image;
                 dto.Description = model.Description;
 
                 CategoryModel catDTO = db.Categories.FirstOrDefault(x => x.Id == model.CategoryId);
@@ -484,7 +450,7 @@ namespace WebShop.Areas.Admin.Controllers
                 using (Db db = new Db())
                 {
                     ProductModel dto = db.Products.Find(id);
-                    dto.ImageName = imageName;
+                    dto.Image = imageName;
 
                     db.SaveChanges();
                 }
@@ -607,6 +573,7 @@ namespace WebShop.Areas.Admin.Controllers
                     // Get username
                     UserModel user = db.Users.Where(x => x.Id == order.UserId).FirstOrDefault();
                     string username = user.Username;
+                    bool isGuest = user.IsGuest;
 
                     // Loop through list of OrderDetailsDTO
                     foreach (var orderDetails in orderDetailsList)

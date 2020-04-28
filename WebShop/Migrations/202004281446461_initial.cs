@@ -3,7 +3,7 @@
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class inital : DbMigration
+    public partial class initial : DbMigration
     {
         public override void Up()
         {
@@ -64,7 +64,7 @@
                         Price = c.Decimal(nullable: false, precision: 18, scale: 2),
                         CategoryName = c.String(),
                         CategoryId = c.Int(nullable: false),
-                        ImageName = c.String(),
+                        Image = c.String(),
                         Discount = c.Decimal(nullable: false, precision: 18, scale: 2),
                     })
                 .PrimaryKey(t => t.Id)

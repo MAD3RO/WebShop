@@ -109,7 +109,7 @@ namespace WebShop.Controllers
                         ProductName = product.Name,
                         Quantity = 1,
                         Price = product.NewPrice,
-                        Image = product.ImageName,
+                        Image = product.Image,
                         Slug = product.Slug,
                         Description = product.Description
                     });
