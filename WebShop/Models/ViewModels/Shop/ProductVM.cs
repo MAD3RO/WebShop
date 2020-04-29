@@ -23,6 +23,7 @@ namespace WebShop.Models.ViewModels.Shop
             Price = row.Price;
             Discount = row.Discount;
             NewPrice = row.NewPrice;
+            DateAdded = row.DateAdded;
             CategoryName = row.CategoryName;
             CategoryId = row.CategoryId;
             Image = row.Image;
@@ -44,6 +45,8 @@ namespace WebShop.Models.ViewModels.Shop
         public decimal Discount { get; set; }
 
         public decimal NewPrice { get; set; }
+
+        public DateTime DateAdded { get; set; }
 
         public string CategoryName { get; set; }
 

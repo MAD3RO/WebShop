@@ -196,6 +196,7 @@ namespace WebShop.Areas.Admin.Controllers
                 product.Price = model.Price;
                 product.CategoryId = model.CategoryId;
                 product.Discount = model.NewPrice;
+                product.DateAdded = DateTime.Now;
 
                 CategoryModel catDTO = db.Categories.FirstOrDefault(x => x.Id == model.CategoryId);
                 product.CategoryName = catDTO.Name;
@@ -582,7 +583,7 @@ namespace WebShop.Areas.Admin.Controllers
                         ProductModel product = db.Products.Where(x => x.Id == orderDetails.ProductId).FirstOrDefault();
 
                         // Get product price
-                        decimal price = product.Price;
+                        decimal price = product.NewPrice;
 
                         // Get product name
                         string productName = product.Name;

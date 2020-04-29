@@ -62,6 +62,7 @@
                         Slug = c.String(),
                         Description = c.String(),
                         Price = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        DateAdded = c.DateTime(nullable: false),
                         CategoryName = c.String(),
                         CategoryId = c.Int(nullable: false),
                         Image = c.String(),

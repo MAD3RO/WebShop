@@ -129,7 +129,10 @@
                                                     {
                                                         <span class="sale">-@item.Discount%</span>
                                                     }
-                                                    <span class="new">NEW</span>
+                                                    @if (item.DateAdded >= ViewBag.FirstDay)
+                                                    {
+                                                        <span class="new">NEW</span>
+                                                    }
                                                 </div>
                                             </div>
                                             <div class="product-body">
@@ -140,12 +143,12 @@
                                                         {<del class="product-old-price">$@item.Price</del>}
                                                     </h4>
                                                     @*<div class="product-rating">
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                </div>*@
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                        </div>*@
                                                 </div>
                                             </div>
                                             @if (!User.IsInRole("Admin"))
@@ -163,7 +166,7 @@
                                         <div class="product container-fluid">
                                             <div class="product-img col-md-2 col-xs-4">
                                                 <a class="productImg" href="/shop/product-details/@item.Slug">
-                                                    <img class="list-group-image img-fluid" src="/Images/Uploads/Products/@item.Id/Thumbs/@item.ImageName" alt="" />
+                                                    <img class="list-group-image img-fluid" src="/Images/Uploads/Products/@item.Id/Thumbs/@item.Image" alt="" />
                                                 </a>
                                                 <div class="product-label">
                                                     @if (item.Discount > 0)
@@ -177,12 +180,12 @@
                                                 <div class="col-md-9 col-xs-8">
                                                     <h4 class="product-name"><a href="/shop/product-details/@item.Slug">@item.Name</a></h4>
                                                     @*<div class="product-rating">
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                </div>*@
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                        </div>*@
                                                     <p class="product-description">@item.Description</p>
                                                 </div>
                                                 <div class="col-md-3 col-xs-4">

@@ -207,7 +207,7 @@ namespace WebShop.Controllers
 
                 if (productVMList == null || productVMList.ToList().Count == 0)
                 {
-                    ViewBag.PriceRangeNotFound = "We have found 0 products that match that price range.";
+                    ViewBag.PriceRangeNotFound = "We haven't found any products that match that price range.";
                     viewType.Add(viewName, null);
                     return viewType;
                 }
@@ -235,6 +235,9 @@ namespace WebShop.Controllers
                 // Set selected order
                 ViewBag.OrderBy = string.IsNullOrEmpty(orderBy) ? "name_asc" : orderBy;
             }
+
+            // Get first day of month
+            ViewBag.FirstDay = DateTime.Today.AddDays(-30);
 
             // Set pagination
             var onePageOfProducts = productVMList.ToPagedList(page, pageSize);
