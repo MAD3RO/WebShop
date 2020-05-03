@@ -51,17 +51,20 @@
                     </div>
                     <p class="product-description">@Model.Description</p>
 
-                    <div class="add-to-cart">
-                        <div class="qty-label">
-                            Qty
-                            <div class="input-number">
-                                <input type="number">
-                                <span class="qty-up">+</span>
-                                <span class="qty-down">-</span>
+                    @if (!User.IsInRole("Admin"))
+                    {
+                        <div class="add-to-cart">
+                            <div class="qty-label">
+                                Qty
+                                <div class="input-number">
+                                    <input type="number">
+                                    <span class="qty-up">+</span>
+                                    <span class="qty-down">-</span>
+                                </div>
                             </div>
+                            <a href="javascript:" data-id="@Model.Id" class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</a>
                         </div>
-                        <a href="javascript:" data-id="@Model.Id" class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</a>
-                    </div>
+                    }
                 </div>
             </div>
             <!-- /Product details -->

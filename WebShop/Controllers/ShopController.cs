@@ -192,7 +192,7 @@ namespace WebShop.Controllers
                     ViewBag.SearchString = searchString;
 
                     // Init the list
-                    productVMList = db.Products.ToArray().Where(x => x.Name.ToLower().Contains(searchString.ToLower())).Select(x => new ProductVM(x));
+                    productVMList = db.Products.ToArray().Where(x => x.Name.IndexOf(searchString, StringComparison.OrdinalIgnoreCase) >= 0).Select(x => new ProductVM(x));
 
                     if (productVMList == null || productVMList.ToList().Count == 0)
                     {
