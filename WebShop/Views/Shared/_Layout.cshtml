@@ -28,33 +28,6 @@
     </style>
     <!-- START-HEADER -->
     <header id="startHeader">
-        <!-- START-TOP-HEADER -->
-        <div id="top-header">
-            <div class="container">
-                <ul class="header-links pull-right">
-                    @if (Request.IsAuthenticated && User.IsInRole("User"))
-                    {
-                        <li>@Html.Action("UserNavPartial", "Account")</li>
-                    }
-
-                    @if (Request.IsAuthenticated && User.IsInRole("Admin"))
-                    {
-                        <li><i class="fas fa-chart-line"></i>@Html.ActionLink("Admin Area", "Index", "Dashboard", new { area = "Admin" }, null)</li>
-                    }
-
-                    @if (Request.IsAuthenticated)
-                    {
-                        <li><a href="#" onclick="location.href='@Url.Action("Logout", "Account")'"><i class="fas fa-sign-out-alt"></i>Logout</a></li>
-                    }
-                    else
-                    {
-                        <li><a href="#" data-toggle="modal" data-target="#headerModal"><i class="far fa-user"></i>Login</a></li>
-                        <li><a href="/account/create-account"><i class="fas fa-sign-in-alt"></i>Register</a></li>
-                    }
-                </ul>
-            </div>
-        </div>
-        <!-- /TOP HEADER -->
         <!-- MAIN HEADER -->
         <div id="header">
             <!-- container -->
@@ -71,7 +44,7 @@
                     </div>
                     <!-- /LOGO -->
                     <!-- SEARCH BAR -->
-                    <div class="col-md-6">
+                    <div class="col-md-5">
                         <div class="header-search">
                             @using (Html.BeginForm("Search", "Shop", FormMethod.Get))
                             {
@@ -82,23 +55,8 @@
                     </div>
                     <!-- /SEARCH BAR -->
                     <!-- ACCOUNT -->
-                    <div class="col-md-3 clearfix">
+                    <div class="col-md-4 clearfix">
                         <div class="header-ctn">
-                            <!-- Wishlist -->
-                            @*<div>
-                                    <a href="#">
-                                        <i class="fas fa-heart"></i>
-                                        <span>Your Wishlist</span>
-                                        <div class="qty">2</div>
-                                    </a>
-                                </div>*@
-                            <!-- /Wishlist -->
-                            <!-- Cart -->
-                            @if (ViewBag.Title != "Cart Details" && !User.IsInRole("Admin") && ViewBag.Title != "Checkout")
-                            {
-                                @Html.Action("CartPartial", "Cart")
-                            }
-                            <!-- /Cart -->
                             <!-- Menu Toogle -->
                             <div class="menu-toggle">
                                 <a href="#">
@@ -107,6 +65,47 @@
                                 </a>
                             </div>
                             <!-- /Menu Toogle -->
+                            <!-- Cart -->
+                            @if (ViewBag.Title != "Cart Details" && !User.IsInRole("Admin") && ViewBag.Title != "Checkout")
+                            {
+                                @Html.Action("CartPartial", "Cart")
+                            }
+                            <!-- /Cart -->
+                            <div>
+                                @if (Request.IsAuthenticated && User.IsInRole("User"))
+                                {
+                                    @Html.Action("UserNavPartial", "Account")
+                                }
+
+                                @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+                                {
+                                    <a href="#" onclick="location.href='@Url.Action("Index", "Dashboard",  new { area = "Admin" }, null)'">
+                                        <i class="fas fa-chart-line"></i>
+                                        <span>Admin area</span>
+                                    </a>
+                                }
+                            </div>
+                            @if (Request.IsAuthenticated)
+                            {
+                                <div>
+                                    <a href="#" onclick="location.href='@Url.Action("Logout", "Account")'"><i class="fas fa-sign-out-alt"></i>Logout</a>
+                                </div>
+                            }
+                            else
+                            {
+                                <div>
+                                    <a href="#" data-toggle="modal" data-target="#headerModal">
+                                        <i class="far fa-user"></i>
+                                        <span>Login</span>
+                                    </a>
+                                </div>
+                                <div>
+                                    <a href="/account/create-account">
+                                        <i class="fas fa-sign-in-alt"></i>
+                                        <span>Register</span>
+                                    </a>
+                                </div>
+                            }
                         </div>
                     </div>
                     <!-- /ACCOUNT -->
@@ -118,6 +117,30 @@
         <!-- /MAIN HEADER -->
     </header>
     <!-- /HEADER -->
+
+    @if (ViewBag.PageTitle == "Home")
+    {
+        <!-- SPECIAL DEAL SECTION -->
+        <div id="special-deal" class="section">
+            <!-- container -->
+            <div class="container">
+                <!-- row -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="special-deal">
+                            <h1 class="text-uppercase">special deal this week</h1>
+                            <p class="text-uppercase">New Products Up to 50% OFF</p>
+                            <a class="primary-btn cta-btn" href="/shop/SpecialDeals">Shop now</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- /row -->
+            </div>
+            <!-- /container -->
+        </div>
+        <!-- /SPECIAL DEAL SECTION -->
+    }
+
     <!-- NAVIGATION -->
     <nav id="navigation">
         <!-- container -->
@@ -340,18 +363,6 @@
         //);
     </script>
     <!-- //categories dropdown -->
-    <!-- sticky header -->
-    <script>
-        $(window).scroll(function () {
-            if ($(this).scrollTop() > 250) {
-                document.getElementById("startHeader").style.top = "-50px";
-            }
-            else {
-                document.getElementById("startHeader").style.top = "0";
-            }
-        });
-    </script>
-    <!-- //sticky header -->
     <!-- smooth-scrolling-of-move-up -->
     <script>
         $(document).ready(function () {

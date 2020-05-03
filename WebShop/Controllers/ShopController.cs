@@ -95,7 +95,6 @@ namespace WebShop.Controllers
         }
 
         // GET: /shop/search/searchString
-        //[HttpGet]
         public ActionResult Search(string orderBy, string gridToggle, string searchString, int page = 1, int pageSize = 12, decimal priceRangeFrom = 0.00m, decimal priceRangeTo = 3000.00m)
         {
             _viewType = Grid(orderBy, gridToggle, "", searchString, page, pageSize, priceRangeFrom, priceRangeTo);
@@ -110,7 +109,6 @@ namespace WebShop.Controllers
         }
 
         // GET: /shop/SpecialDeals
-        //[HttpGet]
         public ActionResult SpecialDeals(string orderBy, string gridToggle, int page = 1, int pageSize = 12, decimal priceRangeFrom = 0.00m, decimal priceRangeTo = 3000.00m)
         {
             _viewType = Grid(orderBy, gridToggle, "", "", page, pageSize, priceRangeFrom, priceRangeTo);
@@ -121,6 +119,31 @@ namespace WebShop.Controllers
             else
             {
                 return View(_viewType.FirstOrDefault().Key, _viewType.FirstOrDefault().Value);
+            }
+        }
+
+        // GET: /shop/NewProductsPartial
+        public ActionResult NewProductsPartial()
+        {
+            // Declare a list of ProductVM
+            IEnumerable<ProductVM> productVMList = null;
+
+            // Get first day of month
+            var firstDay = DateTime.Today.AddDays(-30);
+
+            using (Db db = new Db())
+            {
+                // Init the list
+                productVMList = db.Products.ToArray().Where(x => x.DateAdded >= firstDay).Select(x => new ProductVM(x));
+
+                if (productVMList == null || productVMList.ToList().Count == 0)
+                {
+                    ViewBag.Message = "There are no new products.";
+                    return PartialView();
+                }
+
+                // Return view with list
+                return PartialView(productVMList.ToList());
             }
         }
 

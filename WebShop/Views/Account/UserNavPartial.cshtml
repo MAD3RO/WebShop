@@ -1,3 +1,6 @@
 ﻿@model WebShop.Models.ViewModels.UserNavPartialVM
 
-<i class="fas fa-user-circle"></i><a href="/account/user-profile">@Model.UserName</a>
+<a href="/account/user-profile">
+    <i class="fas fa-user-circle"></i>
+    <span>@Model.UserName</span>
+</a>
