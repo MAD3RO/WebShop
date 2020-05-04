@@ -44,7 +44,7 @@ namespace WebShop.Controllers
         //POST: /account/login-partial
         //[ActionName("login-partial")]
         [HttpPost]
-        //[ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         [HandleError]
         public JsonResult LoginPartial(LoginUserVM model)
         {
@@ -97,7 +97,14 @@ namespace WebShop.Controllers
         [HttpGet]
         public ActionResult CreateAccount()
         {
+            if (!string.IsNullOrEmpty(User.Identity.Name))
+            {
+                return RedirectToAction("Index", "Shop");
+            }
+            else
+            {
             return View("CreateAccount");
+            }
         }
 
         // POST: /account/create-account
@@ -112,13 +119,6 @@ namespace WebShop.Controllers
                 return View("CreateAccount", model);
             }
 
-            //// Check if passwords match
-            //if (!model.Password.Equals(model.ConfirmPassword))
-            //{
-            //    ModelState.AddModelError("", "Passwords do not match.");
-            //    return View("CreateAccount", model);
-            //}
-
             using (Db db = new Db())
             {
                 // Make sure username is unique
@@ -126,6 +126,7 @@ namespace WebShop.Controllers
                 {
                     ModelState.AddModelError("", "Username " + model.Username + " is taken.");
                     model.Username = "";
+                    ViewBag.LoginPartial = "remove";
                     return View("CreateAccount", model);
                 }
 
@@ -134,6 +135,7 @@ namespace WebShop.Controllers
                 {
                     ModelState.AddModelError("", "Email address " + model.EmailAddress + " already exists.");
                     model.EmailAddress = "";
+                    ViewBag.LoginPartial = "remove";
                     return View("CreateAccount", model);
                 }
 
@@ -147,13 +149,14 @@ namespace WebShop.Controllers
                     LastName = model.LastName,
                     Username = model.Username,
                     EmailAddress = model.EmailAddress,
-                    StreetAddress = model.StreetAddress,
+                    Address = model.Address,
                     City = model.City,
                     ZipCode = model.ZipCode,
                     Contact = model.Contact,
                     PasswordHash = CreatePasswordHash(model.Password, salt),
                     Salt = salt,
-                    DateCreated = DateTime.Now
+                    DateCreated = DateTime.Now,
+                    IsGuest = false
                 };
 
                 // Add the DTO
@@ -168,7 +171,7 @@ namespace WebShop.Controllers
                 UserRoleModel userRolesDTO = new UserRoleModel()
                 {
                     UserId = id,
-                    RoleId = 2 // 2 is for user, 1 is for admin
+                    RoleId = 2 // 1 is for admin, 2 is for user, 3 is for guest
                 };
 
                 db.UserRoles.Add(userRolesDTO);
@@ -188,9 +191,23 @@ namespace WebShop.Controllers
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
+
+            var url = Request.UrlReferrer.ToString().ToLower();
             //return Redirect("~/account/login");
             //return Redirect("~/shop/");
-            return RedirectToAction("Index", "Shop");
+            //return RedirectToAction("Index", "Shop");
+            if (url.Contains("checkout"))
+            {
+                return RedirectToAction("Index", "Cart");
+            }
+            else if (url.Contains("user-profile") || url.Contains("orders"))
+            {
+                return RedirectToAction("Index", "Shop");
+            }
+            else
+            {
+                return Redirect(url);
+            }
         }
 
         [Authorize]
@@ -211,7 +228,8 @@ namespace WebShop.Controllers
                 model = new UserNavPartialVM()
                 {
                     FirstName = dto.FirstName,
-                    LastName = dto.LastName
+                    LastName = dto.LastName,
+                    UserName = dto.Username
                 };
             }
 
@@ -288,7 +306,7 @@ namespace WebShop.Controllers
                 dto.LastName = model.LastName;
                 dto.Username = model.Username;
                 dto.EmailAddress = model.EmailAddress;
-                dto.StreetAddress = model.StreetAddress;
+                dto.Address = model.Address;
                 dto.City = model.City;
                 dto.ZipCode = model.ZipCode;
                 dto.Contact = model.Contact;
@@ -315,7 +333,7 @@ namespace WebShop.Controllers
         public ActionResult Orders()
         {
             // Init list of OrdersForUserVM
-            List<OrdersForUserVM> ordersForUser = new List<OrdersForUserVM>();
+            var ordersForUser = new List<OrdersForUserVM>();
 
             using (Db db = new Db())
             {
@@ -345,7 +363,7 @@ namespace WebShop.Controllers
                         ProductModel product = db.Products.Where(x => x.Id == orderDetails.ProductId).FirstOrDefault();
 
                         // Get product price
-                        decimal price = product.Price;
+                        decimal price = product.NewPrice;
 
                         // Get product name
                         string productName = product.Name;
@@ -363,7 +381,9 @@ namespace WebShop.Controllers
                         OrderNumber = order.OrderId,
                         Total = total,
                         ProductsAndQty = productsAndQty,
-                        CreatedAt = order.CreatedAt
+                        CreatedAt = order.CreatedAt,
+                        Status = order.Status,
+                        PaymentMethod = order.PaymentMethod
                     });
                 }
             }

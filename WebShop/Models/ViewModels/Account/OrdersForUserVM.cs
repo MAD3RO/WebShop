@@ -11,5 +11,7 @@ namespace WebShop.Models.ViewModels.Account
         public decimal Total { get; set; }
         public Dictionary<string, int> ProductsAndQty { get; set; }
         public DateTime? CreatedAt { get; set; }
+        public string PaymentMethod { get; set; }
+        public string Status { get; set; }
     }
 }

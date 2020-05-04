@@ -12,13 +12,26 @@ namespace WebShop.Models.Data
     {
         [Key]
         public int Id { get; set; }
+
         public string Name { get; set; }
+
         public string Slug { get; set; }
+
         public string Description { get; set; }
+
         public decimal Price { get; set; }
+
+        public DateTime DateAdded { get; set; }
+
         public string CategoryName { get; set; }
+
         public int CategoryId { get; set; }
-        public string ImageName { get; set; }
+
+        public string Image { get; set; }
+
+        public decimal Discount { get; set; }
+
+        public decimal NewPrice { get { return Math.Round(Discount > 0 ? Price - (Discount / 100) * Price : Price, 2); } }
 
         [ForeignKey("CategoryId")]
         public virtual CategoryModel Category { get; set; }

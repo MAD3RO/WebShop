@@ -2,56 +2,314 @@
 
 @{
     ViewBag.Title = ViewBag.CategoryName;
+    TempData["CategoryName"] = ViewBag.CategoryName;
 }
 
+@using PagedList.Mvc;
+@using PagedList;
 
 <!-- SECTION -->
-<div class="section">
+<div class="section min-height">
     <!-- container -->
     <div class="container">
 
-        <h2>@ViewBag.CategoryName</h2>
+        <!-- row -->
+        <div class="row">
 
-        <table class="table">
-            <tr>
-                <th>
-                    Name
-                </th>
-                <th>
-                    Description
-                </th>
-                <th>
-                    Price
-                </th>
-                <th>
-                    Image
-                </th>
-                <th></th>
-            </tr>
-
-            @foreach (var item in Model)
+            @if (ViewBag.Message != null)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Description)
-                    </td>
-                    <td>
-                        $@Html.DisplayFor(modelItem => item.Price)
-                    </td>
-                    <td>
-                        <a href="/shop/product-details/@item.Slug">
-                            <img src="/Images/Uploads/Products/@item.Id/Thumbs/@item.ImageName" />
-                        </a>
-                    </td>
-                    <td>
-                        <a href="/shop/product-details/@item.Slug">Details</a>
-                    </td>
-                </tr>
+                <br />
+                <h4 class="text-center text-danger">@ViewBag.Message</h4>
             }
+            else
+            {
+                <!-- ASIDE -->
+                <div id="aside" class="col-md-3 col-xs-3">
+                    <!-- aside Widget -->
+                    <div class="aside">
+                        <h3 class="aside-title">Price range</h3>
+                        <div class="price-filter">
+                            @using (Html.BeginForm("Category", "Shop", FormMethod.Get, new { enctype = "multipart/form-data", onsubmit = "return validateForm()" }))
+                            {
+                                <div class="input-number price-min">
+                                    <input id="price-min" type="number" name="priceRangeFrom" step=".01" min="0.00" max="3000.00" value="@ViewBag.PriceRangeFrom">
+                                    <span class="qty-up">+</span>
+                                    <span class="qty-down">-</span>
+                                </div>
+                                <span>-</span>
+                                <div class="input-number price-max">
+                                    <input id="price-max" type="number" name="priceRangeTo" step=".01" min="0.00" max="3000.00" value="@ViewBag.PriceRangeTo">
+                                    <span class="qty-up">+</span>
+                                    <span class="qty-down">-</span>
+                                </div>
+                                <input name="pageSize" type="hidden" value="@ViewBag.SelectedPageSize" />
+                                <input name="orderBy" type="hidden" value="@ViewBag.OrderBy" />
+                                <input name="gridToggle" type="hidden" value="@ViewBag.GridToggle" />
+                                <input name="searchString" type="hidden" value="@ViewBag.SearchString" />
+                                <button type="submit" class="apply-filter">Apply filter</button>
+                            }
+                        </div>
+                    </div>
+                    <!-- /aside Widget -->
+                </div>
+                <!-- /ASIDE -->
+                <!-- STORE -->
+                <div id="store" class="col-md-9 col-xs-9">
+                    <h2 class="page-header text-uppercase">@ViewBag.CategoryName</h2>
 
-        </table>
+                    @if (ViewBag.PriceRangeNotFound != null)
+                    {
+                        <h4 class="text-center text-danger">@ViewBag.PriceRangeNotFound</h4>
+                    }
+                    else
+                    {
+                        <!-- store top filter -->
+                        <div class="store-filter clearfix">
+                            <div class="store-sort">
+                                @using (Html.BeginForm("Category", "Shop", FormMethod.Get, new { style = "display: inline;" }))
+                                {
+                                    <label>
+                                        <input id="hidPageSizeOrderBy" name="pageSize" type="hidden" />
+                                        <input id="hidGridToggleOrderBy" name="gridToggle" type="hidden" />
+                                        <input name="priceRangeFrom" type="hidden" value="@ViewBag.PriceRangeFrom" />
+                                        <input name="priceRangeTo" type="hidden" value="@ViewBag.PriceRangeTo" />
+                                        Sort By:
+                                        @Html.DropDownList("orderBy", new SelectList(new Dictionary<string, string> { { "nameAsc", "Name (A-Z)" }, { "nameDesc", "Name (Z-A)" }, { "priceAsc", "Lowest price" }, { "priceDesc", "Highest price" } }, "Key", "Value"), new { id = "orderByList", @class = "input-select" })
+                                    </label>
+                                }
+                                @using (Html.BeginForm("Category", "Shop", FormMethod.Get, new { style = "display: inline;" }))
+                                {
+                                    <label>
+                                        <input id="hidOrderByPageSize" name="orderBy" type="hidden" />
+                                        <input id="hidGridTogglePageSize" name="gridToggle" type="hidden" />
+                                        <input name="priceRangeFrom" type="hidden" value="@ViewBag.PriceRangeFrom" />
+                                        <input name="priceRangeTo" type="hidden" value="@ViewBag.PriceRangeTo" />
+                                        Show:
+                                        @Html.DropDownList("pageSize", new SelectList(new Dictionary<string, int> { { "12", 12 }, { "24", 24 }, { "36", 36 } }, "Key", "Value"), new { id = "pageSizeList", @class = "input-select" })
+                                    </label>
+                                }
+                            </div>
+                            @using (Html.BeginForm("Category", "Shop", FormMethod.Get, new { style = "display: inline;" }))
+                            {
+                                <input id="hidPageSizeGridToggle" name="pageSize" type="hidden" />
+                                <input id="hidOrderByGridToggle" name="orderBy" type="hidden" />
+                                <input id="hidGridToggle" name="gridToggle" type="hidden" />
+                                <input name="priceRangeFrom" type="hidden" value="@ViewBag.PriceRangeFrom" />
+                                <input name="priceRangeTo" type="hidden" value="@ViewBag.PriceRangeTo" />
+                                <ul class="store-grid">
+                                    @if (ViewBag.GridToggle != "list")
+                                    {
+                                        <li><a class="active" id="grid"><i class="fa fa-th"></i></a></li>
+                                        <li><a id="list"><i class="fa fa-th-list"></i></a></li>
+                                    }
+                                    else
+                                    {
+                                        <li><a id="grid"><i class="fa fa-th"></i></a></li>
+                                        <li><a class="active" id="list"><i class="fa fa-th-list"></i></a></li>
+                                    }
+                                </ul>
+                            }
+                        </div>
+                        <!-- /store top filter -->
+                        <!-- store products -->
+                        <div id="products" class="row">
+                            @foreach (var item in ViewBag.OnePageOfProducts)
+                            {
+                                <!-- product -->
+                                if (ViewBag.GridToggle != "list")
+                                {
+                                    <div class="col-md-3 col-xs-6" id="product" style="padding:0px 5px;">
+                                        <div class="product">
+                                            <div class="product-img">
+                                                <a class="productImg" href="/shop/product-details/@item.Slug">
+                                                    <img class="list-group-image img-fluid" src="/Images/Uploads/Products/@item.Id/Thumbs/@item.Image" alt="">
+                                                </a>
+                                                <div class="product-label">
+                                                    @if (item.Discount > 0)
+                                                    {
+                                                        <span class="sale">-@item.Discount%</span>
+                                                    }
+                                                    @if (item.DateAdded >= ViewBag.FirstDay)
+                                                    {
+                                                        <span class="new">NEW</span>
+                                                    }
+                                                </div>
+                                            </div>
+                                            <div class="product-body">
+                                                <h4 class="product-name"><a href="/shop/product-details/@item.Slug">@item.Name</a></h4>
+                                                <div>
+                                                    <h4 class="product-price">
+                                                        $@item.NewPrice @if (item.Discount > 0)
+                                                        {<del class="product-old-price">$@item.Price</del>}
+                                                    </h4>
+                                                </div>
+                                            </div>
+                                            @if (!User.IsInRole("Admin"))
+                                            {
+                                                <div class="add-to-cart">
+                                                    <a href="javascript:" data-id="@item.Id" class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</a>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="list-group-item" id="product" style="padding:0px 5px;">
+                                        <div class="product container-fluid">
+                                            <div class="product-img col-md-2 col-xs-4">
+                                                <a class="productImg" href="/shop/product-details/@item.Slug">
+                                                    <img class="list-group-image img-fluid" src="/Images/Uploads/Products/@item.Id/Thumbs/@item.Image" alt="" />
+                                                </a>
+                                                <div class="product-label">
+                                                    @if (item.Discount > 0)
+                                                    {
+                                                        <span class="sale">-@item.Discount%</span>
+                                                    }
+                                                    <span class="new">NEW</span>
+                                                </div>
+                                            </div>
+                                            <div class="product-body col-md-10 col-xs-8">
+                                                <div class="col-md-9 col-xs-8">
+                                                    <h4 class="product-name"><a href="/shop/product-details/@item.Slug">@item.Name</a></h4>
+                                                    @*<div class="product-rating">
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                        </div>*@
+                                                    <p class="product-description">@item.Description</p>
+                                                </div>
+                                                <div class="col-md-3 col-xs-4">
+                                                    <h4 class="product-price">
+                                                        $@item.NewPrice @if (item.Discount > 0)
+                                                        {<del class="product-old-price">$@item.Price</del>}
+                                                    </h4>
+                                                    @if (!User.IsInRole("Admin"))
+                                                    {
+                                                        <a href="javascript:" data-id="@item.Id" class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</a>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                <!-- /product -->
+                            }
+                        </div>
+
+                        <!-- /store products -->
+                        <!-- store bottom pagination -->
+                        <div class="store-filter clearfix">
+                            @Html.PagedListPager((IPagedList)ViewBag.OnePageOfProducts, page => Url.Action("Category", new { name = ViewBag.CategoryName, orderBy = ViewBag.OrderBy, gridToggle = ViewBag.GridToggle, page, pageSize = ViewBag.SelectedPageSize, priceRangeFrom = ViewBag.PriceRangeFrom, priceRangeTo = ViewBag.PriceRangeTo }),
+                                new PagedListRenderOptions
+                                {
+                                    DisplayLinkToFirstPage = PagedListDisplayMode.IfNeeded,
+                                    DisplayLinkToLastPage = PagedListDisplayMode.IfNeeded,
+                                    Display = PagedListDisplayMode.IfNeeded,
+                                    DisplayLinkToNextPage = PagedListDisplayMode.IfNeeded,
+                                    DisplayLinkToPreviousPage = PagedListDisplayMode.IfNeeded,
+                                    UlElementClasses = new[] { "store-pagination" },
+                                    MaximumPageNumbersToDisplay = 5,
+                                    LinkToFirstPageFormat = "««",
+                                    LinkToPreviousPageFormat = "«",
+                                    LinkToNextPageFormat = "»",
+                                    LinkToLastPageFormat = "»»"
+                                    //ItemSliceAndTotalFormat = "Showing {1}-{2} products",
+                                    //DisplayItemSliceAndTotal = true,
+                                    //ClassToApplyToFirstListItemInPager = "store-qty"
+                                })
+                        </div>
+                        <!-- /store bottom pagination -->
+                    }
+
+                </div>
+                <!-- /STORE -->
+            }
+        </div>
+        <!-- /row -->
     </div>
 </div>
+
+@section Scripts{
+    <script>
+        $(function () {
+            /*
+            * Select page size
+            */
+
+            $("#pageSizeList").change(function (event) {
+                $("#hidOrderByPageSize").val($("#orderByList").val());
+                if ($('#grid').hasClass('active')) {
+                    $("#hidGridTogglePageSize").val("grid");
+                }
+                else {
+                    $("#hidGridTogglePageSize").val("list");
+                }
+                var form = $(event.target).parents("form");
+                form.submit();
+            });
+
+            /////////////////////////////////////////////////////////////
+
+            /*
+            * Select order
+            */
+
+            $("#orderByList").change(function (event) {
+                $("#hidPageSizeOrderBy").val($("#pageSizeList").val());
+                if ($('#grid').hasClass('active')) {
+                    $("#hidGridToggleOrderBy").val("grid");
+                }
+                else {
+                    $("#hidGridToggleOrderBy").val("list");
+                }
+                var form = $(event.target).parents("form");
+                form.submit();
+            });
+
+            /////////////////////////////////////////////////////////////
+
+            /*
+            * Toggle grid/list view
+            */
+
+            $('#list').click(function (event) {
+                event.preventDefault();
+                $("#hidPageSizeGridToggle").val($("#pageSizeList").val());
+                $("#hidOrderByGridToggle").val($("#orderByList").val());
+                $("#hidGridToggle").val("list");
+                var form = $(event.target).parents("form");
+                form.submit();
+            });
+
+            $('#grid').click(function (event) {
+                event.preventDefault();
+                $("#hidPageSizeGridToggle").val($("#pageSizeList").val());
+                $("#hidOrderByGridToggle").val($("#orderByList").val());
+                $("#hidGridToggle").val("grid");
+                var form = $(event.target).parents("form");
+                form.submit();
+            });
+
+            /////////////////////////////////////////////////////////////
+
+        });
+
+        /*
+        * Price range filter validation
+        */
+
+        function validateForm() {
+            if ($('#price-min').val() > $('#price-max').val()) {
+                alert("Min value must be lower than max value");
+                //location.reload();
+                return false;
+            }
+            else {
+                priceRangeFilter.submit();
+            }
+        }
+    </script>
+}

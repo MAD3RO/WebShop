@@ -6,54 +6,77 @@
 
 <!-- SECTION -->
 <div class="section" id="body-section">
-    <!-- container -->
+    <!-- CONTAINER -->
     <div class="container">
-        <h2>Orders</h2>
-
-        @if (!Model.Any())
-        {
-            <h3 class="text-center">You have no orders.</h3>
-        }
-        else
-        {
-            <table class="table">
-                <tr>
-                    <th>
-                        Order Number
-                    </th>
-                    <th>
-                        Order Details
-                    </th>
-                    <th>
-                        Created At
-                    </th>
-                    <th>
-                        Total
-                    </th>
-                </tr>
-
-                @foreach (var item in Model)
+        <!-- ROW -->
+        <div class="row">
+            <!-- ASIDE -->
+            <div id="aside" class="col-md-2 col-xs-3">
+                <div class="aside">
+                    <h3 class="aside-title text-uppercase">My Profile</h3>
+                    <ul class="user-nav nav navbar-nav">
+                        <li><a href="/account/user-profile">Profile details</a></li>
+                        <li class="active"><a href="/account/Orders">Orders</a>
+                    </ul>
+                </div>
+            </div>
+            <!-- /ASIDE -->
+            <div id="store" class="col-md-10 col-xs-9">
+                <h3 class="page-header text-uppercase">@ViewBag.Title</h3>
+                @if (!Model.Any())
                 {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.OrderNumber)
-                        </td>
-                        <td>
-                            @foreach (var item2 in item.ProductsAndQty)
-                            {
-                                @item2.Key @:x @item2.Value <br />
-                            }
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.CreatedAt)
-                        </td>
-                        <td>
-                            $@Html.DisplayFor(modelItem => item.Total)
-                        </td>
-                    </tr>
+                    <h3 class="text-center text-danger">You have no orders.</h3>
                 }
+                else
+                {
+                    <table class="table">
+                        <tr>
+                            <th>
+                                Order details
+                            </th>
+                            <th>
+                                Date created
+                            </th>
+                            <th>
+                                Total
+                            </th>
+                            <th>
+                                Status
+                            </th>
+                            <th>
+                                Payment Method
+                            </th>
+                        </tr>
 
-            </table>
-        }
+                        @foreach (var order in Model)
+                        {
+                        <tr>
+                            <td>
+                                @foreach (var orderDetails in order.ProductsAndQty)
+                                {
+                                    @orderDetails.Key @:x @orderDetails.Value <br />
+                                }
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => order.CreatedAt)
+                            </td>
+                            <td>
+                                $@Html.DisplayFor(modelItem => order.Total)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => order.Status)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => order.PaymentMethod)
+                            </td>
+                        </tr>
+                        }
+                    </table>
+                }
+            </div>
+        </div>
+        <!-- /ROW -->
     </div>
+    <!-- /CONTAINER -->
 </div>
+<!-- /SECTION -->

@@ -4,74 +4,93 @@
     ViewBag.Title = "Products";
 }
 
-@using PagedList.Mvc;
-@using PagedList;
+<!-- Page Heading -->
+<h1 class="h3 mb-2 text-gray-800">Products</h1>
 
-<h2>Products</h2>
+<br />
 
-<select id="SelectCategory" name="SelectCategory">
-    <option value="0">All</option>
-    @foreach (var item in ViewBag.Categories)
+<div class="store-sort">
+    @using (Html.BeginForm("Products", "Shop", FormMethod.Get, new { style = "display: inline;" }))
     {
-        if (ViewBag.SelectedCat == item.Value)
-        {
-            <option selected="selected" value="@item.Value">@item.Text</option>
-        }
-        else
-        {
-            <option value="@item.Value">@item.Text</option>
-        }
+        <label>
+            <input id="hidPageSize" name="pageSize" type="hidden" />
+            Category:
+            @Html.DropDownList("categoryId", new SelectList(ViewBag.Categories, "Value", "Text"), "All", new { id = "categoryIdList" })
+        </label>
+        <a href="@Url.Action("AddProduct", "Shop")" class="btn btn-success btn-icon-split" style="float:right;">
+            <span class="icon text-white-50">
+                <i class="fas fa-plus"></i>
+            </span>
+            <span class="text">Add new product</span>
+        </a>
     }
-</select>
-<br /><br />
+</div>
 
-<p>
-    @Html.ActionLink("Add new product", "AddProduct")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            Name
-        </th>
-        <th>
-            Description
-        </th>
-        <th>
-            Price
-        </th>
-        <th>
-            ImageName
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var product in ViewBag.OnePageOfProducts)
-    {
-        <tr>
-            <td>
-                @product.Name
-            </td>
-            <td>
-                @product.Description
-            </td>
-            <td>
-                $@product.Price
-            </td>
-            <td>
-                <a href="/Admin/Shop/EditProduct/@product.Id">
-                    <img src="/Images/Uploads/Products/@product.Id/Thumbs/@product.ImageName" />
-                </a>
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "EditProduct", new { id = product.Id }) |
-                @Html.ActionLink("Delete", "DeleteProduct", new { id = product.Id }, new { @class="delete"})
-            </td>
-        </tr>
-    }
-
-</table>
-
-@Html.PagedListPager((IPagedList)ViewBag.OnePageOfProducts, page => Url.Action("Products", new { page, catId = ViewBag.SelectedCat }))
+@if (!Model.Any())
+{
+    <br />
+    <h3 class="text-center text-danger">There are no products.</h3>
+}
+else
+{
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Price</th>
+                            <th>Discount</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th></th>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Price</th>
+                            <th>Discount</th>
+                            <th></th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @foreach (var product in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <a href="/Admin/Shop/EditProduct/@product.Id">
+                                        <img src="/Images/Uploads/Products/@product.Id/Thumbs/@product.Image" style="max-width:80px; max-height:80px;" />
+                                    </a>
+                                </td>
+                                <td>
+                                    @product.Name
+                                </td>
+                                <td>
+                                    @product.Description
+                                </td>
+                                <td>
+                                    $@product.Price
+                                </td>
+                                <td>
+                                    @product.Discount%
+                                </td>
+                                <td>
+                                    <a href="@Url.Action("EditProduct", "Shop", new { id = product.Id })" class="quick-view btn btn-success btn-circle btn-sm" style="margin-bottom:5px;"><i class="fas fa-edit"></i></a>
+                                    <a href="@Url.Action("DeleteProduct", "Shop", new { id = product.Id })" class="btn btn-danger btn-circle btn-sm"><i class="fas fa-trash"></i></a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+}
 
 @section Scripts{
     <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
@@ -81,15 +100,9 @@
             /*
              * Select products from specified category
              */
-
-            $("#SelectCategory").on("change", function () {
-                var url = $(this).val();
-
-                if (url) {
-                    window.location = "/Admin/Shop/Products?catId=" + url;
-                }
-
-                return false;
+            $("#categoryIdList").change(function (event) {
+                var form = $(event.target).parents("form");
+                form.submit();
             });
 
             /////////////////////////////////////////////////////////////

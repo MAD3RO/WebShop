@@ -51,8 +51,8 @@
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Autofac, Version=5.1.2.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
-      <HintPath>..\packages\Autofac.5.1.2\lib\net461\Autofac.dll</HintPath>
+    <Reference Include="Autofac, Version=5.1.3.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.5.1.3\lib\net461\Autofac.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.0\lib\net45\EntityFramework.dll</HintPath>
@@ -92,10 +92,10 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Net" />
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.6.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.7.0\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.7.1\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.3\lib\netstandard2.0\System.Threading.Tasks.Extensions.dll</HintPath>
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -158,15 +158,15 @@
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\PagesController.cs" />
     <Compile Include="Controllers\ShopController.cs" />
-    <Compile Include="Migrations\202003111455111_initial.cs" />
-    <Compile Include="Migrations\202003111455111_initial.designer.cs">
-      <DependentUpon>202003111455111_initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202003111919075_initial2.cs" />
-    <Compile Include="Migrations\202003111919075_initial2.designer.cs">
-      <DependentUpon>202003111919075_initial2.cs</DependentUpon>
+    <Compile Include="Enums\OrderStatus.cs" />
+    <Compile Include="Enums\PaymentMethod.cs" />
+    <Compile Include="Migrations\202004291953331_initial.cs" />
+    <Compile Include="Migrations\202004291953331_initial.designer.cs">
+      <DependentUpon>202004291953331_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Data\CartDetailsModel.cs" />
+    <Compile Include="Models\Data\CartModel.cs" />
     <Compile Include="Models\Data\CategoryModel.cs" />
     <Compile Include="Models\Data\Db.cs" />
     <Compile Include="Models\Data\OrderDetailsModel.cs" />
@@ -187,14 +187,25 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ViewModels\Shop\CategoryVM.cs" />
+    <Compile Include="Models\ViewModels\Shop\CheckoutVM.cs" />
     <Compile Include="Models\ViewModels\Shop\OrderVM.cs" />
     <Compile Include="Models\ViewModels\Shop\ProductVM.cs" />
     <Compile Include="Models\ViewModels\UserNavPartialVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\Admin\Content\all.css" />
+    <Content Include="Areas\Admin\Content\dataTables.bootstrap4.min.css" />
+    <Content Include="Areas\Admin\Content\style.css" />
+    <Content Include="Areas\Admin\Scripts\datatables-demo.js" />
+    <Content Include="Areas\Admin\Scripts\dataTables.bootstrap4.min.js" />
+    <Content Include="Areas\Admin\Scripts\jquery.dataTables.min.js" />
     <Content Include="Areas\Admin\Views\Dashboard\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Admin\Scripts\bootstrap.bundle.min.js" />
+    <Content Include="Areas\Admin\Scripts\jquery.easing.min.js" />
+    <Content Include="Areas\Admin\Scripts\jquery.min.js" />
+    <Content Include="Areas\Admin\Scripts\admin.min.js" />
     <Content Include="ckeditor\adapters\jquery.js" />
     <Content Include="ckeditor\build-config.js" />
     <Content Include="ckeditor\ckeditor.js" />
@@ -614,6 +625,7 @@
     <Content Include="Content\img\shop01.png" />
     <Content Include="Content\img\shop02.png" />
     <Content Include="Content\img\shop03.png" />
+    <Content Include="Content\img\tick.svg" />
     <Content Include="Content\jquery.fancybox-buttons.css" />
     <Content Include="Content\jquery.fancybox-thumbs.css" />
     <Content Include="Content\jquery.fancybox.css" />
@@ -624,6 +636,7 @@
     <Content Include="Content\slick-theme.css" />
     <Content Include="Content\slick.css" />
     <Content Include="Content\style.css" />
+    <Content Include="Content\img\tick.png" />
     <Content Include="favicon.ico" />
     <Content Include="fileman\css\images\animated-overlay.gif" />
     <Content Include="fileman\css\images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -1356,13 +1369,13 @@
     <Content Include="fonts\slick.eot" />
     <Content Include="fonts\slick.ttf" />
     <Content Include="fonts\slick.woff" />
-    <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\easing.js" />
     <Content Include="Scripts\easyResponsiveTabs.js" />
-    <Content Include="Scripts\jquery-3.4.1.js" />
-    <Content Include="Scripts\jquery-3.4.1.min.js" />
-    <Content Include="Scripts\jquery-3.4.1.slim.js" />
-    <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
+    <None Include="Scripts\jquery-3.5.0.intellisense.js" />
+    <Content Include="Scripts\jquery-3.5.0.js" />
+    <Content Include="Scripts\jquery-3.5.0.min.js" />
+    <Content Include="Scripts\jquery-3.5.0.slim.js" />
+    <Content Include="Scripts\jquery-3.5.0.slim.min.js" />
     <Content Include="Scripts\jquery.fancybox-buttons.js" />
     <Content Include="Scripts\jquery.fancybox-media.js" />
     <Content Include="Scripts\jquery.fancybox-thumbs.js" />
@@ -1371,6 +1384,8 @@
     <Content Include="Scripts\jquery.flexslider.js" />
     <Content Include="Scripts\jquery.magnific-popup.js" />
     <Content Include="Scripts\jquery.mousewheel-3.0.6.pack.js" />
+    <Content Include="Scripts\jquery-3.5.0.slim.min.map" />
+    <Content Include="Scripts\jquery-3.5.0.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
@@ -1425,12 +1440,14 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="Scripts\jquery-3.4.1.min.map" />
-    <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper.min.js.map" />
+    <Content Include="Views\Cart\Checkout.cshtml" />
+    <Content Include="Views\Shop\Search.cshtml" />
+    <Content Include="Views\Shop\SpecialDeals.cshtml" />
+    <Content Include="Views\Shop\NewProductsPartial.cshtml" />
     <None Include="_bin_deployableAssemblies\x86\sqlcese40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceqp40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceme40.dll" />
@@ -1475,11 +1492,8 @@
     <TypeScriptCompile Include="Scripts\index.d.ts" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202003111455111_initial.resx">
-      <DependentUpon>202003111455111_initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202003111919075_initial2.resx">
-      <DependentUpon>202003111919075_initial2.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202004291953331_initial.resx">
+      <DependentUpon>202004291953331_initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

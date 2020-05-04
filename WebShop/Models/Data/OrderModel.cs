@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Web;
 
 namespace WebShop.Models.Data
 {
@@ -12,7 +9,13 @@ namespace WebShop.Models.Data
     {
         [Key]
         public int OrderId { get; set; }
+
         public int UserId { get; set; }
+
+        public string Status { get; set; }
+
+        public string PaymentMethod { get; set; }
+
         public DateTime? CreatedAt { get; set; }
 
         [ForeignKey("UserId")]

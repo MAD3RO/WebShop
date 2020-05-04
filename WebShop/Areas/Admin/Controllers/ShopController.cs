@@ -132,7 +132,7 @@ namespace WebShop.Areas.Admin.Controllers
                 dto.Name = newCatName;
                 dto.Slug = newCatName.Replace(" ", "-").ToLower();
 
-                // Save 
+                // Save
                 db.SaveChanges();
             }
 
@@ -195,6 +195,8 @@ namespace WebShop.Areas.Admin.Controllers
                 product.Description = model.Description;
                 product.Price = model.Price;
                 product.CategoryId = model.CategoryId;
+                product.Discount = model.NewPrice;
+                product.DateAdded = DateTime.Now;
 
                 CategoryModel catDTO = db.Categories.FirstOrDefault(x => x.Id == model.CategoryId);
                 product.CategoryName = catDTO.Name;
@@ -257,14 +259,14 @@ namespace WebShop.Areas.Admin.Controllers
                     }
                 }
 
-                // Init inage name 
+                // Init image name
                 string imageName = file.FileName;
 
                 // Save image name to DTO
                 using (Db db = new Db())
                 {
                     ProductModel dto = db.Products.Find(id);
-                    dto.ImageName = imageName;
+                    dto.Image = imageName;
 
                     db.SaveChanges();
                 }
@@ -281,8 +283,6 @@ namespace WebShop.Areas.Admin.Controllers
                 img.Resize(200, 200);
                 img.Save(path2);
             }
-
-
             #endregion
 
             // Redirect
@@ -290,36 +290,27 @@ namespace WebShop.Areas.Admin.Controllers
         }
 
         // POST: Admin/Shop/Products
-        public ActionResult Products(int? page, int? catId)
+        public ActionResult Products(int? categoryId)
         {
             // Declare a list of ProductVM
-            List<ProductVM> listOfProductVM;
-
-            // Set page number
-            var pageNumber = page ?? 1;
+            IEnumerable<ProductVM> productVMList;
 
             using (Db db = new Db())
             {
                 // Init the list
-                listOfProductVM = db.Products.ToArray()
-                    .Where(x => catId == null || catId == 0 || x.CategoryId == catId)
-                    .Select(x => new ProductVM(x))
-                    .ToList();
+                productVMList = db.Products.ToArray()
+                    .Where(x => categoryId == null || categoryId == 0 || x.CategoryId == categoryId)
+                    .Select(x => new ProductVM(x));
 
                 // Populate categories select list
                 ViewBag.Categories = new SelectList(db.Categories.ToList(), "Id", "Name");
 
                 // Set selected category
-                ViewBag.SelectedCat = catId.ToString();
-
+                ViewBag.SelectedCat = categoryId.ToString();
             }
 
-            // Set pagination
-            var onePageOfProducts = listOfProductVM.ToPagedList(pageNumber, 3); // will only contain 25 products max because of the pageSize
-            ViewBag.OnePageOfProducts = onePageOfProducts;
-
             // Return view with list
-            return View(listOfProductVM);
+            return View(productVMList.ToList());
         }
 
         // GET: Admin/Shop/EditProduct/id
@@ -403,7 +394,7 @@ namespace WebShop.Areas.Admin.Controllers
                 dto.Slug = model.Name.Replace(" ", "-").ToLower();
                 dto.Price = model.Price;
                 dto.CategoryId = model.CategoryId;
-                dto.ImageName = model.ImageName;
+                dto.Image = model.Image;
                 dto.Description = model.Description;
 
                 CategoryModel catDTO = db.Categories.FirstOrDefault(x => x.Id == model.CategoryId);
@@ -460,7 +451,7 @@ namespace WebShop.Areas.Admin.Controllers
                 using (Db db = new Db())
                 {
                     ProductModel dto = db.Products.Find(id);
-                    dto.ImageName = imageName;
+                    dto.Image = imageName;
 
                     db.SaveChanges();
                 }
@@ -583,6 +574,7 @@ namespace WebShop.Areas.Admin.Controllers
                     // Get username
                     UserModel user = db.Users.Where(x => x.Id == order.UserId).FirstOrDefault();
                     string username = user.Username;
+                    bool isGuest = user.IsGuest;
 
                     // Loop through list of OrderDetailsDTO
                     foreach (var orderDetails in orderDetailsList)
@@ -591,7 +583,7 @@ namespace WebShop.Areas.Admin.Controllers
                         ProductModel product = db.Products.Where(x => x.Id == orderDetails.ProductId).FirstOrDefault();
 
                         // Get product price
-                        decimal price = product.Price;
+                        decimal price = product.NewPrice;
 
                         // Get product name
                         string productName = product.Name;
