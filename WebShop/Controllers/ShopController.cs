@@ -34,13 +34,13 @@ namespace WebShop.Controllers
             using (Db db = new Db())
             {
                 // Check if product exists
-                if (!db.Products.Any(x => x.Slug.Equals(name)))
+                if (!db.Products.Any(x => x.Name.Replace(" ", "-").ToLower().Equals(name)))
                 {
                     return RedirectToAction("Index", "Shop");
                 }
 
                 // Init productDTO
-                dto = db.Products.Where(x => x.Slug == name).FirstOrDefault();
+                dto = db.Products.Where(x => x.Name.Replace(" ", "-").ToLower() == name).FirstOrDefault();
 
                 // Get id
                 id = dto.Id;

@@ -191,7 +191,7 @@ namespace WebShop.Areas.Admin.Controllers
                 ProductModel product = new ProductModel();
 
                 product.Name = model.Name;
-                product.Slug = model.Name.Replace(" ", "-").ToLower();
+                //product.Slug = model.Name.Replace(" ", "-").ToLower();
                 product.Description = model.Description;
                 product.Price = model.Price;
                 product.CategoryId = model.CategoryId;
@@ -391,7 +391,7 @@ namespace WebShop.Areas.Admin.Controllers
                 ProductModel dto = db.Products.Find(id);
 
                 dto.Name = model.Name;
-                dto.Slug = model.Name.Replace(" ", "-").ToLower();
+                //dto.Slug = model.Name.Replace(" ", "-").ToLower();
                 dto.Price = model.Price;
                 dto.CategoryId = model.CategoryId;
                 dto.Image = model.Image;

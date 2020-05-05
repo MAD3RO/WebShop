@@ -19,8 +19,6 @@ namespace WebShop.Controllers
         // GET: Account
         public ActionResult Index()
         {
-            //return Redirect("~/account/login");
-            //return Redirect("~/shop");
             return RedirectToAction("Index", "Shop");
         }
 
@@ -28,21 +26,36 @@ namespace WebShop.Controllers
         [HttpGet]
         public ActionResult LoginPartial()
         {
-            // Confirm user is not logged in
-            //string username = User.Identity.Name;
+            var model = new LoginUserVM();
 
-            //if (!string.IsNullOrEmpty(username))
+            if (Request.Cookies.Get("username") != null && Request.Cookies.Get("password") != null)
+            {
+                model.Username = Request.Cookies["username"].Value;
+                model.Password = Request.Cookies["password"].Value;
+            }
+            else
+            {
+                model.Username = "";
+                model.Password = "";
+            }
+            model.RememberMe = !string.IsNullOrEmpty(model.Username);
+
+            //HttpCookie authCookie = System.Web.HttpContext.Current.Request.Cookies[FormsAuthentication.FormsCookieName];
+            //if (authCookie != null)
             //{
-            //    //return RedirectToAction("user-profile");
-            //    return PartialView("LoginPartial");
+            //    FormsAuthenticationTicket authTicket = FormsAuthentication.Decrypt(authCookie.Value);
+            //    if (authTicket != null & !authTicket.Expired)
+            //    {
+            //        //model.Username = authTicket.UserData;
+            //        model.Username = authTicket.Name;
+            //    }
             //}
 
             // Return view
-            return PartialView();
+            return PartialView(model);
         }
 
         //POST: /account/login-partial
-        //[ActionName("login-partial")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         [HandleError]
@@ -86,7 +99,30 @@ namespace WebShop.Controllers
             }
             else
             {
-                FormsAuthentication.SetAuthCookie(model.Username, model.RememberMe);
+                if (model.RememberMe)
+                {
+                    var ckUsername = new HttpCookie("username");
+                    var ckPassword = new HttpCookie("password");
+                    ckUsername.Expires = DateTime.Now.AddHours(24);
+                    ckPassword.Expires = DateTime.Now.AddHours(24);
+                    ckUsername.Value = model.Username;
+                    ckPassword.Value = model.Password;
+                    Response.Cookies.Add(ckUsername);
+                    Response.Cookies.Add(ckPassword);
+                }
+                else
+                {
+                    // Remove cookie
+                    var ckUsername = Request.Cookies["username"];
+                    if (ckUsername != null)
+                    {
+                        Response.Cookies.Remove("username");
+                        ckUsername.Expires = DateTime.Now.AddYears(-1);
+                        ckUsername.Value = null;
+                        Response.SetCookie(ckUsername);
+                    }
+                }
+                //FormsAuthentication.SetAuthCookie(model.Username, model.RememberMe);
                 ModelState.Clear();
                 return Json("success", JsonRequestBehavior.AllowGet);
             }
@@ -103,7 +139,7 @@ namespace WebShop.Controllers
             }
             else
             {
-            return View("CreateAccount");
+                return View("CreateAccount");
             }
         }
 

@@ -166,7 +166,10 @@
                                                     {
                                                         <span class="sale">-@item.Discount%</span>
                                                     }
-                                                    <span class="new">NEW</span>
+                                                    @if (item.DateAdded >= ViewBag.FirstDay)
+                                                    {
+                                                        <span class="new">NEW</span>
+                                                    }
                                                 </div>
                                             </div>
                                             <div class="product-body col-md-10 col-xs-8">

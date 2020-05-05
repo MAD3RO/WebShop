@@ -110,7 +110,7 @@ namespace WebShop.Controllers
                         Quantity = 1,
                         Price = product.NewPrice,
                         Image = product.Image,
-                        Slug = product.Slug,
+                        //Slug = product.Slug,
                         Description = product.Description
                     });
                 }

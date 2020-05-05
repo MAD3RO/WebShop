@@ -20,7 +20,7 @@
 </div>
 <!-- /BREADCRUMB -->
 <!-- SECTION -->
-<div class="section" id="body-section">
+<div class="section min-height">
     <!-- container -->
     <div class="container">
 
@@ -62,12 +62,10 @@
                             </td>
                             <td class="text-center" data-th="Price">$@item.Price</td>
                             <td class="text-center qty@(item.ProductId)" data-th="Quantity">
-                                @*<input type="number" class="form-control text-center" value="1">*@
                                 @item.Quantity
                             </td>
                             <td class="text-center total@(item.ProductId)" data-th="Subtotal">$@item.Total</td>
                             <td class="actions text-center" data-th="">
-                                @*<button class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>*@
                                 <a href="#" class="incrproduct" data-id="@item.ProductId"><span class="qty-up">+</span></a>
                                 <a href="#" class="decrproduct" data-id="@item.ProductId"><span class="qty-down">-</span></a>
                                 <a href="#" class="removeproduct btn btn-danger btn-sm" data-id="@item.ProductId"><i class="fas fa-trash"></i> Remove</a>
@@ -77,10 +75,6 @@
                 </tbody>
             </table>
             <a href="javascript:history.back()" class="btn back"><i class="fa fa-arrow-circle-left"></i> Continue Shopping</a>
-
-            @*<div class="cart-summary">
-                </div>*@
-            @*<h5 class="subtotal">TOTAL: $@ViewBag.GrandTotal</h5>*@
 
             <div class="grandtotal text-center">
                 <strong>TOTAL: $<span>@ViewBag.GrandTotal</span></strong>

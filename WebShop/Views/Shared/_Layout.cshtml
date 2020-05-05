@@ -205,11 +205,18 @@
                     <div class="col-md-3 col-xs-6">
                         <div class="footer">
                             <h3 class="footer-title">About Us</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut.</p>
+                            <p>We aim to offer our customers a variety of the latest computers. We offer all of this while providing excellent customer service and friendly support.</p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-xs-6">
+                        <div class="footer">
+                            <h3 class="footer-title">Contact</h3>
                             <ul class="footer-links">
-                                <li><a href="#"><i class="fa fa-map-marker"></i>1734 Stonecoal Road</a></li>
-                                <li><a href="#"><i class="fa fa-phone"></i>+021-95-51-84</a></li>
-                                <li><a href="#"><i class="fa fa-envelope-o"></i>email@email.com</a></li>
+                                <li><a href="#" onclick="return false;"><i class="fa fa-map-marker-alt"></i>Galmočka 12, 10000 Zagreb</a></li>
+                                <li><a href="#" onclick="return false;"><i class="fa fa-phone-square"></i>+385 (0)1 4078 766</a></li>
+                                <li><a href="#" onclick="return false;"><i class="fa fa-phone"></i>+385 (0)1 2754 088</a></li>
+                                <li><a href="#" onclick="return false;"><i class="fa fa-envelope"></i>email@webshop.com</a></li>
                             </ul>
                         </div>
                     </div>
@@ -227,18 +234,18 @@
 
                     <div class="col-md-3 col-xs-6">
                         <div class="footer">
-                            <h3 class="footer-title">Service</h3>
+                            <h3 class="footer-title">My Account</h3>
                             <ul class="footer-links">
                                 <li><a href="#" data-toggle="modal" data-target="#headerModal">Login</a></li>
                                 <li><a href="/account/create-account">Register</a></li>
                                 @if (Request.IsAuthenticated && User.IsInRole("User"))
                                 {
-                                    <li><a href="/account/user-profile">My Account</a></li>
+                                    <li><a href="/account/user-profile">Profile Details</a></li>
                                     <li><a href="/account/orders">Order History</a></li>
                                 }
                                 else
                                 {
-                                    <li><a href="#" data-toggle="modal" data-target="#headerModal">My Account</a></li>
+                                    <li><a href="#" data-toggle="modal" data-target="#headerModal">Profile Details</a></li>
                                     <li><a href="#" data-toggle="modal" data-target="#headerModal">Order History</a></li>
                                 }
                                 <li><a href="/cart/index">View Cart</a></li>

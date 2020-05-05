@@ -59,7 +59,6 @@
                     {
                         Id = c.Int(nullable: false, identity: true),
                         Name = c.String(),
-                        Slug = c.String(),
                         Description = c.String(),
                         Price = c.Decimal(nullable: false, precision: 18, scale: 2),
                         DateAdded = c.DateTime(nullable: false),
