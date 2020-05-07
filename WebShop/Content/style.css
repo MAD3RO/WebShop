@@ -2804,10 +2804,14 @@ h3.other-nw {
     margin: 0px 0px 0px 5px;
 }
 
-.form-horizontal input:focus {
+#form-horizontal input:focus {
     outline: none !important;
     border: 0.5px solid #D10024;
     box-shadow: 0 0 2px #D10024;
+}
+
+#form-horizontal input{
+    margin-bottom:10px;
 }
 /*-- //login --*/
 
