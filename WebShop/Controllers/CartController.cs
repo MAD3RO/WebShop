@@ -341,7 +341,7 @@ namespace WebShop.Controllers
                 // Add to OrderDTO and save
                 orderDTO.UserId = userId;
                 orderDTO.CreatedAt = DateTime.Now;
-                orderDTO.Status = Enum.GetName(typeof(OrderStatus), model.PaymentMethod == "paypal" ? OrderStatus.Paid : OrderStatus.Pending);
+                orderDTO.Status = model.PaymentMethod == "paypal" ? OrderStatus.Paid : OrderStatus.Pending;
                 orderDTO.PaymentMethod = Enum.GetName(typeof(PaymentMethod), model.PaymentMethod == "paypal" ? PaymentMethod.Paypal : PaymentMethod.Cash);
 
                 db.Orders.Add(orderDTO);
@@ -456,7 +456,8 @@ namespace WebShop.Controllers
                 // Add to OrderDTO and save
                 orderDTO.UserId = userId;
                 orderDTO.CreatedAt = DateTime.Now;
-                orderDTO.Status = Enum.GetName(typeof(OrderStatus), paymentMethod == "paypal" ? OrderStatus.Paid : OrderStatus.Pending);
+                //orderDTO.Status = Enum.GetName(typeof(OrderStatus), paymentMethod == "paypal" ? OrderStatus.Paid : OrderStatus.Pending);
+                orderDTO.Status = paymentMethod == "paypal" ? OrderStatus.Paid : OrderStatus.Pending;
                 orderDTO.PaymentMethod = Enum.GetName(typeof(PaymentMethod), paymentMethod == "paypal" ? PaymentMethod.Paypal : PaymentMethod.Cash);
 
                 db.Orders.Add(orderDTO);

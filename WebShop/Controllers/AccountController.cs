@@ -122,7 +122,7 @@ namespace WebShop.Controllers
                         Response.SetCookie(ckUsername);
                     }
                 }
-                //FormsAuthentication.SetAuthCookie(model.Username, model.RememberMe);
+                FormsAuthentication.SetAuthCookie(model.Username, model.RememberMe);
                 ModelState.Clear();
                 return Json("success", JsonRequestBehavior.AllowGet);
             }
@@ -215,11 +215,9 @@ namespace WebShop.Controllers
             }
 
             // Create a TempData message
-            TempData["SM"] = "Registration is successfully done. Account activation link has been sent to your email.";
+            TempData["SM"] = "Registration is successfully done.";
 
             return Redirect("~/account/create-account");
-            //return RedirectToAction("Index", "Shop");
-            //return View("CreateAccount", model);
         }
 
         // GET: /account/Logout
@@ -227,11 +225,8 @@ namespace WebShop.Controllers
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
-
             var url = Request.UrlReferrer.ToString().ToLower();
-            //return Redirect("~/account/login");
-            //return Redirect("~/shop/");
-            //return RedirectToAction("Index", "Shop");
+
             if (url.Contains("checkout"))
             {
                 return RedirectToAction("Index", "Cart");

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using WebShop.Enums;
 
 namespace WebShop.Models.Data
 {
@@ -12,7 +13,7 @@ namespace WebShop.Models.Data
 
         public int UserId { get; set; }
 
-        public string Status { get; set; }
+        public OrderStatus Status { get; set; }
 
         public string PaymentMethod { get; set; }
 

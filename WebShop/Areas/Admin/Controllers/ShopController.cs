@@ -9,6 +9,7 @@ using WebShop.Models.Data;
 using WebShop.Models.ViewModels.Shop;
 using PagedList;
 using WebShop.Areas.Admin.Models.ViewModels.Shop;
+using WebShop.Enums;
 
 namespace WebShop.Areas.Admin.Controllers
 {
@@ -136,7 +137,6 @@ namespace WebShop.Areas.Admin.Controllers
                 db.SaveChanges();
             }
 
-            // Reurn
             return "ok";
         }
 
@@ -602,13 +602,32 @@ namespace WebShop.Areas.Admin.Controllers
                         Username = username,
                         Total = total,
                         ProductsAndQty = productsAndQty,
-                        CreatedAt = order.CreatedAt
+                        CreatedAt = order.CreatedAt,
+                        PaymentMethod = order.PaymentMethod,
+                        Status = order.Status
                     });
                 }
             }
 
             // Return view with OrdersForAdminVM list
             return View(ordersForAdmin);
+        }
+
+        // POST: Admin/Shop/ChangeOrderStatus
+        [HttpPost]
+        public void ChangeOrderStatus(int id, int status)
+        {
+            using (Db db = new Db())
+            {
+                // Get order DTO
+                var dto = db.Orders.Find(id);
+
+                // Edit DTO
+                dto.Status = (OrderStatus)status;
+
+                // Save
+                db.SaveChanges();
+            }
         }
     }
 }

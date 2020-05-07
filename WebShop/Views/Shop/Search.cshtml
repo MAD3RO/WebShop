@@ -137,19 +137,13 @@
                                                 </div>
                                             </div>
                                             <div class="product-body">
+                                                <p class="product-category">@item.CategoryName</p>
                                                 <h4 class="product-name"><a href="/shop/product-details/@item.Slug">@item.Name</a></h4>
                                                 <div>
                                                     <h4 class="product-price">
                                                         $@item.NewPrice @if (item.Discount > 0)
                                                         {<del class="product-old-price">$@item.Price</del>}
                                                     </h4>
-                                                    @*<div class="product-rating">
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                        </div>*@
                                                 </div>
                                             </div>
                                             @if (!User.IsInRole("Admin"))
@@ -182,14 +176,8 @@
                                             </div>
                                             <div class="product-body col-md-10 col-xs-8">
                                                 <div class="col-md-9 col-xs-8">
+                                                    <p class="product-category">@item.CategoryName</p>
                                                     <h4 class="product-name"><a href="/shop/product-details/@item.Slug">@item.Name</a></h4>
-                                                    @*<div class="product-rating">
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                        </div>*@
                                                     <p class="product-description">@item.Description</p>
                                                 </div>
                                                 <div class="col-md-3 col-xs-4">
@@ -213,7 +201,6 @@
                         <!-- /store products -->
                         <!-- store bottom pagination -->
                         <div class="store-filter clearfix">
-                            @*@Html.PagedListPager((IPagedList)ViewBag.OnePageOfProducts, page => Url.Action("Search", new { page, pageSize = ViewBag.SelectedPageSize, orderBy = ViewBag.OrderBy, gridToggle = ViewBag.GridToggle, name = HttpUtility.ParseQueryString(Request.UrlReferrer.Query)["name"] }),*@
                             @Html.PagedListPager((IPagedList)ViewBag.OnePageOfProducts, page => Url.Action("Search", new { orderBy = ViewBag.OrderBy, gridToggle = ViewBag.GridToggle, searchString = ViewBag.SearchString, page, pageSize = ViewBag.SelectedPageSize, priceRangeFrom = ViewBag.PriceRangeFrom, priceRangeTo = ViewBag.PriceRangeTo }),
                                  new PagedListRenderOptions
                                  {
@@ -228,9 +215,6 @@
                                      LinkToPreviousPageFormat = "«",
                                      LinkToNextPageFormat = "»",
                                      LinkToLastPageFormat = "»»"
-                                     //ItemSliceAndTotalFormat = "Showing {1}-{2} products",
-                                     //DisplayItemSliceAndTotal = true,
-                                     //ClassToApplyToFirstListItemInPager = "store-qty"
                                  })
                         </div>
                         <!-- /store bottom pagination -->

@@ -5,13 +5,13 @@ using System.Web;
 
 namespace WebShop.Enums
 {
-    public enum OrderStatus
+    public enum OrderStatus : int
     {
-        Paid,
-        Delivered,
-        Cancelled,
-        Failed,
-        Placed,
-        Pending
+        Paid = 0,
+        Delivered = 1,
+        Cancelled = 2,
+        Failed = 3,
+        Placed = 4,
+        Pending = 5
     }
 }

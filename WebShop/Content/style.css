@@ -1387,6 +1387,11 @@ a.add-to-cart-btn:focus {
         clear: both;
     }
 
+    #product.list-group-item .product-category {
+        text-align: left;
+        height: auto;
+    }
+
     #product.list-group-item .product-name {
         text-align: left;
         margin-bottom: 20px;

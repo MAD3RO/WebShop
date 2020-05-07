@@ -3,7 +3,7 @@
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class initial : DbMigration
+    public partial class intial : DbMigration
     {
         public override void Up()
         {
@@ -103,7 +103,7 @@
                     {
                         OrderId = c.Int(nullable: false, identity: true),
                         UserId = c.Int(nullable: false),
-                        Status = c.String(),
+                        Status = c.Int(nullable: false),
                         PaymentMethod = c.String(),
                         CreatedAt = c.DateTime(),
                     })

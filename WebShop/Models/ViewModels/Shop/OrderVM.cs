@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using WebShop.Enums;
 using WebShop.Models.Data;
 
 namespace WebShop.Models.ViewModels.Shop
@@ -26,7 +27,7 @@ namespace WebShop.Models.ViewModels.Shop
 
         public DateTime? CreatedAt { get; set; }
 
-        public string Status { get; set; }
+        public OrderStatus Status { get; set; }
 
         public string PaymentMethod { get; set; }
     }

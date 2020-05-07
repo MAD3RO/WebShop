@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<WebShop.Areas.Admin.Models.ViewModels.Shop.OrdersForAdminVM>
-
+@using WebShop.Enums;
 @{
     ViewBag.Title = "Orders";
 }
@@ -28,6 +28,8 @@ else
                             <th>Order details</th>
                             <th>Date created</th>
                             <th>Total</th>
+                            <th>Payment method</th>
+                            <th>Status</th>
                         </tr>
                     </thead>
                     <tfoot>
@@ -37,6 +39,8 @@ else
                             <th>Order details</th>
                             <th>Date created</th>
                             <th>Total</th>
+                            <th>Payment method</th>
+                            <th>Status</th>
                         </tr>
                     </tfoot>
                     <tbody>
@@ -55,11 +59,17 @@ else
                                         @item2.Key @:x @item2.Value <br />
                                     }
                                 </td>
-                                <td>
+                                <td style="text-align:center;">
                                     @Html.DisplayFor(modelItem => item.CreatedAt)
                                 </td>
-                                <td>
+                                <td style="text-align:right;">
                                     $@Html.DisplayFor(modelItem => item.Total)
+                                </td>
+                                <td style="text-align:center;">
+                                    @Html.DisplayFor(modelItem => item.PaymentMethod)
+                                </td>
+                                <td style="text-align:center;">
+                                    @Html.EnumDropDownListFor(m => item.Status, new { id = item.OrderNumber.ToString(), @class = "input-select" })
                                 </td>
                             </tr>
                         }
@@ -68,4 +78,29 @@ else
             </div>
         </div>
     </div>
+}
+
+@section Scripts{
+    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
+    <script>
+
+        $(function () {
+
+            /*
+             * Change order status
+             */
+
+            $(".input-select").change(function (event) {
+
+                var id = parseInt(this.id);
+                var status = parseInt($("#" + id).val());
+                var url = "/Admin/Shop/ChangeOrderStatus";
+
+                $.post(url, { id: id, status: status }, function (data) {
+                });
+            });
+
+            /////////////////////////////////////////////////////////////
+        });
+    </script>
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WebShop.Enums;
 using WebShop.Models.Data;
 using WebShop.Models.ViewModels.Shop;
 
@@ -17,7 +18,7 @@ namespace WebShop.Areas.Admin.Controllers
             using (Db db = new Db())
             {
                 // Get number of registered users
-                int usersNum = db.Users.Where(x => x.IsGuest == false).ToList().Count;
+                int usersNum = db.Users.Where(x => x.IsGuest == false && x.Id != 1).ToList().Count;
                 ViewBag.Users = usersNum;
 
                 // Get number of orders
@@ -29,7 +30,7 @@ namespace WebShop.Areas.Admin.Controllers
                 var firstDay = startOfTthisMonth.AddMonths(-1);
                 var lastDay = startOfTthisMonth.AddDays(-1);
 
-                List<OrderVM> completedOrders = db.Orders.Where(x => x.Status == "Paid" && x.CreatedAt >= firstDay && x.CreatedAt <= lastDay).ToArray().Select(x => new OrderVM(x)).ToList();
+                List<OrderVM> completedOrders = db.Orders.Where(x => x.Status == OrderStatus.Paid && x.CreatedAt >= firstDay && x.CreatedAt <= lastDay).ToArray().Select(x => new OrderVM(x)).ToList();
 
                 // Declare monthly earnings counter
                 decimal monthlyEarningsSum = 0;
