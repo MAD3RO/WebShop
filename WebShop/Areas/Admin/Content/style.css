@@ -1,3 +1,59 @@
 ﻿.store-sort {
-    min-height:50px;
+    min-height: 50px;
+}
+
+#deleteImage {
+    float: left;
+    margin-bottom: 20px;
+    padding: 0px;
+}
+
+
+input#ImageName {
+    display: none;
+}
+
+.file {
+    visibility: hidden;
+    position: absolute;
+}
+
+#preview, #clear {
+    visibility: hidden;
+    margin-bottom: 10px;
+}
+
+.remove-image {
+    display: none;
+    position: absolute;
+    top: -10px;
+    right: 3px;
+    border-radius: 100em;
+    /*padding: 2px 6px 3px;*/
+    text-decoration: none;
+    font: 700 21px/20px sans-serif;
+    background: #555;
+    border: 3px solid #fff;
+    color: #FFF;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.5), inset 0 2px 4px rgba(0,0,0,0.3);
+    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+    transition: background 0.5s;
+}
+
+    .remove-image:hover {
+        background: #E54E4E;
+        padding: 3px 7px 5px;
+        top: -10px;
+        right: 3px;
+        text-decoration: none;
+    }
+
+    .remove-image:active {
+        background: #E54E4E;
+        top: -10px;
+        right: 3px;
+    }
+
+.image-div {
+    margin-bottom: 20px !important;
 }

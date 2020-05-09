@@ -15,13 +15,13 @@
                 <div class="aside">
                     <h3 class="aside-title text-uppercase">My Profile</h3>
                     <ul class="user-nav nav navbar-nav">
-                        <li class="active"><a href="account/user-profile">Profile details</a></li>
+                        <li class="active"><a href="/account/user-profile">Profile details</a></li>
                         <li><a href="/account/Orders">Orders</a>
                     </ul>
                 </div>
             </div>
             <!-- /ASIDE -->
-            <div id="store" class="col-md-10 col-xs-9">
+            <div id="store" class="col-md-8 col-xs-8">
                 <h3 class="page-header text-uppercase">@ViewBag.Title</h3>
 
                 @if (TempData["SM"] != null)
@@ -34,98 +34,94 @@
                 @using (Html.BeginForm())
                 {
                     @Html.AntiForgeryToken()
-                    <div class="form-horizontal">
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                        @Html.HiddenFor(model => model.Id)
-
-                        <div class="form-group">
-                            <label class="control-label col-md-2">First Name</label>
-                            <div class="col-md-10">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.Id)
+                    <div class="row" id="form-horizontal">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="firstName">First name</label>
                                 @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
                                 @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <label class="control-label col-md-2">Last Name</label>
-                            <div class="col-md-10">
+                            <div class="col-md-6 mb-3">
+                                <label for="lastName">Last name</label>
                                 @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
                                 @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label class="control-label col-md-2">Email</label>
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.EmailAddress, new { htmlAttributes = new { @class = "form-control" } })
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                <label for="username">Username</label>
+                                @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control", placeholder = "Username" } })
+                                @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                <label for="email">E-mail</label>
+                                @Html.EditorFor(model => model.EmailAddress, new { htmlAttributes = new { @class = "form-control", placeholder = "you@example.com" } })
                                 @Html.ValidationMessageFor(model => model.EmailAddress, "", new { @class = "text-danger" })
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Username, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="control-label col-md-2">Address</label>
-                            <div class="col-md-10">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <span class="input-group-text"><i class="fas fa-home"></i></span>
+                                <label for="address">Address</label>
                                 @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
                                 @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.City, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
+                            <div class="col-md-6 mb-3">
+                                <span class="input-group-text"><i class="fas fa-building"></i></span>
+                                <label for="city">City</label>
                                 @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control" } })
                                 @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label class="control-label col-md-2">Zip code</label>
-                            <div class="col-md-10">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <span class="input-group-text"><i class="fas fa-envelope-open"></i></span>
+                                <label for="zip-code">Zip code</label>
                                 @Html.EditorFor(model => model.ZipCode, new { htmlAttributes = new { @class = "form-control" } })
                                 @Html.ValidationMessageFor(model => model.ZipCode, "", new { @class = "text-danger" })
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Contact, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
+                            <div class="col-md-6 mb-3">
+                                <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                <label for="contact">Contact</label>
                                 @Html.EditorFor(model => model.Contact, new { htmlAttributes = new { @class = "form-control" } })
                                 @Html.ValidationMessageFor(model => model.Contact, "", new { @class = "text-danger" })
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.PasswordFor(model => model.Password, new { @class = "form-control" })
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <span class="input-group-text"><i class="fas fa-unlock-alt"></i></span>
+                                <label for="password">Password</label>
+                                @Html.PasswordFor(model => model.Password, new { @class = "form-control", placeholder = "********" })
                                 @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <label class="control-label col-md-2">Confirm Password</label>
-                            <div class="col-md-10">
-                                @Html.PasswordFor(model => model.ConfirmPassword, new { @class = "form-control" })
+                            <div class="col-md-6 mb-3">
+                                <span class="input-group-text"><i class="fas fa-unlock-alt"></i></span>
+                                <label for="confirm-password">Confirm password</label>
+                                @Html.PasswordFor(model => model.ConfirmPassword, new { @class = "form-control", placeholder = "********" })
                                 @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <div class="col-md-offset-2 col-md-10">
-                                <input type="submit" value="Edit Profile" class="btn btn-default" />
-                            </div>
+                        <div class="mb-3">
+                            <input type="submit" value="Edit profile" class="edit btn" />
                         </div>
                     </div>
                 }
             </div>
+            <div class="col-md-2 col-xs-1"></div>
         </div>
         <!-- /ROW -->
     </div>

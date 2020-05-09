@@ -2708,7 +2708,7 @@ ul.multi-column-dropdown li {
     float: left;
 }
 
-.register input[type="text"], .register input[type="email"], .register input[type="password"] {
+/*.register input[type="text"], .register input[type="email"], .register input[type="password"] {
     outline: none;
     border: 1px solid #DFDFDF;
     background: #f5f5f5;
@@ -2744,7 +2744,7 @@ div#horizontalTab ul {
 
     .register input[type="submit"]:hover {
         background: #3c43a4;
-    }
+    }*/
 
 div#OR {
     height: 30px;
@@ -2804,15 +2804,29 @@ h3.other-nw {
     margin: 0px 0px 0px 5px;
 }
 
+
 #form-horizontal input:focus {
     outline: none !important;
     border: 0.5px solid #D10024;
     box-shadow: 0 0 2px #D10024;
 }
 
-#form-horizontal input{
-    margin-bottom:10px;
+#form-horizontal .row {
+    margin-bottom: 20px;
 }
+
+.register, .edit {
+    color: #FFF;
+    background-color: #D10024;
+    padding:8px 50px;
+    float:left;
+    font-size:16px;
+}
+
+    .register:hover, .edit:hover {
+        color:#FFF;
+        opacity: 0.9;
+    }
 /*-- //login --*/
 
 

@@ -28,7 +28,6 @@
                         <div class="price-filter">
                             @using (Html.BeginForm("Search", "Shop", FormMethod.Get, new { enctype = "multipart/form-data", onsubmit = "return validateForm()" }))
                             {
-                                <div id="price-slider"></div>
                                 <div class="input-number price-min">
                                     <input id="price-min" type="number" name="priceRangeFrom" step=".01" min="0.00" max="3000.00" value="@ViewBag.PriceRangeFrom">
                                     <span class="qty-up">+</span>

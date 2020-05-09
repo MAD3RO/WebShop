@@ -162,11 +162,17 @@ namespace WebShop.Areas.Admin.Controllers
         public ActionResult AddProduct(ProductVM model, HttpPostedFileBase file)
         {
             // Check model state
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid || file == null)
             {
                 using (Db db = new Db())
                 {
                     model.Categories = new SelectList(db.Categories.ToList(), "Id", "Name");
+
+                    // Product image upload validation
+                    if (file == null)
+                    {
+                        ModelState.AddModelError("Image", "Product image is required.");
+                    }
                     return View(model);
                 }
             }
@@ -195,7 +201,7 @@ namespace WebShop.Areas.Admin.Controllers
                 product.Description = model.Description;
                 product.Price = model.Price;
                 product.CategoryId = model.CategoryId;
-                product.Discount = model.NewPrice;
+                product.Discount = model.Discount;
                 product.DateAdded = DateTime.Now;
 
                 CategoryModel catDTO = db.Categories.FirstOrDefault(x => x.Id == model.CategoryId);
