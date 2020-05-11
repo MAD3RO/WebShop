@@ -13,7 +13,7 @@
             <!-- Product main img -->
             <div class="col-md-5 col-md-push-2">
                 <div id="product-main-img">
-                    @if (Model.GalleryImages != null)
+                    @if (Model.GalleryImages.Any())
                     {
                         foreach (var image in Model.GalleryImages)
                         {
@@ -22,13 +22,17 @@
                             </div>
                         }
                     }
+                    else
+                    {
+                        <h5 class="text-center text-danger">There are no images in product gallery.</h5>
+                    }
                 </div>
             </div>
             <!-- /Product main img -->
             <!-- Product thumb imgs -->
             <div class="col-md-2  col-md-pull-5">
                 <div id="product-imgs">
-                    @if (Model.GalleryImages != null)
+                    @if (Model.GalleryImages.Any())
                     {
                         foreach (var image in Model.GalleryImages)
                         {

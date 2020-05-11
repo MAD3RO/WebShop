@@ -1371,6 +1371,8 @@
     <Content Include="fonts\slick.woff" />
     <Content Include="Scripts\easing.js" />
     <Content Include="Scripts\easyResponsiveTabs.js" />
+    <Content Include="Areas\Admin\Views\Shop\UserDetails.cshtml" />
+    <Content Include="Areas\Admin\Views\Shop\Users.cshtml" />
     <None Include="Scripts\jquery-3.5.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.5.0.js" />
     <Content Include="Scripts\jquery-3.5.0.min.js" />

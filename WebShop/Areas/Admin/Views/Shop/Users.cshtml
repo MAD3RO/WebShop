@@ -1,0 +1,87 @@
+﻿@model IEnumerable<WebShop.Models.ViewModels.Account.UserProfileVM>
+
+@{
+    ViewBag.Title = "Users";
+}
+
+<!-- Page Heading -->
+<h1 class="h3 mb-2 text-gray-800">Users</h1>
+
+<br />
+
+@if (!Model.Any())
+{
+    <br />
+    <h3 class="text-center text-danger">There are no registered users.</h3>
+}
+else
+{
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table" id="dataTable" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>First name</th>
+                            <th>Last name</th>
+                            <th>E-mail</th>
+                            <th>Address</th>
+                            <th>City</th>
+                            <th>Zip code</th>
+                            <th>Contact</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Username</th>
+                            <th>First name</th>
+                            <th>Last name</th>
+                            <th>E-mail</th>
+                            <th>Address</th>
+                            <th>City</th>
+                            <th>Zip code</th>
+                            <th>Contact</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @foreach (var user in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <a href="/Admin/Shop/user-details/@user.Username">
+                                        @user.Username
+                                    </a>
+                                </td>
+                                <td>
+                                    @user.FirstName
+                                </td>
+                                <td>
+                                    @user.LastName
+                                </td>
+                                <td>
+                                    @user.EmailAddress
+                                </td>
+                                <td>
+                                    @user.Address
+                                </td>
+                                <td>
+                                    @user.City
+                                </td>
+                                <td>
+                                    @user.ZipCode
+                                </td>
+                                <td>
+                                    @user.Contact
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+}
+
+

@@ -40,17 +40,6 @@ namespace WebShop.Controllers
             }
             model.RememberMe = !string.IsNullOrEmpty(model.Username);
 
-            //HttpCookie authCookie = System.Web.HttpContext.Current.Request.Cookies[FormsAuthentication.FormsCookieName];
-            //if (authCookie != null)
-            //{
-            //    FormsAuthenticationTicket authTicket = FormsAuthentication.Decrypt(authCookie.Value);
-            //    if (authTicket != null & !authTicket.Expired)
-            //    {
-            //        //model.Username = authTicket.UserData;
-            //        model.Username = authTicket.Name;
-            //    }
-            //}
-
             // Return view
             return PartialView(model);
         }

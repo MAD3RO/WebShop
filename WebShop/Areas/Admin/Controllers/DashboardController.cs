@@ -30,7 +30,7 @@ namespace WebShop.Areas.Admin.Controllers
                 var firstDay = startOfTthisMonth.AddMonths(-1);
                 var lastDay = startOfTthisMonth.AddDays(-1);
 
-                List<OrderVM> completedOrders = db.Orders.Where(x => x.Status == OrderStatus.Paid && x.CreatedAt >= firstDay && x.CreatedAt <= lastDay).ToArray().Select(x => new OrderVM(x)).ToList();
+                List<OrderVM> completedOrders = db.Orders.Where(x => x.Status == OrderStatus.Completed && x.CreatedAt >= firstDay && x.CreatedAt <= lastDay).ToArray().Select(x => new OrderVM(x)).ToList();
 
                 // Declare monthly earnings counter
                 decimal monthlyEarningsSum = 0;

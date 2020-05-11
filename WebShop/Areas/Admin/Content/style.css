@@ -40,14 +40,6 @@ input#ImageName {
     transition: background 0.5s;
 }
 
-    .remove-image:hover {
-        background: #E54E4E;
-        padding: 3px 7px 5px;
-        top: -10px;
-        right: 3px;
-        text-decoration: none;
-    }
-
     .remove-image:active {
         background: #E54E4E;
         top: -10px;

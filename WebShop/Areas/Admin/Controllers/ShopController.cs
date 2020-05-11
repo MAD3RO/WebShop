@@ -10,6 +10,7 @@ using WebShop.Models.ViewModels.Shop;
 using PagedList;
 using WebShop.Areas.Admin.Models.ViewModels.Shop;
 using WebShop.Enums;
+using WebShop.Models.ViewModels.Account;
 
 namespace WebShop.Areas.Admin.Controllers
 {
@@ -634,6 +635,52 @@ namespace WebShop.Areas.Admin.Controllers
                 // Save
                 db.SaveChanges();
             }
+        }
+
+        // GET: Admin/Shop/UserDetails/username
+        [HttpGet]
+        [ActionName("user-details")]
+        public ActionResult UserDetails(string id)
+        {
+            // Declare model
+            UserProfileVM model;
+
+            using (Db db = new Db())
+            {
+                // Get user
+                UserModel dto = db.Users.Where(x => x.Username == id).FirstOrDefault();
+
+                // Build model
+                model = new UserProfileVM(dto);
+            }
+
+            // Return view with model
+            return View("UserDetails", model);
+        }
+
+        // GET: Admin/Shop/Users
+        [HttpGet]
+        public ActionResult Users()
+        {
+            // Declare model
+            List<UserProfileVM> users;
+
+            try
+            {
+                using (Db db = new Db())
+                {
+                    // Get users
+                    users = db.Users.Where(x => x.IsGuest == false && x.Id != 1).ToArray().Select(x => new UserProfileVM(x)).ToList();
+                }
+            }
+            catch
+            {
+                // Return view with model
+                return View();
+            }
+
+            // Return view with model
+            return View(users);
         }
     }
 }
