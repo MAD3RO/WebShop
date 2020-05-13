@@ -2,6 +2,10 @@
     min-height: 50px;
 }
 
+.ajax-text {
+    float: left;
+}
+
 #deleteImage {
     float: left;
     margin-bottom: 20px;
