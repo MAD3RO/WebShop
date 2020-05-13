@@ -29,7 +29,7 @@
 </div>
 <!-- /BREADCRUMB -->
 <!-- SECTION -->
-<div class="section">
+<div class="section min-height">
     <!-- CONTAINER -->
     <div class="container">
         @if (TempData["Checkout"] != null)
@@ -202,10 +202,12 @@
             </div>
             <!-- /ROW -->
             @*if (ViewBag.IsValid != null && ViewBag.IsValid == "true")
-                {
-                    <div class="ajaxbg"><span><img src="~/Content/img/ajax-loader.gif" /></span></div>
-                    @Html.Action("PaypalPartial", "Cart")
-                }*@
+            {
+                <div class="ajaxbg"><span><img src="~/Content/img/ajax-loader.gif" /></span></div>
+                @Html.Action("PaypalPartial", "Cart")
+            }*@
+            <div class="ajaxbg"><span><img src="~/Content/img/ajax-loader.gif" /></span></div>
+            @Html.Action("PaypalPartial", "Cart")
         }
     </div>
     <!-- /container -->

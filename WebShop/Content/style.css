@@ -2824,7 +2824,8 @@ h3.other-nw {
 }
 
     .register:hover, .edit:hover {
-        color:#FFF;
+        color: #FFF;
+        background-color: #D10024;
         opacity: 0.9;
     }
 /*-- //login --*/

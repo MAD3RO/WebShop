@@ -5,7 +5,7 @@
 }
 
 <!-- SECTION -->
-<div class="section">
+<div class="section min-height">
     <!-- CONTAINER -->
     <div class="container">
         <!-- ROW -->
@@ -102,7 +102,7 @@
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <span class="input-group-text"><i class="fas fa-unlock-alt"></i></span>
-                                <label for="password">Password</label>
+                                <label for="password">New password</label>
                                 @Html.PasswordFor(model => model.Password, new { @class = "form-control", placeholder = "********" })
                                 @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
                             </div>

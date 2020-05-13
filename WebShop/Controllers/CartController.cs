@@ -387,8 +387,8 @@ namespace WebShop.Controllers
 
             ViewBag.IsValid = "true";
             //return View(model);
-            return Redirect("~/cart/Checkout");
             ModelState.Clear();
+            return Redirect("~/cart/Checkout");
 
             //return Json("success", JsonRequestBehavior.AllowGet);
         }
@@ -484,12 +484,12 @@ namespace WebShop.Controllers
             }
 
             // Email admin
-            var client = new SmtpClient("smtp.mailtrap.io", 2525)
-            {
-                Credentials = new NetworkCredential("6f6e00fa066652", "efd12fae5a9eed"),
-                EnableSsl = true
-            };
-            client.Send("admin@example.com", "admin@example.com", "New Order", "You have a new order. Order number " + orderId);
+            //var client = new SmtpClient("smtp.mailtrap.io", 2525)
+            //{
+            //    Credentials = new NetworkCredential("6f6e00fa066652", "efd12fae5a9eed"),
+            //    EnableSsl = true
+            //};
+            //client.Send("admin@example.com", "admin@example.com", "New Order", "You have a new order. Order number " + orderId);
 
             // Create a TempData message
             TempData["Checkout"] = "Your order was completed successfully.";
