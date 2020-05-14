@@ -231,7 +231,7 @@ namespace WebShop.Controllers
             if (cart == null)
             {
                 // Create a TempData message
-                TempData["Checkout"] = "Your order was completed successfully.";
+                TempData["Checkout"] = "Your order has been recieved and is now being processed.";
                 return View();
             }
 
@@ -281,9 +281,7 @@ namespace WebShop.Controllers
                 // Check model state
                 if (!ModelState.IsValid)
                 {
-                    ViewBag.IsValid = "false";
                     return View("Checkout", model);
-                    //return Json("error", JsonRequestBehavior.AllowGet);
                 }
 
                 using (Db db = new Db())
@@ -321,8 +319,6 @@ namespace WebShop.Controllers
                     db.UserRoles.Add(userRolesDTO);
                     db.SaveChanges();
                 }
-
-                //return View(model);
             }
 
             // Get cart list
@@ -367,135 +363,13 @@ namespace WebShop.Controllers
                 }
             }
 
-            // Email admin
-            //var client = new SmtpClient("smtp.mailtrap.io", 2525)
-            //{
-            //    Credentials = new NetworkCredential("6f6e00fa066652", "efd12fae5a9eed"),
-            //    EnableSsl = true
-            //};
-            //client.Send("admin@example.com", "admin@example.com", "New Order", "You have a new order. Order number " + orderId);
-
-            // Create a TempData message
-            TempData["Checkout"] = "Your order was completed successfully.";
-
-            // Reset session
-
-            if (model.PaymentMethod != "paypal")
-            {
-                Session["cart"] = null;
-            }
-
-            ViewBag.IsValid = "true";
-            //return View(model);
-            ModelState.Clear();
-            return Redirect("~/cart/Checkout");
-
-            //return Json("success", JsonRequestBehavior.AllowGet);
-        }
-
-        // POST: /Cart/PlaceOrder
-        [HttpPost]
-        public void PlaceOrder(string firstName, string lastName, string email, string address, string city, long zipCode, long contact, string paymentMethod)
-        {
-            // Get username
-            string username = User.Identity.Name;
-
-            if (string.IsNullOrEmpty(username))
-            {
-                using (Db db = new Db())
-                {
-                    // Create userDTO
-                    UserModel userDTO = new UserModel()
-                    {
-                        FirstName = firstName,
-                        LastName = lastName,
-                        EmailAddress = email,
-                        Address = address,
-                        City = city,
-                        ZipCode = zipCode,
-                        Contact = contact,
-                        DateCreated = DateTime.Now,
-                        IsGuest = true
-                    };
-
-                    // Add the DTO
-                    db.Users.Add(userDTO);
-
-                    // Save
-                    db.SaveChanges();
-
-                    // Add to UserRolesDTO
-                    int id = userDTO.Id;
-
-                    UserRoleModel userRolesDTO = new UserRoleModel()
-                    {
-                        UserId = id,
-                        RoleId = 3 // 1 is for admin, 2 is for user, 3 is for guest
-                    };
-
-                    db.UserRoles.Add(userRolesDTO);
-                    db.SaveChanges();
-                }
-
-                //return View(model);
-            }
-
-            // Get cart list
-            List<CartVM> cart = Session["cart"] as List<CartVM>;
-
-            int orderId = 0;
-
-            using (Db db = new Db())
-            {
-                // Init OrderDTO
-                OrderModel orderDTO = new OrderModel();
-
-                // Get user id
-                var q = db.Users.FirstOrDefault(x => x.EmailAddress == email);
-                int userId = q.Id;
-
-                // Add to OrderDTO and save
-                orderDTO.UserId = userId;
-                orderDTO.CreatedAt = DateTime.Now;
-                //orderDTO.Status = Enum.GetName(typeof(OrderStatus), paymentMethod == "paypal" ? OrderStatus.Paid : OrderStatus.Pending);
-                orderDTO.Status = paymentMethod == "paypal" ? OrderStatus.Paid : OrderStatus.Pending;
-                orderDTO.PaymentMethod = Enum.GetName(typeof(PaymentMethod), paymentMethod == "paypal" ? PaymentMethod.Paypal : PaymentMethod.Cash);
-
-                db.Orders.Add(orderDTO);
-                db.SaveChanges();
-
-                // Get inserted id
-                orderId = orderDTO.OrderId;
-
-                // Init OrderDetailsDTO
-                OrderDetailsModel orderDetailsDTO = new OrderDetailsModel();
-
-                // Add to OrderDetailsDTO
-                foreach (var item in cart)
-                {
-                    orderDetailsDTO.OrderId = orderId;
-                    //orderDetailsDTO.UserId = userId;
-                    orderDetailsDTO.ProductId = item.ProductId;
-                    orderDetailsDTO.Quantity = item.Quantity;
-
-                    db.OrderDetails.Add(orderDetailsDTO);
-                    db.SaveChanges();
-                }
-            }
-
-            // Email admin
-            //var client = new SmtpClient("smtp.mailtrap.io", 2525)
-            //{
-            //    Credentials = new NetworkCredential("6f6e00fa066652", "efd12fae5a9eed"),
-            //    EnableSsl = true
-            //};
-            //client.Send("admin@example.com", "admin@example.com", "New Order", "You have a new order. Order number " + orderId);
-
-            // Create a TempData message
-            TempData["Checkout"] = "Your order was completed successfully.";
+            System.Threading.Thread.Sleep(50);
 
             // Reset session
             Session["cart"] = null;
+
+            ModelState.Clear();
+            return Redirect("~/cart/Checkout");
         }
     }
 }

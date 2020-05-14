@@ -91,13 +91,9 @@ namespace WebShop.Controllers
                 if (model.RememberMe)
                 {
                     var ckUsername = new HttpCookie("username");
-                    var ckPassword = new HttpCookie("password");
                     ckUsername.Expires = DateTime.Now.AddHours(24);
-                    ckPassword.Expires = DateTime.Now.AddHours(24);
                     ckUsername.Value = model.Username;
-                    ckPassword.Value = model.Password;
                     Response.Cookies.Add(ckUsername);
-                    Response.Cookies.Add(ckPassword);
                 }
                 else
                 {

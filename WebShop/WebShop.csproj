@@ -83,6 +83,9 @@
     <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
       <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
     </Reference>
+    <Reference Include="PayPal, Version=1.9.1.0, Culture=neutral, PublicKeyToken=5b4afc1ccaef40fb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PayPal.1.9.1\lib\net451\PayPal.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data" />
@@ -160,9 +163,9 @@
     <Compile Include="Controllers\ShopController.cs" />
     <Compile Include="Enums\OrderStatus.cs" />
     <Compile Include="Enums\PaymentMethod.cs" />
-    <Compile Include="Migrations\202005071442074_intial.cs" />
-    <Compile Include="Migrations\202005071442074_intial.designer.cs">
-      <DependentUpon>202005071442074_intial.cs</DependentUpon>
+    <Compile Include="Migrations\202005140946335_initial.cs" />
+    <Compile Include="Migrations\202005140946335_initial.designer.cs">
+      <DependentUpon>202005140946335_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Data\CartDetailsModel.cs" />
@@ -1149,15 +1152,17 @@
     <Content Include="Scripts\ckeditor\plugins\wsc\LICENSE.md" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="_bin_deployableAssemblies\amd64\Microsoft.VC90.CRT\Microsoft.VC90.CRT.manifest" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\index.d.ts" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202005071442074_intial.resx">
-      <DependentUpon>202005071442074_intial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202005140946335_initial.resx">
+      <DependentUpon>202005140946335_initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
