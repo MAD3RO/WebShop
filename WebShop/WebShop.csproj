@@ -163,13 +163,11 @@
     <Compile Include="Controllers\ShopController.cs" />
     <Compile Include="Enums\OrderStatus.cs" />
     <Compile Include="Enums\PaymentMethod.cs" />
-    <Compile Include="Migrations\202005140946335_initial.cs" />
-    <Compile Include="Migrations\202005140946335_initial.designer.cs">
-      <DependentUpon>202005140946335_initial.cs</DependentUpon>
+    <Compile Include="Migrations\202006071932418_initial.cs" />
+    <Compile Include="Migrations\202006071932418_initial.designer.cs">
+      <DependentUpon>202006071932418_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\Data\CartDetailsModel.cs" />
-    <Compile Include="Models\Data\CartModel.cs" />
     <Compile Include="Models\Data\CategoryModel.cs" />
     <Compile Include="Models\Data\Db.cs" />
     <Compile Include="Models\Data\OrderDetailsModel.cs" />
@@ -1161,8 +1159,8 @@
     <TypeScriptCompile Include="Scripts\index.d.ts" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202005140946335_initial.resx">
-      <DependentUpon>202005140946335_initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202006071932418_initial.resx">
+      <DependentUpon>202006071932418_initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

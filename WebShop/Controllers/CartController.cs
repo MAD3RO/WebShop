@@ -289,7 +289,7 @@ namespace WebShop.Controllers
                     // Create userDTO
                     UserModel userDTO = new UserModel()
                     {
-                        Username = "Guest" + Guid.NewGuid().ToString().Substring(0, 15),
+                        Username = "Guest_" + Guid.NewGuid().ToString().Substring(0, 15),
                         FirstName = model.FirstName,
                         LastName = model.LastName,
                         EmailAddress = model.EmailAddress,
