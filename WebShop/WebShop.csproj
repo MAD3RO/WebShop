@@ -154,18 +154,16 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\DashboardController.cs" />
-    <Compile Include="Areas\Admin\Controllers\PagesController.cs" />
     <Compile Include="Areas\Admin\Controllers\ShopController.cs" />
     <Compile Include="Areas\Admin\Models\ViewModels\Shop\OrdersForAdminVM.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CartController.cs" />
-    <Compile Include="Controllers\PagesController.cs" />
     <Compile Include="Controllers\ShopController.cs" />
     <Compile Include="Enums\OrderStatus.cs" />
     <Compile Include="Enums\PaymentMethod.cs" />
-    <Compile Include="Migrations\202006071932418_initial.cs" />
-    <Compile Include="Migrations\202006071932418_initial.designer.cs">
-      <DependentUpon>202006071932418_initial.cs</DependentUpon>
+    <Compile Include="Migrations\202006152254027_initial.cs" />
+    <Compile Include="Migrations\202006152254027_initial.designer.cs">
+      <DependentUpon>202006152254027_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Data\CategoryModel.cs" />
@@ -177,13 +175,11 @@
     <Compile Include="Models\Data\UserModel.cs" />
     <Compile Include="Models\Data\UserRoleModel.cs" />
     <Compile Include="Models\Data\WebShopInitializer.cs" />
-    <Compile Include="Models\Data\PageModel.cs" />
     <Compile Include="Models\ViewModels\Account\LoginUserVM.cs" />
     <Compile Include="Models\ViewModels\Account\OrdersForUserVM.cs" />
     <Compile Include="Models\ViewModels\Account\UserProfileVM.cs" />
     <Compile Include="Models\ViewModels\Account\UserVM.cs" />
     <Compile Include="Models\ViewModels\Cart\CartVM.cs" />
-    <Compile Include="Models\ViewModels\Pages\PageVM.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -923,13 +919,9 @@
     <Content Include="Content\Site.css" />
     <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\Admin\Views\Pages\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Pages\AddPage.cshtml" />
-    <Content Include="Areas\Admin\Views\Pages\EditPage.cshtml" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\bootstrap.min.js.map" />
-    <Content Include="Areas\Admin\Views\Pages\PageDetails.cshtml" />
     <Content Include="bin\roslyn\csc.exe.config" />
     <Content Include="bin\roslyn\csc.rsp" />
     <Content Include="bin\roslyn\csi.exe.config" />
@@ -1078,8 +1070,6 @@
     <Content Include="Areas\Admin\Views\Shop\AddProduct.cshtml" />
     <Content Include="Areas\Admin\Views\Shop\Products.cshtml" />
     <Content Include="Areas\Admin\Views\Shop\EditProduct.cshtml" />
-    <Content Include="Views\Pages\Index.cshtml" />
-    <Content Include="Views\Pages\PagesMenuPartial.cshtml" />
     <Content Include="Views\Shop\CategoryMenuPartial.cshtml" />
     <Content Include="Views\Shop\Category.cshtml" />
     <Content Include="Views\Shop\ProductDetails.cshtml" />
@@ -1104,6 +1094,7 @@
     <Content Include="Views\Shop\Search.cshtml" />
     <Content Include="Views\Shop\SpecialDeals.cshtml" />
     <Content Include="Views\Shop\NewProductsPartial.cshtml" />
+    <Content Include="Views\Shop\Index.cshtml" />
     <None Include="_bin_deployableAssemblies\x86\sqlcese40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceqp40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceme40.dll" />
@@ -1159,8 +1150,8 @@
     <TypeScriptCompile Include="Scripts\index.d.ts" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202006071932418_initial.resx">
-      <DependentUpon>202006071932418_initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202006152254027_initial.resx">
+      <DependentUpon>202006152254027_initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

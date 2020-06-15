@@ -15,7 +15,7 @@ namespace WebShop.Controllers
         // GET: Shop
         public ActionResult Index()
         {
-            return RedirectToAction("Index", "Pages");
+            return View();
         }
 
         // GET: /shop/product-details/name
@@ -133,11 +133,11 @@ namespace WebShop.Controllers
             // Declare view type
             var viewType = new Dictionary<string, IEnumerable<ProductVM>>();
 
-// Set price range from
-ViewBag.PriceRangeFrom = priceRangeFrom;
+            // Set price range from
+            ViewBag.PriceRangeFrom = priceRangeFrom;
 
-// Set price range to
-ViewBag.PriceRangeTo = priceRangeTo;
+            // Set price range to
+            ViewBag.PriceRangeTo = priceRangeTo;
 
             using (Db db = new Db())
             {

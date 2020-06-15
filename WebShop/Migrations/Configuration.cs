@@ -17,15 +17,6 @@
 
         protected override void Seed(WebShop.Models.Data.Db context)
         {
-            // Page initializer
-            var Pages = new List<PageModel>
-                {
-                    new PageModel{Title="Home", Body="<p>This is Home page.</p>", Slug="home", Sorting=0},
-                };
-
-            Pages.ForEach(page => context.Pages.AddOrUpdate(s => s.Title, page));
-            context.SaveChanges();
-
             // Categories initializer
             var Categories = new List<CategoryModel>
                 {
@@ -113,7 +104,7 @@
             // Users initializer
             var Users = new List<UserModel>
                 {
-                    new UserModel{FirstName = "Admin", LastName="Admin", EmailAddress="admin@gmail.com", Username="admin", Address=null, City=null, Contact=null, ZipCode=null, PasswordHash="1AA2693838747090005ED77F132B6CE68C15AB7E", Salt="4ok+P6YyPBl9EqGs/dFvtcZAXWMrJVyG6KQGYpWvfVc=", DateCreated=null, IsGuest=false}
+                    new UserModel{FirstName = "Admin", LastName="Admin", EmailAddress="admin@gmail.com", Username="admin", Address=null, City=null, Contact=null, ZipCode=null, PasswordHash="5219ED0176D0561BBE7FD004D1FA49ABA5AC18067B9DD27FDA49FBA98E4DD6EB70AC21BE48007A496558B59308074E9E5E08AE278004B3CD991AA44A6BC7CBFE", Salt="gfBE5FYChkI6RvCoLwm0otmY2VTBMVVtXjs4MAnt3Yk=", DateCreated=null, IsGuest=false}
                 };
 
             Users.ForEach(user => context.Users.AddOrUpdate(s => s.Username, user));

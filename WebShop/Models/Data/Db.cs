@@ -10,7 +10,6 @@ namespace WebShop.Models.Data
     public class Db : DbContext
     {
         public Db() : base("Db") { }
-        public DbSet<PageModel> Pages { get; set; }
         public DbSet<CategoryModel> Categories { get; set; }
         public DbSet<ProductModel> Products { get; set; }
         public DbSet<UserModel> Users { get; set; }

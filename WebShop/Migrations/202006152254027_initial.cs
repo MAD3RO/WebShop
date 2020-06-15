@@ -86,18 +86,6 @@
                 .Index(t => t.CategoryId);
             
             CreateTable(
-                "dbo.tblPages",
-                c => new
-                    {
-                        Id = c.Int(nullable: false, identity: true),
-                        Title = c.String(),
-                        Slug = c.String(),
-                        Body = c.String(),
-                        Sorting = c.Int(nullable: false),
-                    })
-                .PrimaryKey(t => t.Id);
-            
-            CreateTable(
                 "dbo.tblRoles",
                 c => new
                     {
@@ -137,7 +125,6 @@
             DropIndex("dbo.tblOrderDetails", new[] { "OrderId" });
             DropTable("dbo.tblUserRoles");
             DropTable("dbo.tblRoles");
-            DropTable("dbo.tblPages");
             DropTable("dbo.tblProducts");
             DropTable("dbo.tblUsers");
             DropTable("dbo.tblOrders");
