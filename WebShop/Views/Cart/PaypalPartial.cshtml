@@ -4,11 +4,13 @@
     int count = 1;
 }
 <div class="paypaldiv hidden">
+    <input type="hidden" name="cmd" value="_ext-enter">
     <form class="paypalform" action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
         <input type="hidden" name="cmd" value="_cart">
         <input type="hidden" name="upload" value="1">
-        @*<input type="hidden" name="business" value="tylerdurden_seller@gmail.com">*@
         <input type="hidden" name="business" value="sb-43mqes1778738@business.example.com">
+        <input type="hidden" name="return" value="http://localhost:61797/Cart/Checkout">
+        <input type="hidden" name="cancel_return" value="http://localhost:61797/">
 
         @foreach (var product in Model)
         {
@@ -18,6 +20,6 @@
             count++;
         }
         <input type="hidden" name="currency_code" value="USD">
-        <input type="image" src="http://www.paypal.com/en_US/i/btn/x-click-but01.gif" name="paypalSubmit" alt="Make payments with PayPal - it's fast, free and secure!">
+        <input type="image" src="http://www.paypal.com/en_US/i/btn/x-click-but01.gif" name="paypalSubmit">
     </form>
 </div>

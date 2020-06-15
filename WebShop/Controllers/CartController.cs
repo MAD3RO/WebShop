@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Mail;
-using System.Web;
 using System.Web.Mvc;
 using WebShop.Enums;
 using WebShop.Models.Data;
-using WebShop.Models.ViewModels.Account;
 using WebShop.Models.ViewModels.Cart;
 using WebShop.Models.ViewModels.Shop;
 
@@ -210,7 +206,6 @@ namespace WebShop.Controllers
         }
 
         // GET: /Cart/PaypalPartial
-        [HttpGet]
         public ActionResult PaypalPartial()
         {
             List<CartVM> cart = Session["cart"] as List<CartVM>;
@@ -222,7 +217,6 @@ namespace WebShop.Controllers
         }
 
         // GET: /Cart/PlaceOrder
-        [HttpGet]
         public ActionResult Checkout()
         {
             List<CartVM> cart = Session["cart"] as List<CartVM>;

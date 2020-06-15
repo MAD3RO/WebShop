@@ -66,7 +66,7 @@ namespace WebShop.Controllers
 
                 if (user != null)
                 {
-                    if (user.PasswordHash == CreatePasswordHash(model.Password, user.Salt))
+                    if (user.PasswordHash == CreateHash(model.Password, user.Salt))
                     {
                         isValid = true;
                     }
@@ -174,7 +174,7 @@ namespace WebShop.Controllers
                     City = model.City,
                     ZipCode = model.ZipCode,
                     Contact = model.Contact,
-                    PasswordHash = CreatePasswordHash(model.Password, salt),
+                    PasswordHash = CreateHash(model.Password, salt),
                     Salt = salt,
                     DateCreated = DateTime.Now,
                     IsGuest = false
@@ -200,7 +200,7 @@ namespace WebShop.Controllers
             }
 
             // Create a TempData message
-            TempData["SM"] = "Registration is successfully done.";
+            TempData["SM"] = "Registration is successfully done. You can now login.";
 
             return Redirect("~/account/create-account");
         }
@@ -292,16 +292,6 @@ namespace WebShop.Controllers
                 return View("UserProfile", model);
             }
 
-            //// Check if passwords match if need be
-            //if (!string.IsNullOrWhiteSpace(model.Password))
-            //{
-            //    if (!model.Password.Equals(model.ConfirmPassword))
-            //    {
-            //        ModelState.AddModelError("", "Passwords do not match.");
-            //        return View("UserProfile", model);
-            //    }
-            //}
-
             using (Db db = new Db())
             {
                 // Get username
@@ -329,7 +319,7 @@ namespace WebShop.Controllers
 
                 if (!string.IsNullOrWhiteSpace(model.Password))
                 {
-                    dto.PasswordHash = CreatePasswordHash(model.Password, salt);
+                    dto.PasswordHash = CreateHash(model.Password, salt);
                     dto.Salt = salt;
                 }
 
@@ -415,10 +405,10 @@ namespace WebShop.Controllers
         /// <param name="pwd"></param>
         /// <param name="salt"></param>
         /// <returns></returns>
-        public string CreatePasswordHash(string pwd, string salt)
+        public string CreateHash(string pwd, string salt)
         {
             string pwdAndSalt = String.Concat(pwd, salt);
-            string hashedPwd = GetSwcSHA1(pwdAndSalt);
+            string hashedPwd = SHA512(pwdAndSalt);
 
             return hashedPwd;
         }
@@ -438,20 +428,23 @@ namespace WebShop.Controllers
         }
 
         /// <summary>
-        ///
+        /// Decrypt password with hash
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="input"></param>
         /// <returns></returns>
-        public static string GetSwcSHA1(string value)
+        public static string SHA512(string input)
         {
-            SHA1 algorithm = SHA1.Create();
-            byte[] data = algorithm.ComputeHash(Encoding.UTF8.GetBytes(value));
-            string sh1 = "";
-            for (int i = 0; i < data.Length; i++)
+            var bytes = Encoding.UTF8.GetBytes(input);
+            using (var hash = System.Security.Cryptography.SHA512.Create())
             {
-                sh1 += data[i].ToString("x2").ToUpperInvariant();
+                var hashedInputBytes = hash.ComputeHash(bytes);
+                // Convert to text
+                // StringBuilder Capacity is 128, because 512 bits / 8 bits in byte * 2 symbols for byte
+                var hashedInputStringBuilder = new StringBuilder(128);
+                foreach (var b in hashedInputBytes)
+                    hashedInputStringBuilder.Append(b.ToString("X2"));
+                return hashedInputStringBuilder.ToString();
             }
-            return sh1;
         }
         #endregion
     }

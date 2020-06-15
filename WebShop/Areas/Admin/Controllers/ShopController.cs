@@ -17,6 +17,7 @@ namespace WebShop.Areas.Admin.Controllers
     [Authorize(Roles = "Admin")]
     public class ShopController : Controller
     {
+        #region Category
         // GET: Admin/Shop/Categories
         public ActionResult Categories()
         {
@@ -120,7 +121,6 @@ namespace WebShop.Areas.Admin.Controllers
         [HttpPost]
         public string RenameCategory(string newCatName, int id)
         {
-
             using (Db db = new Db())
             {
                 // Check category name is unique
@@ -140,9 +140,10 @@ namespace WebShop.Areas.Admin.Controllers
 
             return "ok";
         }
+        #endregion
 
+        #region Product
         // GET: Admin/Shop/AddProduct
-        [HttpGet]
         public ActionResult AddProduct()
         {
             //  Init the model
@@ -321,7 +322,6 @@ namespace WebShop.Areas.Admin.Controllers
         }
 
         // GET: Admin/Shop/EditProduct/id
-        [HttpGet]
         public ActionResult EditProduct(int id)
         {
             // Declare productVM
@@ -398,7 +398,6 @@ namespace WebShop.Areas.Admin.Controllers
                 ProductModel dto = db.Products.Find(id);
 
                 dto.Name = model.Name;
-                //dto.Slug = model.Name.Replace(" ", "-").ToLower();
                 dto.Price = model.Price;
                 dto.CategoryId = model.CategoryId;
                 dto.Image = model.Image;
@@ -472,7 +471,6 @@ namespace WebShop.Areas.Admin.Controllers
                 WebImage img = new WebImage(file.InputStream);
                 img.Resize(200, 200);
                 img.Save(path2);
-
             }
 
             #endregion
@@ -482,7 +480,6 @@ namespace WebShop.Areas.Admin.Controllers
         }
 
         // GET: Admin/Shop/DeleteProduct/id
-        [HttpGet]
         public ActionResult DeleteProduct(int id)
         {
             // Delete product from DB
@@ -536,9 +533,7 @@ namespace WebShop.Areas.Admin.Controllers
                     img.Resize(200, 200);
                     img.Save(path2);
                 }
-
             }
-
         }
 
         // POST: Admin/Shop/DeleteImage(id)
@@ -554,7 +549,9 @@ namespace WebShop.Areas.Admin.Controllers
             if (System.IO.File.Exists(fullPath2))
                 System.IO.File.Delete(fullPath2);
         }
+        #endregion
 
+        #region Orders
         // GET: Admin/Shop/Orders
         public ActionResult Orders()
         {
@@ -636,7 +633,9 @@ namespace WebShop.Areas.Admin.Controllers
                 db.SaveChanges();
             }
         }
+        #endregion
 
+        #region Users
         // GET: Admin/Shop/UserDetails/username
         [HttpGet]
         [ActionName("user-details")]
@@ -675,12 +674,13 @@ namespace WebShop.Areas.Admin.Controllers
             }
             catch
             {
-                // Return view with model
+                // Return view without model
                 return View();
             }
 
             // Return view with model
             return View(users);
         }
+        #endregion
     }
 }

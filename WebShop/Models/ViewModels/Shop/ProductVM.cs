@@ -18,7 +18,6 @@ namespace WebShop.Models.ViewModels.Shop
         {
             Id = row.Id;
             Name = row.Name;
-            Slug = row.Slug;
             Description = row.Description;
             Price = row.Price;
             Discount = row.Discount;
@@ -34,7 +33,7 @@ namespace WebShop.Models.ViewModels.Shop
         [Required(ErrorMessage = "Product name is required.")]
         public string Name { get; set; }
 
-        public string Slug { get; set; }
+        public string Slug { get { return Name.Replace(" ", "-").ToLower(); } }
 
         [Required(ErrorMessage = "Product description is required.")]
         public string Description { get; set; }

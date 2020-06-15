@@ -12,8 +12,6 @@ namespace WebShop.Controllers
 {
     public class ShopController : Controller
     {
-        Dictionary<string, IEnumerable<ProductVM>> _viewType;
-
         // GET: Shop
         public ActionResult Index()
         {
@@ -81,45 +79,21 @@ namespace WebShop.Controllers
         }
 
         // GET: /shop/category/name
-        public ActionResult Category(string name, string orderBy, string gridToggle, int page = 1, int pageSize = 12, decimal priceRangeFrom = 0.00m, decimal priceRangeTo = 3000.00m)
+        public ActionResult Category(string cat, string orderBy, string gridToggle, int page = 1, int pageSize = 12, decimal priceRangeFrom = 0.00m, decimal priceRangeTo = 3000.00m)
         {
-            _viewType = Grid(orderBy, gridToggle, name, "", page, pageSize, priceRangeFrom, priceRangeTo);
-            if (_viewType.FirstOrDefault().Value == null)
-            {
-                return View(_viewType.FirstOrDefault().Key);
-            }
-            else
-            {
-                return View(_viewType.FirstOrDefault().Key, _viewType.FirstOrDefault().Value);
-            }
+            return Grid(orderBy, gridToggle, cat, "", page, pageSize, priceRangeFrom, priceRangeTo);
         }
 
         // GET: /shop/search/searchString
         public ActionResult Search(string orderBy, string gridToggle, string searchString, int page = 1, int pageSize = 12, decimal priceRangeFrom = 0.00m, decimal priceRangeTo = 3000.00m)
         {
-            _viewType = Grid(orderBy, gridToggle, "", searchString, page, pageSize, priceRangeFrom, priceRangeTo);
-            if (_viewType.FirstOrDefault().Value == null)
-            {
-                return View(_viewType.FirstOrDefault().Key);
-            }
-            else
-            {
-                return View(_viewType.FirstOrDefault().Key, _viewType.FirstOrDefault().Value);
-            }
+            return Grid(orderBy, gridToggle, "", searchString, page, pageSize, priceRangeFrom, priceRangeTo);
         }
 
         // GET: /shop/SpecialDeals
         public ActionResult SpecialDeals(string orderBy, string gridToggle, int page = 1, int pageSize = 12, decimal priceRangeFrom = 0.00m, decimal priceRangeTo = 3000.00m)
         {
-            _viewType = Grid(orderBy, gridToggle, "", "", page, pageSize, priceRangeFrom, priceRangeTo);
-            if (_viewType.FirstOrDefault().Value == null)
-            {
-                return View(_viewType.FirstOrDefault().Key);
-            }
-            else
-            {
-                return View(_viewType.FirstOrDefault().Key, _viewType.FirstOrDefault().Value);
-            }
+            return Grid(orderBy, gridToggle, "", "", page, pageSize, priceRangeFrom, priceRangeTo);
         }
 
         // GET: /shop/NewProductsPartial
@@ -148,7 +122,7 @@ namespace WebShop.Controllers
         }
 
         #region Helper methods
-        public Dictionary<string, IEnumerable<ProductVM>> Grid(string orderBy, string gridToggle, string name, string searchString, int page = 1, int pageSize = 12, decimal priceRangeFrom = 0.00m, decimal priceRangeTo = 3000.00m)
+        public ActionResult Grid(string orderBy, string gridToggle, string cat, string searchString, int page = 1, int pageSize = 12, decimal priceRangeFrom = 0.00m, decimal priceRangeTo = 3000.00m)
         {
             // Declare a list of ProductVM
             IEnumerable<ProductVM> productVMList = null;
@@ -159,16 +133,16 @@ namespace WebShop.Controllers
             // Declare view type
             var viewType = new Dictionary<string, IEnumerable<ProductVM>>();
 
-            // Set price range from
-            ViewBag.PriceRangeFrom = priceRangeFrom;
+// Set price range from
+ViewBag.PriceRangeFrom = priceRangeFrom;
 
-            // Set price range to
-            ViewBag.PriceRangeTo = priceRangeTo;
+// Set price range to
+ViewBag.PriceRangeTo = priceRangeTo;
 
             using (Db db = new Db())
             {
                 // Init the list
-                if (searchString == "" && name == "") // Special Deals
+                if (searchString == "" && cat == "") // Special Deals
                 {
                     // Set page type
                     viewName = "SpecialDeals";
@@ -178,50 +152,42 @@ namespace WebShop.Controllers
                     {
                         ViewBag.Message = "There are no products with discount.";
                         viewType.Add(viewName, null);
-                        return viewType;
+                        return View(viewType.FirstOrDefault().Key);
                     }
                 }
-                else if (name != "") // Category
+                else if (cat != "") // Category
                 {
                     // Set page type
                     viewName = "Category";
-
                     // Get category id
-                    CategoryModel categoryDTO = db.Categories.Where(x => x.Slug == name).FirstOrDefault();
+                    CategoryModel categoryDTO = db.Categories.Where(x => x.Slug == cat).FirstOrDefault();
                     int catId = categoryDTO.Id;
-
-                    // Get category name
-                    ProductModel productCat = db.Products.Where(x => x.CategoryId == catId).FirstOrDefault();
-
-                    // Save category name
+                    // Store category name
                     ViewBag.CategoryName = categoryDTO.Name;
-
                     // Init the list
                     productVMList = db.Products.ToArray().Where(x => x.CategoryId == catId).Select(x => new ProductVM(x));
-
+                    // Check if there are no products
                     if (productVMList == null || productVMList.ToList().Count == 0)
                     {
                         ViewBag.Message = "There are no products in " + categoryDTO.Name + " category.";
                         viewType.Add(viewName, null);
-                        return viewType;
+                        return View(viewType.FirstOrDefault().Key);
                     }
                 }
-                else if (searchString != "")
+                else if (searchString != "") // Search
                 {
                     // Set page type
                     viewName = "Search";
-
                     // Save search result
                     ViewBag.SearchString = searchString;
-
                     // Init the list
                     productVMList = db.Products.ToArray().Where(x => x.Name.IndexOf(searchString, StringComparison.OrdinalIgnoreCase) >= 0).Select(x => new ProductVM(x));
-
+                    // Check if there are no products
                     if (productVMList == null || productVMList.ToList().Count == 0)
                     {
                         ViewBag.Message = "Your search for '" + searchString + "' did not match any products.";
                         viewType.Add(viewName, null);
-                        return viewType;
+                        return View(viewType.FirstOrDefault().Key);
                     }
                 }
 
@@ -232,7 +198,7 @@ namespace WebShop.Controllers
                 {
                     ViewBag.PriceRangeNotFound = "We haven't found any products that match that price range.";
                     viewType.Add(viewName, null);
-                    return viewType;
+                    return View(viewType.FirstOrDefault().Key);
                 }
 
                 // Sort order
@@ -271,7 +237,16 @@ namespace WebShop.Controllers
 
             // Return view with list
             viewType.Add(viewName, productVMList.ToList());
-            return viewType;
+
+            // Return view either with model or without it
+            if (viewType.FirstOrDefault().Value == null)
+            {
+                return View(viewType.FirstOrDefault().Key);
+            }
+            else
+            {
+                return View(viewType.FirstOrDefault().Key, viewType.FirstOrDefault().Value);
+            }
         }
         #endregion
     }
