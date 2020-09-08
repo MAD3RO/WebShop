@@ -9,11 +9,11 @@
 
     if (tempCategoryName == item.Name)
     {
-        <li class="active"><a href="/shop/category/@item.Slug.ToLower()">@item.Name</a></li>
+        <li class="active"><a href="/shop/category/@item.Slug">@item.Name</a></li>
     }
     else
     {
-        <li><a href="/shop/category/@item.Slug.ToLower()">@item.Name</a></li>
+        <li><a href="/shop/category/@item.Slug">@item.Name</a></li>
     }
 }
 

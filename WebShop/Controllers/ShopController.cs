@@ -79,9 +79,9 @@ namespace WebShop.Controllers
         }
 
         // GET: /shop/category/name
-        public ActionResult Category(string cat, string orderBy, string gridToggle, int page = 1, int pageSize = 12, decimal priceRangeFrom = 0.00m, decimal priceRangeTo = 3000.00m)
+        public ActionResult Category(string name, string orderBy, string gridToggle, int page = 1, int pageSize = 12, decimal priceRangeFrom = 0.00m, decimal priceRangeTo = 3000.00m)
         {
-            return Grid(orderBy, gridToggle, cat, "", page, pageSize, priceRangeFrom, priceRangeTo);
+            return Grid(orderBy, gridToggle, name, "", page, pageSize, priceRangeFrom, priceRangeTo);
         }
 
         // GET: /shop/search/searchString
@@ -142,7 +142,7 @@ namespace WebShop.Controllers
             using (Db db = new Db())
             {
                 // Init the list
-                if (searchString == "" && cat == "") // Special Deals
+                if (string.IsNullOrEmpty(searchString) && string.IsNullOrEmpty(cat)) // Special Deals
                 {
                     // Set page type
                     viewName = "SpecialDeals";
@@ -155,7 +155,7 @@ namespace WebShop.Controllers
                         return View(viewType.FirstOrDefault().Key);
                     }
                 }
-                else if (cat != "") // Category
+                else if (!string.IsNullOrEmpty(cat)) // Category
                 {
                     // Set page type
                     viewName = "Category";
@@ -174,7 +174,7 @@ namespace WebShop.Controllers
                         return View(viewType.FirstOrDefault().Key);
                     }
                 }
-                else if (searchString != "") // Search
+                else if (!string.IsNullOrEmpty(searchString)) // Search
                 {
                     // Set page type
                     viewName = "Search";

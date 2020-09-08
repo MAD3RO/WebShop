@@ -591,7 +591,7 @@ textarea.input {
 .cart-dropdown .cart-list {
     max-height: 180px;
     overflow-y: auto;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 
     .cart-dropdown .cart-list .product-widget {
@@ -1105,7 +1105,7 @@ a.add-to-cart-btn:focus {
 }
 
     .product-widget + .product-widget {
-        margin: 15px 0px;
+        margin: 5px 0px;
     }
 
     .product-widget .product-img {
@@ -1121,7 +1121,7 @@ a.add-to-cart-btn:focus {
 
     .product-widget .product-body {
         padding-left: 75px;
-        min-height: 60px;
+        min-height: 65px;
     }
 
         .product-widget .product-body .product-category {

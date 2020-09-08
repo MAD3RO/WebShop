@@ -198,7 +198,7 @@
                         <!-- /store products -->
                         <!-- store bottom pagination -->
                         <div class="store-filter clearfix">
-                            @Html.PagedListPager((IPagedList)ViewBag.OnePageOfProducts, page => Url.Action("Category", new { name = ViewBag.CategoryName, orderBy = ViewBag.OrderBy, gridToggle = ViewBag.GridToggle, page, pageSize = ViewBag.SelectedPageSize, priceRangeFrom = ViewBag.PriceRangeFrom, priceRangeTo = ViewBag.PriceRangeTo }),
+                            @Html.PagedListPager((IPagedList)ViewBag.OnePageOfProducts, page => Url.Action("Category", new { orderBy = ViewBag.OrderBy, gridToggle = ViewBag.GridToggle, page, pageSize = ViewBag.SelectedPageSize, priceRangeFrom = ViewBag.PriceRangeFrom, priceRangeTo = ViewBag.PriceRangeTo }),
                                 new PagedListRenderOptions
                                 {
                                     DisplayLinkToFirstPage = PagedListDisplayMode.IfNeeded,
