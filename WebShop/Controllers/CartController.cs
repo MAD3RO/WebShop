@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
-using System.Net.Mail;
-using System.Web;
 using System.Web.Mvc;
 using WebShop.Enums;
 using WebShop.Models.Data;
-using WebShop.Models.ViewModels.Account;
 using WebShop.Models.ViewModels.Cart;
 using WebShop.Models.ViewModels.Shop;
 
@@ -84,7 +82,7 @@ namespace WebShop.Controllers
             return PartialView(model);
         }
 
-        public ActionResult AddToCartPartial(int id)
+        public ActionResult AddToCartPartial(int id, int qty = 1)
         {
             // Init CartVM list
             List<CartVM> cart = Session["cart"] as List<CartVM> ?? new List<CartVM>();
@@ -107,7 +105,7 @@ namespace WebShop.Controllers
                     {
                         ProductId = product.Id,
                         ProductName = product.Name,
-                        Quantity = 1,
+                        Quantity = qty,
                         Price = product.NewPrice,
                         Image = product.Image,
                         //Slug = product.Slug,
@@ -117,14 +115,13 @@ namespace WebShop.Controllers
                 else
                 {
                     // If it is, increment
-                    productInCart.Quantity++;
+                    productInCart.Quantity = productInCart.Quantity + qty;
                 }
             }
 
             // Get total qty and price and add to model
-            int qty = 0;
             decimal total = 0m;
-
+            qty--;
             foreach (var item in cart)
             {
                 qty += item.Quantity;
@@ -210,7 +207,6 @@ namespace WebShop.Controllers
         }
 
         // GET: /Cart/PaypalPartial
-        [HttpGet]
         public ActionResult PaypalPartial()
         {
             List<CartVM> cart = Session["cart"] as List<CartVM>;
@@ -222,7 +218,6 @@ namespace WebShop.Controllers
         }
 
         // GET: /Cart/PlaceOrder
-        [HttpGet]
         public ActionResult Checkout()
         {
             List<CartVM> cart = Session["cart"] as List<CartVM>;
@@ -231,7 +226,7 @@ namespace WebShop.Controllers
             if (cart == null)
             {
                 // Create a TempData message
-                TempData["Checkout"] = "Your order was completed successfully.";
+                TempData["Checkout"] = "Your order has been recieved and is now being processed.";
                 return View();
             }
 
@@ -281,9 +276,7 @@ namespace WebShop.Controllers
                 // Check model state
                 if (!ModelState.IsValid)
                 {
-                    ViewBag.IsValid = "false";
                     return View("Checkout", model);
-                    //return Json("error", JsonRequestBehavior.AllowGet);
                 }
 
                 using (Db db = new Db())
@@ -291,6 +284,7 @@ namespace WebShop.Controllers
                     // Create userDTO
                     UserModel userDTO = new UserModel()
                     {
+                        Username = "Guest_" + Guid.NewGuid().ToString().Substring(0, 15),
                         FirstName = model.FirstName,
                         LastName = model.LastName,
                         EmailAddress = model.EmailAddress,
@@ -320,8 +314,6 @@ namespace WebShop.Controllers
                     db.UserRoles.Add(userRolesDTO);
                     db.SaveChanges();
                 }
-
-                //return View(model);
             }
 
             // Get cart list
@@ -366,135 +358,50 @@ namespace WebShop.Controllers
                 }
             }
 
-            // Email admin
-            //var client = new SmtpClient("smtp.mailtrap.io", 2525)
-            //{
-            //    Credentials = new NetworkCredential("6f6e00fa066652", "efd12fae5a9eed"),
-            //    EnableSsl = true
-            //};
-            //client.Send("admin@example.com", "admin@example.com", "New Order", "You have a new order. Order number " + orderId);
+            var authToken = "K7Z9vgWERat816CAw3VbLrkfYu8HJwYYRuwJQn-jTmnGgTdp7LI-p6CBRJq";
 
-            // Create a TempData message
-            TempData["Checkout"] = "Your order was completed successfully.";
+            //read in txn token from querystring
+            var txToken = Request.QueryString.Get("tx");
 
-            // Reset session
+            var query = string.Format("cmd=_notify-synch&tx={0}&at={1}", txToken, authToken);
 
-            if (model.PaymentMethod != "paypal")
+            // Create the request back
+            string url = "https://www.sandbox.paypal.com/cgi-bin/webscr";
+            HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url);
+
+            // Set values for the request back
+            req.Method = "POST";
+            req.ContentType = "application/x-www-form-urlencoded";
+            req.ContentLength = query.Length;
+
+            // Write the request back IPN strings
+            StreamWriter stOut = new StreamWriter(req.GetRequestStream(), System.Text.Encoding.ASCII);
+            stOut.Write(query);
+            stOut.Close();
+
+            // Do the request to PayPal and get the response
+            StreamReader stIn = new StreamReader(req.GetResponse().GetResponseStream());
+            var strResponse = stIn.ReadToEnd();
+            stIn.Close();
+
+            // If response was SUCCESS, parse response string and output details
+            if (strResponse.StartsWith("SUCCESS"))
             {
-                Session["cart"] = null;
+
             }
 
-            ViewBag.IsValid = "true";
-            //return View(model);
-            return Redirect("~/cart/Checkout");
-            ModelState.Clear();
-
-            //return Json("success", JsonRequestBehavior.AllowGet);
-        }
-
-        // POST: /Cart/PlaceOrder
-        [HttpPost]
-        public void PlaceOrder(string firstName, string lastName, string email, string address, string city, long zipCode, long contact, string paymentMethod)
-        {
-            // Get username
-            string username = User.Identity.Name;
-
-            if (string.IsNullOrEmpty(username))
-            {
-                using (Db db = new Db())
-                {
-                    // Create userDTO
-                    UserModel userDTO = new UserModel()
-                    {
-                        FirstName = firstName,
-                        LastName = lastName,
-                        EmailAddress = email,
-                        Address = address,
-                        City = city,
-                        ZipCode = zipCode,
-                        Contact = contact,
-                        DateCreated = DateTime.Now,
-                        IsGuest = true
-                    };
-
-                    // Add the DTO
-                    db.Users.Add(userDTO);
-
-                    // Save
-                    db.SaveChanges();
-
-                    // Add to UserRolesDTO
-                    int id = userDTO.Id;
-
-                    UserRoleModel userRolesDTO = new UserRoleModel()
-                    {
-                        UserId = id,
-                        RoleId = 3 // 1 is for admin, 2 is for user, 3 is for guest
-                    };
-
-                    db.UserRoles.Add(userRolesDTO);
-                    db.SaveChanges();
-                }
-
-                //return View(model);
-            }
-
-            // Get cart list
-            List<CartVM> cart = Session["cart"] as List<CartVM>;
-
-            int orderId = 0;
-
-            using (Db db = new Db())
-            {
-                // Init OrderDTO
-                OrderModel orderDTO = new OrderModel();
-
-                // Get user id
-                var q = db.Users.FirstOrDefault(x => x.EmailAddress == email);
-                int userId = q.Id;
-
-                // Add to OrderDTO and save
-                orderDTO.UserId = userId;
-                orderDTO.CreatedAt = DateTime.Now;
-                //orderDTO.Status = Enum.GetName(typeof(OrderStatus), paymentMethod == "paypal" ? OrderStatus.Paid : OrderStatus.Pending);
-                orderDTO.Status = paymentMethod == "paypal" ? OrderStatus.Paid : OrderStatus.Pending;
-                orderDTO.PaymentMethod = Enum.GetName(typeof(PaymentMethod), paymentMethod == "paypal" ? PaymentMethod.Paypal : PaymentMethod.Cash);
-
-                db.Orders.Add(orderDTO);
-                db.SaveChanges();
-
-                // Get inserted id
-                orderId = orderDTO.OrderId;
-
-                // Init OrderDetailsDTO
-                OrderDetailsModel orderDetailsDTO = new OrderDetailsModel();
-
-                // Add to OrderDetailsDTO
-                foreach (var item in cart)
-                {
-                    orderDetailsDTO.OrderId = orderId;
-                    //orderDetailsDTO.UserId = userId;
-                    orderDetailsDTO.ProductId = item.ProductId;
-                    orderDetailsDTO.Quantity = item.Quantity;
-
-                    db.OrderDetails.Add(orderDetailsDTO);
-                    db.SaveChanges();
-                }
-            }
-
-            // Email admin
-            var client = new SmtpClient("smtp.mailtrap.io", 2525)
-            {
-                Credentials = new NetworkCredential("6f6e00fa066652", "efd12fae5a9eed"),
-                EnableSsl = true
-            };
-            client.Send("admin@example.com", "admin@example.com", "New Order", "You have a new order. Order number " + orderId);
-
-            // Create a TempData message
-            TempData["Checkout"] = "Your order was completed successfully.";
+            System.Threading.Thread.Sleep(50);
 
             // Reset session
             Session["cart"] = null;
+
+            ModelState.Clear();
+            return Redirect("~/cart/Checkout");
+        }
+
+        public ActionResult haha()
+        {
+            return Redirect("/");
         }
     }
 }

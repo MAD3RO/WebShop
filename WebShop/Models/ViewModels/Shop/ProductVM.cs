@@ -18,7 +18,6 @@ namespace WebShop.Models.ViewModels.Shop
         {
             Id = row.Id;
             Name = row.Name;
-            Slug = row.Slug;
             Description = row.Description;
             Price = row.Price;
             Discount = row.Discount;
@@ -31,15 +30,16 @@ namespace WebShop.Models.ViewModels.Shop
 
         public int Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Product name is required.")]
         public string Name { get; set; }
 
-        public string Slug { get; set; }
+        public string Slug { get { return Name.Replace(" ", "-").ToLower(); } }
 
-        [Required]
+        [Required(ErrorMessage = "Product description is required.")]
         public string Description { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Product price is required.")]
+        [Range(1, 3000, ErrorMessage = "Please enter a value between {1} and {2}")]
         public decimal Price { get; set; }
 
         public decimal Discount { get; set; }
@@ -50,10 +50,10 @@ namespace WebShop.Models.ViewModels.Shop
 
         public string CategoryName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Category is required.")]
         public int CategoryId { get; set; }
 
-        [Required]
+        //[Required(ErrorMessage = "Product image is required.")]
         public string Image { get; set; }
 
         public IEnumerable<SelectListItem> Categories { get; set; }

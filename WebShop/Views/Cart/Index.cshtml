@@ -93,12 +93,10 @@
 
 @section Scripts{
     <script>
-
         $(function () {
             /*
              * Increment product
              */
-
             $("a.incrproduct").click(function (e) {
                 e.preventDefault();
 
@@ -118,12 +116,6 @@
                     var grandtotal = (gt + data.price).toFixed(2);
 
                     $("div.grandtotal span").text(grandtotal);
-                }).done(function (data) {
-                    var url2 = "/cart/PaypalPartial";
-
-                    $.get(url2, {}, function (data) {
-                        $('div.paypaldiv').html(data);
-                    });
                 });
             });
             /////////////////////////////////////////////////////////////
@@ -131,7 +123,6 @@
             /*
             * Decrement product
             */
-
             $("a.decrproduct").click(function (e) {
                 e.preventDefault();
 
@@ -158,22 +149,13 @@
 
                         $("div.grandtotal span").text(grandtotal);
                     }
-
-                }).done(function (data) {
-                    var url2 = "/cart/PaypalPartial";
-
-                    $.get(url2, {}, function (data) {
-                        $('div.paypaldiv').html(data);
-                    });
                 });
             });
-
             //////////////////////////////////////////////////////////////
 
             /*
             * Remove product
             */
-
             $("a.removeproduct").click(function (e) {
                 e.preventDefault();
 
@@ -185,9 +167,7 @@
                     location.reload();
                 });
             });
-
             //////////////////////////////////////////////////////////////
-
         });
     </script>
 }

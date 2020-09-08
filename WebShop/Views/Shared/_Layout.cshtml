@@ -165,24 +165,8 @@
                     {
                         <li><a href="/shop/SpecialDeals">Special Deals</a></li>
                     }
-                    @*@Html.Action("PagesMenuPartial", "Pages")*@
+
                     @Html.Action("CategoryMenuPartial", "Shop")
-                    @*<li class="nav-item dropdown-categories mr-lg-2 mb-lg-0 mb-2">
-                            <a class="nav-link dropdown-toggle" href="#" onclick="return false;" data-toggle="dropdown-navbar" aria-haspopup="true" aria-expanded="false">
-                                Categories <i class="fa fa-caret-down" style="margin-left:5px;" aria-hidden="true"></i>
-                            </a>
-                            <div class="dropdown-menu">
-                                <div class="agile_inner_drop_nav_info p-4">
-                                    <div class="row">
-                                        <div class="col-sm-6 multi-gd-img">
-                                            <ul class="multi-column-dropdown">
-                                                @Html.Action("CategoryMenuPartial", "Shop")
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>*@
                 </ul>
                 <!-- /NAV -->
             </div>
@@ -297,8 +281,14 @@
                         }
                         else if (partialResult === "success") {
                             $("#headerModal").modal("hide");
-                            //setTimeout(function () { window.location.href = "/Shop/Index"; }, 35);
-                            setTimeout(function () { location.reload(); }, 35);
+                            setTimeout(function () {
+                                if (window.location.href.toLocaleLowerCase().indexOf("checkout") > -1) {
+                                    document.location.href = "/";
+                                }
+                                else {
+                                    location.reload();
+                                }
+                            }, 35);
                         }
                     }
                 });
@@ -306,29 +296,26 @@
         });
     </script>
     <!-- //login form validation -->
-    <!-- categories dropdown -->
     <script>
         /*
         * Add to cart
         */
-
         $("a.add-to-cart-btn").click(function (e) {
             e.preventDefault();
 
             var productId = $(this).data("id");
+            var qty = $("#qty").val();
             var url = "/cart/AddToCartPartial";
 
-            $.get(url, { id: productId }, function (data) {
+            $.get(url, { id: productId, qty: qty }, function (data) {
                 location.reload();
             });
         });
-
         ////////////////////////////////////////////////////////
 
         /*
         * Remove product from cart
         */
-
         $("a.removeproduct").click(function (e) {
             e.preventDefault();
 
@@ -340,13 +327,11 @@
                 location.reload();
             });
         });
-
         /////////////////////////////////////////////////////////////
 
         /*
         * Checkout as a guest
         */
-
         $("a.checkout").click(function (e) {
             e.preventDefault();
             document.getElementById("checkout-as-guest").classList.remove("hidden");
@@ -354,22 +339,9 @@
 
         $("#headerModal").on('hidden.bs.modal', function () {
             document.getElementById("checkout-as-guest").classList.add("hidden");
-        })
-
+        });
         //////////////////////////////////////////////////////////////
-
-        //$(".dropdown-categories").hover(
-        //    function () {
-        //        $('.dropdown-menu', this).stop(true, true).slideDown("fast");
-        //        $(this).toggleClass('open');
-        //    },
-        //    function () {
-        //        $('.dropdown-menu', this).stop(true, true).slideUp("fast");
-        //        $(this).toggleClass('open');
-        //    }
-        //);
     </script>
-    <!-- //categories dropdown -->
     <!-- smooth-scrolling-of-move-up -->
     <script>
         $(document).ready(function () {

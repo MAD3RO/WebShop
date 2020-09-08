@@ -1,0 +1,72 @@
+﻿@model WebShop.Models.ViewModels.Account.UserProfileVM
+
+
+@{
+    ViewBag.Title = "UserDetails";
+
+    var htmlAttributes = new Dictionary<string, object>
+{
+{ "class", "form-control"}
+};
+
+    htmlAttributes.Add("readonly", "readonly");
+}
+
+
+<!-- Page Heading -->
+<h1 class="h3 mb-2 text-gray-800">@Model.Username's details</h1>
+<br />
+<div class="col-md-8 card shadow mb-4">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12 mb-4">
+
+                @using (Html.BeginForm("user-details", "Shop"))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-horizontal">
+                        <div class="row">
+                            <div class="col-md-4 mb-4">
+                                <label>First name</label>
+                                @Html.EditorFor(model => model.FirstName, new { htmlAttributes = htmlAttributes })
+                            </div>
+
+                            <div class="col-md-4 mb-4">
+                                <label>Last name</label>
+                                @Html.EditorFor(model => model.LastName, new { htmlAttributes = htmlAttributes })
+                            </div>
+
+                            <div class="col-md-4 mb-4">
+                                <label>E-mail</label>
+                                @Html.EditorFor(model => model.EmailAddress, new { htmlAttributes = htmlAttributes })
+                            </div>
+                        </div>
+
+                        <div class="form-group mb-4">
+                            <label>Address</label>
+                            @Html.EditorFor(model => model.Address, new { htmlAttributes = htmlAttributes })
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4 mb-4">
+                                <label>City</label>
+                                @Html.EditorFor(model => model.City, new { htmlAttributes = htmlAttributes })
+                            </div>
+
+                            <div class="col-md-4 mb-4">
+                                <label>Zip code</label>
+                                @Html.EditorFor(model => model.ZipCode, new { htmlAttributes = htmlAttributes })
+                            </div>
+
+                            <div class="col-md-4 mb-4">
+                                <label>Contact</label>
+                                @Html.EditorFor(model => model.Contact, new { htmlAttributes = htmlAttributes })
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

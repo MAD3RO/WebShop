@@ -5,7 +5,7 @@
 }
 
 <!-- SECTION -->
-<div class="section">
+<div class="section min-height">
     <!-- container -->
     <div class="container">
         <!-- row -->
@@ -13,7 +13,7 @@
             <!-- Product main img -->
             <div class="col-md-5 col-md-push-2">
                 <div id="product-main-img">
-                    @if (Model.GalleryImages != null)
+                    @if (Model.GalleryImages.Any())
                     {
                         foreach (var image in Model.GalleryImages)
                         {
@@ -22,13 +22,17 @@
                             </div>
                         }
                     }
+                    else
+                    {
+                        <h5 class="text-center text-danger">There are no images in product gallery.</h5>
+                    }
                 </div>
             </div>
             <!-- /Product main img -->
             <!-- Product thumb imgs -->
             <div class="col-md-2  col-md-pull-5">
                 <div id="product-imgs">
-                    @if (Model.GalleryImages != null)
+                    @if (Model.GalleryImages.Any())
                     {
                         foreach (var image in Model.GalleryImages)
                         {
@@ -57,7 +61,7 @@
                             <div class="qty-label">
                                 Quantity
                                 <div class="input-number">
-                                    <input type="number">
+                                    <input type="number" id="qty" value="1"/>
                                     <span class="qty-up">+</span>
                                     <span class="qty-down">-</span>
                                 </div>
@@ -67,45 +71,12 @@
                     }
                 </div>
             </div>
-            <!-- /Product details -->
-            <!-- Product tab -->
-            <div class="col-md-12">
-                <div id="product-tab">
-                    <!-- product tab nav -->
-                    <ul class="tab-nav">
-                        <li class="active"><a data-toggle="tab" href="#tab1">Description</a></li>
-                        <li><a data-toggle="tab" href="#tab2">Specification</a></li>
-                    </ul>
-                    <!-- /product tab nav -->
-                    <!-- product tab content -->
-                    <div class="tab-content">
-                        <!-- tab1  -->
-                        <div id="tab1" class="tab-pane fade in active">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <p>@Model.Description</p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- /tab1  -->
-                        <!-- tab2  -->
-                        <div id="tab2" class="tab-pane fade in">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <p>@Model.Description</p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- /tab2  -->
-                    </div>
-                    <!-- /product tab content  -->
-                </div>
-            </div>
-            <!-- /product tab -->
         </div>
         <!-- /row -->
     </div>
 </div>
+<br />
+<br />
 
 <link href="~/Content/jquery.fancybox.css" rel="stylesheet" />
 
@@ -113,48 +84,18 @@
     <script src="~/Scripts/jquery.fancybox.js"></script>
     <script>
         $(function () {
-
             /*
             * Fancybox
             */
-
             $(".fancybox").fancybox();
-
-            ////////////////////////////////////////////////////////
-
-            /*
-            * Add to cart
-            */
-
-            $("a.addtocart").click(function (e) {
-                e.preventDefault();
-
-                $("span.loader").addClass("ib");
-
-                var url = "/cart/AddToCartPartial";
-
-                $.get(url, { id: @Model.Id }, function (data) {
-                    $(".ajaxcart").html(data);
-                }).done(function () {
-                    $("span.loader").removeClass("ib");
-                    $("span.ajaxmsg").addClass("ib");
-                    setTimeout(function () {
-                        $("span.ajaxmsg").fadeOut("fast");
-                        $("span.ajaxmsg").removeClass("ib");
-                    }, 1000);
-                });
-            });
-
             ////////////////////////////////////////////////////////
 
             /*
             * Hide old price if there is no discount
             */
-
             if (@Model.Price===@Model.NewPrice) {
                 $(".product-old-price").hide();
             }
-
             ////////////////////////////////////////////////////////
 
         });

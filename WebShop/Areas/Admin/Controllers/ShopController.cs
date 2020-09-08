@@ -10,12 +10,14 @@ using WebShop.Models.ViewModels.Shop;
 using PagedList;
 using WebShop.Areas.Admin.Models.ViewModels.Shop;
 using WebShop.Enums;
+using WebShop.Models.ViewModels.Account;
 
 namespace WebShop.Areas.Admin.Controllers
 {
     [Authorize(Roles = "Admin")]
     public class ShopController : Controller
     {
+        #region Category
         // GET: Admin/Shop/Categories
         public ActionResult Categories()
         {
@@ -119,7 +121,6 @@ namespace WebShop.Areas.Admin.Controllers
         [HttpPost]
         public string RenameCategory(string newCatName, int id)
         {
-
             using (Db db = new Db())
             {
                 // Check category name is unique
@@ -139,9 +140,10 @@ namespace WebShop.Areas.Admin.Controllers
 
             return "ok";
         }
+        #endregion
 
+        #region Product
         // GET: Admin/Shop/AddProduct
-        [HttpGet]
         public ActionResult AddProduct()
         {
             //  Init the model
@@ -162,11 +164,17 @@ namespace WebShop.Areas.Admin.Controllers
         public ActionResult AddProduct(ProductVM model, HttpPostedFileBase file)
         {
             // Check model state
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid || file == null)
             {
                 using (Db db = new Db())
                 {
                     model.Categories = new SelectList(db.Categories.ToList(), "Id", "Name");
+
+                    // Product image upload validation
+                    if (file == null)
+                    {
+                        ModelState.AddModelError("Image", "Product image is required.");
+                    }
                     return View(model);
                 }
             }
@@ -195,7 +203,7 @@ namespace WebShop.Areas.Admin.Controllers
                 product.Description = model.Description;
                 product.Price = model.Price;
                 product.CategoryId = model.CategoryId;
-                product.Discount = model.NewPrice;
+                product.Discount = model.Discount;
                 product.DateAdded = DateTime.Now;
 
                 CategoryModel catDTO = db.Categories.FirstOrDefault(x => x.Id == model.CategoryId);
@@ -314,7 +322,6 @@ namespace WebShop.Areas.Admin.Controllers
         }
 
         // GET: Admin/Shop/EditProduct/id
-        [HttpGet]
         public ActionResult EditProduct(int id)
         {
             // Declare productVM
@@ -391,7 +398,6 @@ namespace WebShop.Areas.Admin.Controllers
                 ProductModel dto = db.Products.Find(id);
 
                 dto.Name = model.Name;
-                //dto.Slug = model.Name.Replace(" ", "-").ToLower();
                 dto.Price = model.Price;
                 dto.CategoryId = model.CategoryId;
                 dto.Image = model.Image;
@@ -465,7 +471,6 @@ namespace WebShop.Areas.Admin.Controllers
                 WebImage img = new WebImage(file.InputStream);
                 img.Resize(200, 200);
                 img.Save(path2);
-
             }
 
             #endregion
@@ -475,7 +480,6 @@ namespace WebShop.Areas.Admin.Controllers
         }
 
         // GET: Admin/Shop/DeleteProduct/id
-        [HttpGet]
         public ActionResult DeleteProduct(int id)
         {
             // Delete product from DB
@@ -529,9 +533,7 @@ namespace WebShop.Areas.Admin.Controllers
                     img.Resize(200, 200);
                     img.Save(path2);
                 }
-
             }
-
         }
 
         // POST: Admin/Shop/DeleteImage(id)
@@ -547,7 +549,9 @@ namespace WebShop.Areas.Admin.Controllers
             if (System.IO.File.Exists(fullPath2))
                 System.IO.File.Delete(fullPath2);
         }
+        #endregion
 
+        #region Orders
         // GET: Admin/Shop/Orders
         public ActionResult Orders()
         {
@@ -629,5 +633,54 @@ namespace WebShop.Areas.Admin.Controllers
                 db.SaveChanges();
             }
         }
+        #endregion
+
+        #region Users
+        // GET: Admin/Shop/UserDetails/username
+        [HttpGet]
+        [ActionName("user-details")]
+        public ActionResult UserDetails(string id)
+        {
+            // Declare model
+            UserProfileVM model;
+
+            using (Db db = new Db())
+            {
+                // Get user
+                UserModel dto = db.Users.Where(x => x.Username == id).FirstOrDefault();
+
+                // Build model
+                model = new UserProfileVM(dto);
+            }
+
+            // Return view with model
+            return View("UserDetails", model);
+        }
+
+        // GET: Admin/Shop/Users
+        [HttpGet]
+        public ActionResult Users()
+        {
+            // Declare model
+            List<UserProfileVM> users;
+
+            try
+            {
+                using (Db db = new Db())
+                {
+                    // Get users
+                    users = db.Users.Where(x => x.IsGuest == false && x.Id != 1).ToArray().Select(x => new UserProfileVM(x)).ToList();
+                }
+            }
+            catch
+            {
+                // Return view without model
+                return View();
+            }
+
+            // Return view with model
+            return View(users);
+        }
+        #endregion
     }
 }

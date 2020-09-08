@@ -6,79 +6,111 @@
 
 <!-- Page Heading -->
 <h1 class="h3 mb-2 text-gray-800">Add product</h1>
+<br />
+<div class="col-md-8 card shadow mb-4">
+    <div class="card-body">
+        @if (TempData["SM"] != null)
+        {
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="card bg-success text-white shadow col-md-4 text-center">
+                    @TempData["SM"]
+                </div>
+                <div class="col-md-4"></div>
+            </div>
+            <br />
+        }
+        @using (Html.BeginForm("AddProduct", "Shop", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Id)
 
-@if (TempData["SM"] != null)
-{
-    <div class="alert alert-success">
-        @TempData["SM"]
+            <div class="form-horizontal">
+                <div class="row">
+                    <div class="col-md-8 mb-4">
+                        @Html.LabelFor(model => model.Name)
+                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="col-md-4 mb-2">
+                        <label>Category</label>
+                        @Html.DropDownListFor(model => model.CategoryId, Model.Categories, "Select Category", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Description)
+                    @Html.TextAreaFor(model => model.Description, new { @class = "form-control", rows = "3" })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label>Price ($)</label>
+                        @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control", type = "number", step = ".01" } })
+                        @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label>Discount (%)</label>
+                        @Html.EditorFor(model => model.Discount, new { htmlAttributes = new { @class = "form-control", type = "number", step = ".01" } })
+                        @Html.ValidationMessageFor(model => model.Discount, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <input type="file" name="file" class="file" accept="image/*">
+                        <div class="input-group my-3">
+                            <input type="text" id="file" class="form-control" name="file" disabled placeholder="Product image">
+                            <div class="input-group-append">
+                                <button type="button" class="browse btn btn-info btn-icon-split">
+                                    <span class="icon text-white-50">
+                                        <i class="fas fa-upload"></i>
+                                    </span>
+                                    <span class="text">Browse</span>
+                                </button>
+                            </div>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <img src="https://placehold.it/80x80" id="preview" class="img-thumbnail">
+                        <button type="button" id="clear" class="btn btn-danger btn-icon-split" style="float:right;">
+                            <span class="icon text-white-50">
+                                <i class="fas fa-trash"></i>
+                            </span>
+                            <span class="text">Clear</span>
+                        </button>
+                    </div>
+                </div>
+
+                <br />
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <a href="/Admin/Shop/Products" class="btn btn-secondary btn-icon-split" style="float:left;">
+                            <span class="icon text-white-50">
+                                <i class="fas fa-arrow-left"></i>
+                            </span>
+                            <span class="text">Back to products</span>
+                        </a>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <button type="submit" class="btn btn-success btn-icon-split" style="float:right;">
+                            <span class="icon text-white-50">
+                                <i class="fas fa-plus"></i>
+                            </span>
+                            <span class="text">Add product</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        }
     </div>
-}
-
-@using (Html.BeginForm("AddProduct", "Shop", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextAreaFor(model => model.Description, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Discount, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Discount, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Discount, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="control-label col-md-2">Category</label>
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.CategoryId, Model.Categories, "Select Category", new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="control-label col-md-2">Product Image</label>
-            <div class="col-md-10">
-                <input type="file" name="file" id="ImageUpload" />
-                <img src="#" id="imgpreview" />
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Add Product" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
-}
-
-<div>
-    @Html.ActionLink("Back to Products", "Products")
 </div>
 
 @section Scripts{
@@ -89,27 +121,31 @@
              * Preview selected image
              */
 
-            function readURL(input) {
-                if (input.files && input.files[0]) {
-                    var reader = new FileReader();
+            $(document).on("click", ".browse", function () {
+                var file = $(this).parents().find(".file");
+                file.trigger("click");
+            });
+            $('input[type="file"]').change(function (e) {
+                var fileName = e.target.files[0].name;
+                $("#file").val(fileName);
 
-                    reader.onload = function (e) {
-                        $("img#imgpreview")
-                            .attr("src", e.target.result)
-                            .width(200)
-                            .height(200);
-                    }
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    // get loaded data and render thumbnail.
+                    document.getElementById("preview").src = e.target.result;
+                    document.getElementById("preview").style.visibility = "visible";
+                    document.getElementById("clear").style.visibility = "visible";
+                };
+                // read the image file as a data URL.
+                reader.readAsDataURL(this.files[0]);
+            });
 
-                    reader.readAsDataURL(input.files[0]);
-                }
-            }
-
-            $("#ImageUpload").change(function () {
-                readURL(this);
+            $('#clear').on('click', function (e) {
+                e.preventDefault();
+                $('#file').val('');
             });
 
             /////////////////////////////////////////////////////////////
-
         });
     </script>
 }

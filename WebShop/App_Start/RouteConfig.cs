@@ -19,15 +19,7 @@ namespace WebShop
 
             routes.MapRoute("Shop", "Shop/{action}/{name}", new { controller = "Shop", action = "Index", name = UrlParameter.Optional }, new[] { "WebShop.Controllers" });
 
-            routes.MapRoute("PagesMenuPartial", "Pages/PagesMenuPartial", new { controller = "Pages", action = "PagesMenuPartial" }, new[] { "WebShop.Controllers" });
-            routes.MapRoute("Pages", "{page}", new { controller = "Pages", action = "Index" }, new[] { "WebShop.Controllers" });
-            routes.MapRoute("Default", "", new { controller = "Pages", action = "Index" }, new[] { "WebShop.Controllers" });
-
-            //routes.MapRoute(
-            //    name: "Default",
-            //    url: "{controller}/{action}/{id}",
-            //    defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
-            //);
+            routes.MapRoute("Default", "", new { controller = "Shop", action = "Index" }, new[] { "WebShop.Controllers" });
         }
     }
 }
