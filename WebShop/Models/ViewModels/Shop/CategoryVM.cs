@@ -23,7 +23,7 @@ namespace WebShop.Models.ViewModels.Shop
 
         public string Name { get; set; }
 
-        public string Slug { get { return Name.Replace(" ", "-").ToLower(); } }
+        public string Slug { get { return Name.Replace(" ", "-").ToLower().Replace(".", ""); } }
 
         public int Sorting { get; set; }
     }

@@ -18,7 +18,7 @@ namespace WebShop.Models.ViewModels.Cart
 
         public string Image { get; set; }
 
-        public string Slug { get { return ProductName.Replace(" ", "-").ToLower(); } }
+        public string Slug { get { return ProductName.Replace(" ", "-").ToLower().Replace(".", ""); } }
 
         public string Description { get; set; }
     }

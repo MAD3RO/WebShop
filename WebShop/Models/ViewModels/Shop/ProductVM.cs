@@ -33,7 +33,7 @@ namespace WebShop.Models.ViewModels.Shop
         [Required(ErrorMessage = "Product name is required.")]
         public string Name { get; set; }
 
-        public string Slug { get { return Name.Replace(" ", "-").ToLower(); } }
+        public string Slug { get { return Name.Replace(" ", "-").ToLower().Replace(".", ""); } }
 
         [Required(ErrorMessage = "Product description is required.")]
         public string Description { get; set; }
