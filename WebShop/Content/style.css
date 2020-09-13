@@ -1223,14 +1223,15 @@ a.add-to-cart-btn:focus {
 
         .products-slick-nav .slick-prev:before, .products-slick-nav .slick-next:before {
             font-size: 14px;
-            content: ">";
-            margin-left:5px;
+            content: "\f105";
+            margin-left: 7px;
         }
         .products-slick-nav .slick-prev:before, .products-slick-nav .slick-next:after {
             font-size: 14px;
-            content: "<";
-            margin-right: 5px;
+            content: "\f104";
+            margin-right: 7px;
         }
+
 
 
 /*=========================================================
