@@ -17,6 +17,7 @@ namespace WebShop.Controllers
     public class AccountController : Controller
     {
         // GET: Account
+        [AllowAnonymous]
         public ActionResult Index()
         {
             return RedirectToAction("Index", "Shop");
@@ -28,15 +29,16 @@ namespace WebShop.Controllers
         {
             var model = new LoginUserVM();
 
-            if (Request.Cookies.Get("username") != null && Request.Cookies.Get("password") != null)
-            {
+            //if (Request.Cookies.Get("username") != null && Request.Cookies.Get("password") != null)
+            if (Request.Cookies.Get("username") != null)
+                {
                 model.Username = Request.Cookies["username"].Value;
-                model.Password = Request.Cookies["password"].Value;
+                //model.Password = Request.Cookies["password"].Value;
             }
             else
             {
                 model.Username = "";
-                model.Password = "";
+                //model.Password = "";
             }
             model.RememberMe = !string.IsNullOrEmpty(model.Username);
 
@@ -48,7 +50,7 @@ namespace WebShop.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [HandleError]
-        public JsonResult LoginPartial(LoginUserVM model)
+        public ActionResult LoginPartial(LoginUserVM model)
         {
             // Check model state
             if (!ModelState.IsValid)
@@ -90,14 +92,23 @@ namespace WebShop.Controllers
             {
                 if (model.RememberMe)
                 {
-                    var ckUsername = new HttpCookie("username");
-                    ckUsername.Expires = DateTime.Now.AddHours(24);
-                    ckUsername.Value = model.Username;
+                    var ckUsername = new HttpCookie("username")
+                    {
+                        Expires = DateTime.Now.AddHours(24),
+                        Value = model.Username
+                    };
                     Response.Cookies.Add(ckUsername);
+
+                    //var ckPassword = new HttpCookie("password")
+                    //{
+                    //    Expires = DateTime.Now.AddHours(24),
+                    //    Value = model.Password
+                    //};
+                    //Response.Cookies.Add(ckPassword);
                 }
                 else
                 {
-                    // Remove cookie
+                    // Remove username cookie
                     var ckUsername = Request.Cookies["username"];
                     if (ckUsername != null)
                     {
@@ -106,16 +117,27 @@ namespace WebShop.Controllers
                         ckUsername.Value = null;
                         Response.SetCookie(ckUsername);
                     }
+                    // Remove password cookie
+                    //var ckPassword = Request.Cookies["password"];
+                    //if (ckUsername != null)
+                    //{
+                    //    Response.Cookies.Remove("password");
+                    //    ckPassword.Expires = DateTime.Now.AddYears(-1);
+                    //    ckPassword.Value = null;
+                    //    Response.SetCookie(ckPassword);
+                    //}
                 }
                 FormsAuthentication.SetAuthCookie(model.Username, model.RememberMe);
                 ModelState.Clear();
                 return Json("success", JsonRequestBehavior.AllowGet);
+                //return Redirect(FormsAuthentication.GetRedirectUrl(model.Username, model.RememberMe));
             }
         }
 
         // GET: /Account/create-account
         [ActionName("create-account")]
         [HttpGet]
+        [AllowAnonymous]
         public ActionResult CreateAccount()
         {
             if (!string.IsNullOrEmpty(User.Identity.Name))
@@ -132,6 +154,7 @@ namespace WebShop.Controllers
         [ActionName("create-account")]
         [ValidateAntiForgeryToken]
         [HttpPost]
+        [AllowAnonymous]
         public ActionResult CreateAccount(UserVM model)
         {
             // Check model state

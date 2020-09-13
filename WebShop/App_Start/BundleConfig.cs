@@ -5,18 +5,15 @@ namespace WebShop
 {
     public class BundleConfig
     {
-        // For more information on bundling, visit https://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/scripts").Include(
-            "~/Scripts/jquery-3.5.0.min.js",
-            //"~/Scripts/jquery.min.js",
+            "~/Scripts/jquery-3.5.1.min.js",
             "~/Scripts/bootstrap.min.js",
             "~/Scripts/jquery.validate.min.js",
             "~/Scripts/jquery.validate.unobtrusive.min.js",
             "~/Scripts/jquery.unobtrusive-ajax.min.js",
             "~/Scripts/slick.min.js",
-            //"~/Scripts/nouislider.min.js",
             "~/Scripts/jquery.zoom.min.js",
             "~/Scripts/scroll.js",
             "~/Scripts/move-top.js",
@@ -33,8 +30,6 @@ namespace WebShop
             "~/Areas/Admin/Scripts/dataTables.bootstrap4.min.js",
             "~/Areas/Admin/Scripts/datatables-demo.js"));
 
-            // Use the development version of Modernizr to develop with and learn from. Then, when you're
-            // ready for production, use the build tool at https://modernizr.com to pick only the tests you need.
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                      "~/Scripts/modernizr-*"));
 

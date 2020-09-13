@@ -173,19 +173,14 @@
     <script src="~/Scripts/jquery.fancybox.js"></script>
     <script>
         $(function () {
-
            /*
             * Fancybox
             */
-
             $(".fancybox").fancybox();
-
             ////////////////////////////////////////////////////////
-
            /*
             * Upload product image
             */
-
             $(document).on("click", ".browse", function () {
                 var file = $(this).parents().find(".file");
                 file.trigger("click");
@@ -209,13 +204,10 @@
                 e.preventDefault();
                 $('#file').val('');
             });
-
-        //////////////////////////////////////////////////////////////
-
-       /*
-        * Dropzone js
-        */
-
+            //////////////////////////////////////////////////////////////
+           /*
+            * Dropzone js
+            */
             Dropzone.options.dropzoneForm = {
                 acceptedFiles: "image/*",
                 init: function () {
@@ -230,13 +222,10 @@
                     });
                 }
             };
-
-        //////////////////////////////////////////////////////////////
-
-       /*
-        * Dropzone js
-        */
-
+            //////////////////////////////////////////////////////////////
+           /*
+            * Delete image
+            */
             $("a#deleteImage").click(function (e) {
                 e.preventDefault();
 
@@ -249,10 +238,8 @@
                 $.post(url, { id: @Model.Id, imageName: imageName }, function (data) {
                     $this.parent().fadeOut("fast");
                 });
-
             });
-
-        //////////////////////////////////////////////////////////////
+            //////////////////////////////////////////////////////////////
         });
     </script>
 }

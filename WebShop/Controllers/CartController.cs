@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Net;
 using System.Web.Mvc;
 using WebShop.Enums;
 using WebShop.Models.Data;
@@ -358,7 +356,7 @@ namespace WebShop.Controllers
                 }
             }
 
-            System.Threading.Thread.Sleep(50);
+            System.Threading.Thread.Sleep(100);
 
             // Reset session
             Session["cart"] = null;
