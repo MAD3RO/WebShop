@@ -27,8 +27,11 @@ namespace WebShop.Areas.Admin.Controllers
 
                 // Get number of sold products and sum of monthly earnings
                 var startOfTthisMonth = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
-                var firstDay = startOfTthisMonth.AddMonths(-1);
-                var lastDay = startOfTthisMonth.AddDays(-1);
+                var startOfNextMonth = startOfTthisMonth.AddMonths(1);
+                //var firstDay = startOfTthisMonth.AddMonths(-1);
+                //var lastDay = startOfTthisMonth.AddDays(-1);
+                var firstDay = startOfTthisMonth;
+                var lastDay = startOfNextMonth.AddDays(-1);
 
                 List<OrderVM> completedOrders = db.Orders.Where(x => x.Status == OrderStatus.Completed && x.CreatedAt >= firstDay && x.CreatedAt <= lastDay).ToArray().Select(x => new OrderVM(x)).ToList();
 
