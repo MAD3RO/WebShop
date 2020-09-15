@@ -6,7 +6,6 @@
 
 <!-- Page Heading -->
 <h1 class="h3 mb-2 text-gray-800">Products</h1>
-
 <br />
 
 <div class="store-sort">
@@ -95,7 +94,6 @@ else
 @section Scripts{
     <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
     <script>
-
         $(function () {
             /*
              * Select products from specified category
@@ -104,18 +102,14 @@ else
                 var form = $(event.target).parents("form");
                 form.submit();
             });
-
             /////////////////////////////////////////////////////////////
-
             /*
              * Confirm product deletion
              */
             $("a.delete").click(function () {
                 if (!confirm("Confirm product deletion")) return false;
             });
-
             /////////////////////////////////////////////////////////////
-
         });
     </script>
 }

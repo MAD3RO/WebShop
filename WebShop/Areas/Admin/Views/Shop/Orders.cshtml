@@ -6,9 +6,7 @@
 
 <!-- Page Heading -->
 <h1 class="h3 mb-2 text-gray-800">Orders</h1>
-
 <br />
-
 
 @if (!Model.Any())
 {
@@ -85,13 +83,10 @@ else
 @section Scripts{
     <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
     <script>
-
         $(function () {
-
             /*
              * Change order status
              */
-
             $(".input-select").change(function (event) {
 
                 var id = parseInt(this.id);
@@ -101,7 +96,6 @@ else
                 $.post(url, { id: id, status: status }, function (data) {
                 });
             });
-
             /////////////////////////////////////////////////////////////
         });
     </script>

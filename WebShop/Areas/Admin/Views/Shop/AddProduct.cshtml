@@ -115,12 +115,10 @@
 
 @section Scripts{
     <script>
-
         $(function () {
             /*
              * Preview selected image
              */
-
             $(document).on("click", ".browse", function () {
                 var file = $(this).parents().find(".file");
                 file.trigger("click");
@@ -144,7 +142,6 @@
                 e.preventDefault();
                 $('#file').val('');
             });
-
             /////////////////////////////////////////////////////////////
         });
     </script>

@@ -57,20 +57,13 @@
                     <!-- ACCOUNT -->
                     <div class="col-md-4 clearfix">
                         <div class="header-ctn">
-                            <!-- Menu Toogle -->
-                            <div class="menu-toggle">
-                                <a href="#">
-                                    <i class="fa fa-bars"></i>
-                                    <span>Menu</span>
-                                </a>
-                            </div>
-                            <!-- /Menu Toogle -->
                             <!-- Cart -->
                             @if (ViewBag.Title != "Cart Details" && !User.IsInRole("Admin") && ViewBag.Title != "Checkout")
                             {
                                 @Html.Action("CartPartial", "Cart")
                             }
                             <!-- /Cart -->
+                            <!-- Profile -->
                             <div>
                                 @if (Request.IsAuthenticated && User.IsInRole("User"))
                                 {
@@ -85,6 +78,8 @@
                                     </a>
                                 }
                             </div>
+                            <!-- /Profile -->
+                            <!-- Login/Logout -->
                             @if (Request.IsAuthenticated)
                             {
                                 <div>
@@ -106,6 +101,15 @@
                                     </a>
                                 </div>
                             }
+                            <!-- /Login/Logout -->
+                            <!-- Menu Toogle -->
+                            <div class="menu-toggle">
+                                <a href="#">
+                                    <i class="fa fa-bars"></i>
+                                    <span>Menu</span>
+                                </a>
+                            </div>
+                            <!-- /Menu Toogle -->
                         </div>
                     </div>
                     <!-- /ACCOUNT -->
@@ -262,12 +266,18 @@
     </footer>
     <!-- /FOOTER -->
 
+    <a href="#" id="toTop" style="display:inline;">
+        <span id="toTopHover" style="opacity:0;"></span>
+    </a>
+
     @Scripts.Render("~/bundles/scripts")
     @RenderSection("scripts", required: false)
 
-    <!-- login form validation -->
     <script>
-        $(document).ready(function () {
+        $(function () {
+            /*
+            * Login form validation
+            */
             $("#headerModal").on("submit", "#loginForm", function (e) {
                 e.preventDefault();
                 var form = $(this);
@@ -293,66 +303,64 @@
                     }
                 });
             });
-        });
-    </script>
-    <!-- //login form validation -->
-    <script>
-        /*
-        * Add to cart
-        */
-        $("a.add-to-cart-btn").click(function (e) {
-            e.preventDefault();
+            ////////////////////////////////////////////////////////
 
-            var productId = $(this).data("id");
-            var qty = $("#qty").val();
-            var url = "/cart/AddToCartPartial";
+            /*
+            * Add to cart
+            */
+            $("a.add-to-cart-btn").click(function (e) {
+                e.preventDefault();
 
-            $.get(url, { id: productId, qty: qty }, function (data) {
-                location.reload();
+                var productId = $(this).data("id");
+                var qty = $("#qty").val();
+                var url = "/cart/AddToCartPartial";
+
+                $.get(url, { id: productId, qty: qty }, function (data) {
+                    location.reload();
+                });
             });
-        });
-        ////////////////////////////////////////////////////////
+            ////////////////////////////////////////////////////////
 
-        /*
-        * Remove product from cart
-        */
-        $("a.removeproduct").click(function (e) {
-            e.preventDefault();
+            /*
+            * Remove product from cart
+            */
+            $("a.removeproduct").click(function (e) {
+                e.preventDefault();
 
-            var $this = $(this);
-            var productId = $(this).data("id");
-            var url = "/cart/RemoveProduct";
+                var $this = $(this);
+                var productId = $(this).data("id");
+                var url = "/cart/RemoveProduct";
 
-            $.get(url, { productId: productId }, function (data) {
-                location.reload();
+                $.get(url, { productId: productId }, function (data) {
+                    location.reload();
+                });
             });
-        });
-        /////////////////////////////////////////////////////////////
+            /////////////////////////////////////////////////////////////
 
-        /*
-        * Checkout as a guest
-        */
-        $("a.checkout").click(function (e) {
-            e.preventDefault();
-            document.getElementById("checkout-as-guest").classList.remove("hidden");
-        });
+            /*
+            * Checkout as a guest
+            */
+            $("a.checkout").click(function (e) {
+                e.preventDefault();
+                document.getElementById("checkout-as-guest").classList.remove("hidden");
+            });
 
-        $("#headerModal").on('hidden.bs.modal', function () {
-            document.getElementById("checkout-as-guest").classList.add("hidden");
-        });
-        //////////////////////////////////////////////////////////////
-    </script>
-    <!-- smooth-scrolling-of-move-up -->
-    <script>
-        $(document).ready(function () {
+            /*
+            * Hide checkout as guest button
+            */
+            $("#headerModal").on('hidden.bs.modal', function () {
+                document.getElementById("checkout-as-guest").classList.add("hidden");
+            });
+            //////////////////////////////////////////////////////////////
+
+            /*
+            * Smooth scrolling of move up
+            */
             $().UItoTop({
                 easingType: 'easeOutQuart'
             });
+            //////////////////////////////////////////////////////////////
         });
     </script>
-    <!-- //smooth-scrolling-of-move-up -->
-    <a href="#" id="toTop" style="display:inline;">
-        <span id="toTopHover" style="opacity:0;"></span>
-    </a>
 </body>
 </html>

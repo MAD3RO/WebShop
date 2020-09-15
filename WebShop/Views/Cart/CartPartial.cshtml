@@ -30,16 +30,16 @@
             </div>
             <div class="cart-btns">
                 <a href="/cart/index">View Cart</a>
-                @if (Request.IsAuthenticated)
+                <a href="#" onclick="location.href='@Url.Action("Checkout", "cart")'">Checkout <i class="fa fa-arrow-circle-right"></i></a>
+                @*@if (Request.IsAuthenticated)
                 {
                     <a href="#" onclick="location.href='@Url.Action("Checkout", "cart")'">Checkout <i class="fa fa-arrow-circle-right"></i></a>
                 }
                 else
                 {
-                    @*@Html.Action("LoginPartial", "Account")*@
                     <a class="checkout" href="#" data-toggle="modal" data-target="#headerModal">Checkout <i class="fa fa-arrow-circle-right"></i></a>
-                    @*<a href="#" data-toggle="modal" data-target="#headerModal"><i class="far fa-user"></i>Login</a>*@
-                }
+                    <a href="#" data-toggle="modal" data-target="#headerModal"><i class="far fa-user"></i>Login</a>
+                }*@
             </div>
         }
         else
@@ -50,44 +50,3 @@
         }
     </div>
 </div>
-
-@section Scripts{
-    <script>
-        $(function () {
-            ///*
-            //* Add to cart
-            //*/
-
-            //$("a.add-to-cart-btn").click(function (e) {
-            //    e.preventDefault();
-
-            //    var productId = $(this).data("id");
-            //    var url = "/cart/AddToCartPartial";
-
-            //    $.get(url, { id: productId }, function (data) {
-            //        location.reload();
-            //    });
-            //});
-
-            //////////////////////////////////////////////////////////
-
-            ///*
-            //* Remove product from cart
-            //*/
-
-            //$("a.removeproduct").click(function (e) {
-            //    e.preventDefault();
-
-            //    var $this = $(this);
-            //    var productId = $(this).data("id");
-            //    var url = "/cart/RemoveProduct";
-
-            //    $.get(url, { productId: productId }, function (data) {
-            //        location.reload();
-            //    });
-            //});
-
-            //////////////////////////////////////////////////////////
-        }
-    </script>
-}

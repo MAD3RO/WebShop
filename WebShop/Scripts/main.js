@@ -146,7 +146,7 @@
 	//	}
 	//}
 
-	//// Price Slider
+	// Price Slider
 	//var priceSlider = document.getElementById('price-slider');
 	//if (priceSlider) {
 	//	noUiSlider.create(priceSlider, {

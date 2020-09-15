@@ -22,7 +22,7 @@
             else
             {
                 <!-- ASIDE -->
-                <div id="aside" class="col-md-3 col-xs-3">
+                <div id="aside" class="col-md-3">
                     <!-- aside Widget -->
                     <div class="aside">
                         <h3 class="aside-title">Price range ($)</h3>
@@ -52,7 +52,7 @@
                 </div>
                 <!-- /ASIDE -->
                 <!-- STORE -->
-                <div id="store" class="col-md-9 col-xs-9">
+                <div id="store" class="col-md-9">
                     <h2 class="page-header text-uppercase">@ViewBag.Title</h2>
 
                     @if (ViewBag.PriceRangeNotFound != null)
@@ -213,9 +213,6 @@
                                     LinkToPreviousPageFormat = "«",
                                     LinkToNextPageFormat = "»",
                                     LinkToLastPageFormat = "»»"
-                                    //ItemSliceAndTotalFormat = "Showing {1}-{2} products",
-                                    //DisplayItemSliceAndTotal = true,
-                                    //ClassToApplyToFirstListItemInPager = "store-qty"
                                 })
                         </div>
                         <!-- /store bottom pagination -->
@@ -235,7 +232,6 @@
             /*
             * Select page size
             */
-
             $("#pageSizeList").change(function (event) {
                 $("#hidOrderByPageSize").val($("#orderByList").val());
                 if ($('#grid').hasClass('active')) {
@@ -247,13 +243,11 @@
                 var form = $(event.target).parents("form");
                 form.submit();
             });
-
             /////////////////////////////////////////////////////////////
 
             /*
             * Select order
             */
-
             $("#orderByList").change(function (event) {
                 $("#hidPageSizeOrderBy").val($("#pageSizeList").val());
                 if ($('#grid').hasClass('active')) {
@@ -265,13 +259,11 @@
                 var form = $(event.target).parents("form");
                 form.submit();
             });
-
             /////////////////////////////////////////////////////////////
 
             /*
             * Toggle grid/list view
             */
-
             $('#list').click(function (event) {
                 event.preventDefault();
                 $("#hidPageSizeGridToggle").val($("#pageSizeList").val());
@@ -289,7 +281,6 @@
                 var form = $(event.target).parents("form");
                 form.submit();
             });
-
             /////////////////////////////////////////////////////////////
 
         });
@@ -297,7 +288,6 @@
         /*
         * Price range filter validation
         */
-
         function validateForm() {
             if ($('#price-min').val() > $('#price-max').val()) {
                 alert("Min value must be lower than max value");
@@ -308,5 +298,6 @@
                 priceRangeFilter.submit();
             }
         }
+        /////////////////////////////////////////////////////////////
     </script>
 }

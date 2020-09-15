@@ -15,7 +15,7 @@ namespace WebShop.Models.Data
 
         public string Name { get; set; }
 
-        public string Slug { get { return Name.Replace(" ", "-").ToLower(); } }
+        public string Slug { get { return Name.Replace(" ", "-").ToLower().Replace(".", "").Replace("/", ""); } }
 
         public string Description { get; set; }
 

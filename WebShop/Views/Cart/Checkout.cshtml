@@ -153,10 +153,6 @@
                                 }
                             </div>
                         }
-                        @*<div class="order-col">
-                            <div>Shipping</div>
-                            <div><strong>FREE</strong></div>
-                        </div>*@
                         <div class="order-col">
                             <div><strong>TOTAL</strong></div>
                             <div><strong class="order-total">$@ViewBag.GrandTotal</strong></div>
@@ -184,13 +180,6 @@
                             </div>
                         </div>
                     </div>
-                    @*<div class="input-checkbox">
-                        <input type="checkbox" id="terms">
-                        <label for="terms">
-                            <span></span>
-                            I've read and accept the <a href="#">terms & conditions</a>
-                        </label>
-                    </div>*@
                     <a href="#" class="placeorder primary-btn order-submit">Place order</a>
                 </div>
                 <!-- /ORDER DETAILS-->
@@ -206,14 +195,12 @@
 
 @section scripts{
     <script>
-
         $(function () {
             /*
             * Place order
             */
             $("a.placeorder").click(function (e) {
                 e.preventDefault();
-
                 if (document.getElementById('payment-1').checked) {
                     $("#PaymentMethod").val("cash");
                     $('form input[name="checkoutSubmit"]').click();
@@ -221,50 +208,14 @@
                 if (document.getElementById('payment-2').checked) {
                     $("#PaymentMethod").val("paypal");
                     $('form input[name="checkoutSubmit"]').click();
-                    //$('form input[name="checkoutSubmit"]').click(function (e) {
-                    //    e.preventDefault();
-                    //    $('form input[name="paypalSubmit"]').click();
-                    //});
-                    setTimeout(function () {
-                        $('form input[name="paypalSubmit"]').click();
-                    }, 60);
+
+                    if ($('#checkoutForm').valid()) {
+                        setTimeout(function () {
+                            $('form input[name="paypalSubmit"]').click();
+                        }, 105);
+                    }
                 }
             });
-
-            //$("a.placeorder").click(function (e) {
-            //    e.preventDefault();
-
-            //    var model = { Name: "Shyju", Location: "Detroit" };
-            //    var $this = $(this);
-            //    var url = "/cart/Checkout";
-
-            //    $.post(url, {}, function (data) {
-            //        setTimeout(function () {
-            //            $('form input[name="paypalSubmit"]').click();
-            //        }, 2000);
-            //    });
-            //});
-
-            //// this is the id of the form
-            //$("#loginForm").submit(function (e) {
-
-            //    var url = "path/to/your/login.php"; // The script to check credentials
-
-            //    $.ajax({
-            //        type: "POST",
-            //        url: url,
-            //        data: $("#loginForm").serialize(), // serializes the form's elements.
-            //        success: function (data) {
-            //            // use data and process the response from the php script.
-            //            // include a property in data to indicate if the validation passed. For example:
-            //            if (!data.valid) {
-            //                //Show the hidden PIN div
-            //            }
-            //        }
-            //    });
-
-            //    e.preventDefault(); // avoid to execute the actual submit of the form.
-            //});
             //////////////////////////////////////////////////////////////
         });
     </script>

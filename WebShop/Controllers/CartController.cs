@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Net;
 using System.Web.Mvc;
 using WebShop.Enums;
 using WebShop.Models.Data;
@@ -358,50 +356,13 @@ namespace WebShop.Controllers
                 }
             }
 
-            var authToken = "K7Z9vgWERat816CAw3VbLrkfYu8HJwYYRuwJQn-jTmnGgTdp7LI-p6CBRJq";
-
-            //read in txn token from querystring
-            var txToken = Request.QueryString.Get("tx");
-
-            var query = string.Format("cmd=_notify-synch&tx={0}&at={1}", txToken, authToken);
-
-            // Create the request back
-            string url = "https://www.sandbox.paypal.com/cgi-bin/webscr";
-            HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url);
-
-            // Set values for the request back
-            req.Method = "POST";
-            req.ContentType = "application/x-www-form-urlencoded";
-            req.ContentLength = query.Length;
-
-            // Write the request back IPN strings
-            StreamWriter stOut = new StreamWriter(req.GetRequestStream(), System.Text.Encoding.ASCII);
-            stOut.Write(query);
-            stOut.Close();
-
-            // Do the request to PayPal and get the response
-            StreamReader stIn = new StreamReader(req.GetResponse().GetResponseStream());
-            var strResponse = stIn.ReadToEnd();
-            stIn.Close();
-
-            // If response was SUCCESS, parse response string and output details
-            if (strResponse.StartsWith("SUCCESS"))
-            {
-
-            }
-
-            System.Threading.Thread.Sleep(50);
+            System.Threading.Thread.Sleep(100);
 
             // Reset session
             Session["cart"] = null;
 
             ModelState.Clear();
             return Redirect("~/cart/Checkout");
-        }
-
-        public ActionResult haha()
-        {
-            return Redirect("/");
         }
     }
 }
